@@ -1,0 +1,105 @@
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'colors-background-bg-primary': '#fff',
+        'foundation-green-normal': '#00a991',
+        'colors-text-text-tertiary-600': '#475467',
+        'colors-border-border-primary': '#d0d5dd',
+        'colors-text-text-secondary-700': '#344054',
+        'colors-text-text-placeholder': '#667085',
+        'colors-text-text-primary-900': '#101828',
+        lightseagreen: {
+          '100': '#33baa7',
+          '200': '#1ac2ab',
+          '300': '#1aa18f',
+        },
+        'colors-border-border-secondary': '#eaecf0',
+        'colors-background-bg-active': '#f9fafb',
+        'foundation-green-green-100': '#b0e4dd',
+        'colors-text-text-secondary-hover': '#18222f',
+        'foundation-green-light-hover': '#d9f2ef',
+        'component-colors-utility-error-utility-error-600': '#da2d20',
+        'component-colors-utility-error-utility-error-700': '#b42318',
+        darkslategray: '#303030',
+        whitesmoke: '#f9f9f9',
+        'colors-border-border-tertiary': '#f2f4f7',
+        'component-colors-components-avatars-avatar-contrast-border':
+          'rgba(0, 0, 0, 0.08)',
+        'component-colors-components-buttons-primary-button-primary-bg':
+          '#7e56d9',
+        'component-colors-components-buttons-tertiary-color-button-tertiary-color-fg':
+          '#6941c6',
+        'component-colors-utility-success-utility-success-50': '#ecfdf3',
+        'component-colors-utility-success-utility-success-200': '#abefc6',
+        'component-colors-utility-success-utility-success-700': '#067647',
+      },
+      spacing: {
+        'spacing-4xl': '32px',
+        'spacing-xs': '4px',
+        'spacing-sm': '6px',
+        'spacing-3xl': '24px',
+        'spacing-lg': '12px',
+        'spacing-xl': '16px',
+        'spacing-xxs': '2px',
+        'spacing-2xl': '20px',
+        'spacing-md': '8px',
+        'spacing-7xl': '64px',
+        'width-sm': '480px',
+        'width-xl': '768px',
+        'container-max-width-desktop': '1280px',
+        'spacing-9xl': '96px',
+        'spacing-6xl': '48px',
+        'width-md': '560px',
+        'container-padding-mobile': '16px',
+      },
+      fontFamily: {
+        'text-sm-semibold': 'Inter',
+      },
+      borderRadius: {
+        '9980xl': '9999px',
+        '3xs': '10px',
+        'spacing-sm': '6px',
+        'spacing-lg': '12px',
+        'radius-md': '8px',
+        'radius-full': '9999px',
+        'radius-2xl': '16px',
+        'radius-xl': '12px',
+        'rounded-full': '9999px',
+        'radius-sm': '6px',
+      },
+    },
+    fontSize: {
+      sm: '14px',
+      base: '16px',
+      '11xl': '30px',
+      lg: '18px',
+      '5xl': '24px',
+      lgi: '19px',
+      xl: '20px',
+      '17xl': '36px',
+      '10xl': '29px',
+      '3xl': '22px',
+      '13xl': '32px',
+      '7xl': '26px',
+      inherit: 'inherit',
+    },
+    screens: {
+      mq750: {
+        raw: 'screen and (max-width: 750px)',
+      },
+      mq450: {
+        raw: 'screen and (max-width: 450px)',
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;

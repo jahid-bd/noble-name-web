@@ -3,10 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  @apply leading-[normal] m-0;
+  @apply leading-[normal] m-0 font-primary;
 }
 *,
 ::before,
 ::after {
   border-width: 0;
+}
+
+.heading-text {
+  @apply text-text-primary text-3xl font-semibold text-text-primary;
 }

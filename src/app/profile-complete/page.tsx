@@ -1,9 +1,5 @@
-'use client';
-
-import ProfileCompleteView from '@/components/view/ProfileCompoleteView';
-
 const page = () => {
-  return <ProfileCompleteView />;
+  return <div>page</div>;
 };
 
 export default page;
