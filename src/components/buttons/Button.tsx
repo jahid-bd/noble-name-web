@@ -14,7 +14,7 @@ const Button = ({ children, className, onClick }: ButtonProps) => {
   return (
     <button
       className={clsx(
-        'w-full bg-primary rounded-md text-base font-semibold text-white p-[10px] flex items-center justify-center',
+        'w-full bg-primary rounded-md text-base font-semibold text-white p-[10px] flex items-center justify-center button-hover',
         className
       )}
       onClick={onClick}

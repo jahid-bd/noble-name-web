@@ -11,8 +11,8 @@ const config: Config = {
     extend: {
       colors: {
         primary: '#00A991',
-        'green-200': '#8AD7CC',
-        'green-500': '#00A991',
+        'green-hover': '#007e6a',
+        'green-light': '#8AD7CC',
         'green-disabled': '#B0E4DD',
         blue: '#27AAE1',
         'dark-blue': '#1D80A9',
@@ -24,8 +24,6 @@ const config: Config = {
         'text-secondary': '#344054',
         'text-tertiary': '#475467',
         'text-placeholder': '#667085',
-        'text-primary-900': '#101828',
-        'text-secondary-900': '#344054',
         'gray-bg': '#F9FAFB',
         'error-secondary': '#F04438',
       },

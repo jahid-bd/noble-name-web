@@ -12,5 +12,9 @@ body {
 }
 
 .heading-text {
-  @apply text-text-primary text-3xl font-semibold text-text-primary;
+  @apply text-text-primary text-3xl font-semibold;
+}
+
+.button-hover {
+  @apply transition-all duration-200 hover:bg-green-hover;
 }

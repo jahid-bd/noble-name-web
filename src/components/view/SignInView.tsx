@@ -8,10 +8,9 @@ import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
 import PlanButton from '../buttons/PlanButton';
 import InputField from '../form/InputField';
 
-const SignupView = () => {
+const SignInView = () => {
   const [formState, setFormState] = useState({
     name: '',
-    email: '',
     password: '',
   });
 
@@ -21,7 +20,7 @@ const SignupView = () => {
 
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
-      <div className="w-full max-w-[360px] h-[622px] mx-auto">
+      <div className="w-full max-w-[370px] h-[622px] mx-auto">
         {/* logo */}
         <div className="mb-8">
           <Link
@@ -40,7 +39,10 @@ const SignupView = () => {
 
         {/* Title */}
         <div>
-          <h1 className="heading-text text-center">Sign up</h1>
+          <h1 className="heading-text text-center">Log in to your account</h1>
+          <p className="pt-4 text-center text-text-tertiary">
+            Welcome back! Please enter your details.
+          </p>
         </div>
 
         {/* Signup Form */}
@@ -56,27 +58,34 @@ const SignupView = () => {
                 value={formState.name}
               />
             </div>
-            <div className="mb-5">
-              <InputField
-                type="email"
-                label="Email*"
-                name="email"
-                placeholder="Enter your email"
-                onChange={handleChange}
-                value={formState.email}
-              />
-            </div>
 
             <div className="mb-5">
               <InputField
                 type="password"
                 label="Password*"
                 name="password"
-                placeholder="Create a password"
-                message="Must be at least 8 characters."
+                placeholder="Enter your password"
                 onChange={handleChange}
-                value={formState.password}
+                value={formState.name}
               />
+            </div>
+
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="remember"
+                  className="w-4 h-4 border border-border-primary"
+                />
+                <label
+                  htmlFor="remember"
+                  className="text-sm text-text-secondary font-medium"
+                >
+                  Remember for 30 days
+                </label>
+              </div>
+
+              <PlanButton>Forgot password</PlanButton>
             </div>
 
             <div>
@@ -84,16 +93,16 @@ const SignupView = () => {
             </div>
 
             <div className="mt-4">
-              <GoogleSignupBtn text="Sign up with Google" />
+              <GoogleSignupBtn text="Sign in with Google" />
             </div>
           </form>
         </div>
 
         {/* signin link */}
         <div className="flex items-center justify-center gap-1 mb-5">
-          <p className="text-text-tertiary">Already have an account?</p>
-          <Link href="/sign-in">
-            <PlanButton>Sign In</PlanButton>
+          <p className="text-text-tertiary">Don’t have an account?</p>
+          <Link href="/sign-up">
+            <PlanButton>Sign Up</PlanButton>
           </Link>
         </div>
       </div>
@@ -101,4 +110,4 @@ const SignupView = () => {
   );
 };
 
-export default SignupView;
+export default SignInView;
