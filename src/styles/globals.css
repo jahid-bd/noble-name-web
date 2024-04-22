@@ -18,3 +18,9 @@ body {
 .button-hover {
   @apply transition-all duration-200 hover:bg-green-hover;
 }
+
+.select-shadow {
+  box-shadow: 0px 4px 6px -2px #10182808;
+
+  /* box-shadow: 0px 12px 16px -4px #10182814; */
+}
