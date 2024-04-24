@@ -13,6 +13,7 @@ const config: Config = {
                 primary: "#00A991",
                 "green-hover": "#007e6a",
                 "green-light": "#8AD7CC",
+                "green-light-50": "#E6F6F4",
                 "green-disabled": "#B0E4DD",
                 blue: "#27AAE1",
                 "dark-blue": "#1D80A9",

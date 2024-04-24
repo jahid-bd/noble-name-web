@@ -8,7 +8,7 @@ import InputField from "../form/InputField";
 import PlanButton from "../buttons/PlanButton";
 import GoogleSignupBtn from "../buttons/GoogleSignupBtn";
 
-const SignInView = () => {
+const HomeView = () => {
     const [formState, setFormState] = useState({
         name: "",
         password: "",
@@ -112,4 +112,4 @@ const SignInView = () => {
     );
 };
 
-export default SignInView;
+export default HomeView;
