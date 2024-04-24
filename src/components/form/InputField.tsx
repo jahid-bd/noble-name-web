@@ -10,6 +10,7 @@ interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   message?: string;
   className?: string;
+  min?: any;
 }
 
 const InputField = ({
@@ -20,6 +21,7 @@ const InputField = ({
   onChange,
   message,
   className,
+  min,
 }: InputProps) => {
   return (
     <div className="w-full">
@@ -38,6 +40,7 @@ const InputField = ({
           'w-full outline-none border border-border-primary px-[14px] py-[10px] rounded-md shadow-sm placeholder:text-text-placeholder ',
           className
         )}
+        min={min}
       />
 
       {message ? (

@@ -47,7 +47,7 @@ const SelectInput = ({
   return (
     <div>
       <label
-        htmlFor="age"
+        htmlFor={label}
         className="font-medium text-sm text-text-secondary pb-[6px] block"
       >
         {label}

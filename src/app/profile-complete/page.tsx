@@ -1,5 +1,7 @@
+import BasicInfoView from '@/components/view/BasicInfoView';
+
 const page = () => {
-  return <div>page</div>;
+  return <BasicInfoView />;
 };
 
 export default page;
