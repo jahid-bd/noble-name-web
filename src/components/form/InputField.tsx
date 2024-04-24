@@ -40,7 +40,7 @@ const InputField = ({
           'w-full outline-none border border-border-primary px-[14px] py-[10px] rounded-md shadow-sm placeholder:text-text-placeholder ',
           className
         )}
-        min="2022-06"
+        min={min}
       />
 
       {message ? (
