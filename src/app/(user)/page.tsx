@@ -1,9 +1,8 @@
-"use client";
-
+import HomeView from "@/components/view/HomeView";
 import type { NextPage } from "next";
 
 const Homepage: NextPage = () => {
-    return <h1>Home</h1>;
+    return <HomeView />;
 };
 
 export default Homepage;
