@@ -1,9 +1,8 @@
-"use client";
-
 import type { NextPage } from "next";
+import BlogView from "@/components/view/BlogView";
 
 const Blog: NextPage = () => {
-    return <h1>Blog Page</h1>;
+    return <BlogView />;
 };
 
 export default Blog;
