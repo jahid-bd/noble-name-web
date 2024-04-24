@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import Button from '../buttons/Button';
-import InputField from './InputField';
-import RadioButton from './RadioButton';
-import SelectInput from './SelectInput';
+import InputField from '../form/InputField';
+import RadioButton from '../form/RadioButton';
+import SelectInput from '../form/SelectInput';
 
 const BasicInfoView = () => {
   const childeAgeOptions = [
@@ -24,6 +24,10 @@ const BasicInfoView = () => {
   ];
 
   const ageOptions = [
+    {
+      value: '',
+      label: 'Age',
+    },
     {
       value: '18-24',
       label: '18-24',
