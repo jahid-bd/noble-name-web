@@ -319,10 +319,10 @@ const SettingsView = () => {
 
           <div className="flex item-center justify-end">
             <div className="w-full mt-[60px] flex items-center justify-end gap-3">
-              <Button className="w-[80px] bg-white border border-border-primary !text-sm !text-text-secondary hover:!text-white">
+              <Button className="!w-[80px] bg-white border border-border-primary !text-sm !text-text-secondary hover:!text-white">
                 Cancel
               </Button>
-              <Button className="text-sm w-[135px]">Save changes</Button>
+              <Button className="text-sm !w-[135px]">Save changes</Button>
             </div>
           </div>
         </div>
