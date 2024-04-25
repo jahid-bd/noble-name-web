@@ -39,6 +39,7 @@ const config: Config = {
             borderRadius: {},
             boxShadow: {
                 menu: "0px 20px 40px 0px rgba(212, 212, 212, 0.25)",
+                "btn-shadow-xs": "b0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
                 plan: "0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)",
             },
         },
