@@ -1,3 +1,4 @@
+import LoadingIcon from '@/assets/icons/LoadingIcon';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
@@ -8,9 +9,10 @@ interface ButtonProps {
   suffixIcon?: JSX.Element;
   variant?: string;
   onClick?: () => void;
+  isLoading?: boolean;
 }
 
-const Button = ({ children, className, onClick }: ButtonProps) => {
+const Button = ({ children, className, onClick, isLoading }: ButtonProps) => {
   return (
     <button
       className={clsx(
@@ -19,7 +21,10 @@ const Button = ({ children, className, onClick }: ButtonProps) => {
       )}
       onClick={onClick}
     >
-      <span>{children}</span>
+      <>
+        <span className="mr-2">{isLoading ? <LoadingIcon /> : null}</span>
+        <span>{children}</span>
+      </>
     </button>
   );
 };

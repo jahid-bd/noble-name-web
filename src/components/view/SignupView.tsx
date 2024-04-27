@@ -1,22 +1,102 @@
 'use client';
 
+import { userRegister } from '@/services/api';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 import Button from '../buttons/Button';
 import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
 import PlanButton from '../buttons/PlanButton';
 import InputField from '../form/InputField';
+interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
+}
 
 const SignupView = () => {
-  const [formState, setFormState] = useState({
+  const initialValues = {
     name: '',
     email: '',
     password: '',
-  });
+  };
+  const [formState, setFormState] = useState({ ...initialValues });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    console.log(formState);
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const [serverError, setserverError] = useState<string>();
+
+  const router = useRouter();
+
+  const { mutate: signup, isPending } = useMutation({
+    mutationFn: (data: RegisterData) => userRegister(data),
+    onError: (error: any) => {
+      console.log('error', error);
+      setserverError(error.response.data.message);
+    },
+    onSuccess: (data) => {
+      setFormState(initialValues);
+      router.push('/auth/email-verification');
+    },
+  });
+
+  const passMessages = {
+    min: 'At least 8 characters',
+    lower: 'Lower case letters (a-z)',
+    upper: 'Upper case letters (A-Z)',
+    special: 'Numbers (0-9)',
+    number: 'Special characters (e.g. !@#$%^&*)',
+  };
+
+  const schema = yup
+    .object({
+      email: yup
+        .string()
+        .trim()
+        .nullable()
+        .email('Please enter a valid email address')
+        .required('Please enter an email address'),
+      password: yup
+        .string()
+        .trim()
+        .min(8, passMessages.min)
+        // .matches(/^\w{8,}$/, passMessages.min)
+        // .matches(/^(?=.*[a-z])/, passMessages.lower)
+        // .matches(/^(?=.*[A-Z]
+        .required('Password is required'),
+      name: yup
+        .string()
+        .trim()
+        .required('Please enter a valid name')
+        .min(3, 'Name must be at least 3 characters'),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    criteriaMode: 'all',
+    mode: 'onChange',
+  });
+
+  const onSubmit = (data: RegisterData) => {
+    setserverError('');
+    signup(data);
+  };
+
+  const handleAuth = () => {
+    router.push(`http://localhost:8000/auth/google`);
   };
 
   return (
@@ -45,7 +125,7 @@ const SignupView = () => {
 
         {/* Signup Form */}
         <div className="my-8 ">
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <InputField
                 type="text"
@@ -54,6 +134,9 @@ const SignupView = () => {
                 placeholder="Enter your name"
                 onChange={handleChange}
                 value={formState.name}
+                register={register}
+                error={errors.name?.message}
+                className={serverError ? 'border-red-500' : ''}
               />
             </div>
             <div className="mb-5">
@@ -64,6 +147,9 @@ const SignupView = () => {
                 placeholder="Enter your email"
                 onChange={handleChange}
                 value={formState.email}
+                register={register}
+                error={errors.email?.message}
+                className={serverError ? 'border-red-500' : ''}
               />
             </div>
 
@@ -76,15 +162,30 @@ const SignupView = () => {
                 message="Must be at least 8 characters."
                 onChange={handleChange}
                 value={formState.password}
+                error={errors.password?.message}
+                register={register}
+                className={serverError ? 'border-red-500' : ''}
               />
             </div>
 
             <div>
-              <Button>Get started</Button>
+              {serverError ? (
+                <div className="pb-3">
+                  <p className="text-sm text-center text-red-500">
+                    {serverError}
+                  </p>
+                </div>
+              ) : null}
+              <Button isLoading={isPending}>Get started</Button>
             </div>
 
             <div className="mt-4">
-              <GoogleSignupBtn text="Sign up with Google" />
+              <Link href={'http://localhost:8000/auth/google'}>
+                <GoogleSignupBtn
+                  text="Sign up with Google"
+                  // onClick={handleAuth}
+                />
+              </Link>
             </div>
           </form>
         </div>
@@ -92,7 +193,7 @@ const SignupView = () => {
         {/* signin link */}
         <div className="flex items-center justify-center gap-1 mb-5">
           <p className="text-text-tertiary">Already have an account?</p>
-          <Link href="/sign-in">
+          <Link href="/auth/sign-in">
             <PlanButton>Sign In</PlanButton>
           </Link>
         </div>

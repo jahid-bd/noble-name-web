@@ -1,3 +1,5 @@
+import QueryProvider from '@/components/providers/QueryProvider';
+import axios from 'axios';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../styles/globals.css';
@@ -14,9 +16,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  axios.interceptors.request.use(function (config) {
+    config.withCredentials = true;
+    return config;
+  });
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }
