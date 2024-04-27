@@ -7,6 +7,7 @@ interface InputProps {
     placeholder?: string;
     type: string;
     value: string;
+    min?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     message?: string;
     className?: string;
@@ -17,6 +18,7 @@ const InputField = ({
     label,
     placeholder,
     type,
+    min,
     onChange,
     message,
     className,

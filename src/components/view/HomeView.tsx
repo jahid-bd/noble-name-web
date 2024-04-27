@@ -5,6 +5,8 @@ import Button from "@/components/buttons/Button";
 import BlogCard from "@/components/cards/BlogCard";
 import InputField from "@/components/form/InputField";
 import ChildHand from "@/assets/images/child_hand.jpg";
+import NameSearchSection from "@/components/section/NameSearchSection";
+import AddNameModal from "../modal/AddNameModal";
 
 const HomeView = () => {
     const handleChange = () => {
@@ -15,13 +17,11 @@ const HomeView = () => {
         <main className="bg-white pb-[60px] md:pb-[60px]">
             <section className="bg-black py-16">
                 <div className="container mx-auto px-[6px]">
-                    <h1 className="text-[28px] md:text-[32px] font-semibold text-white text-center">
+                    <h1 className="text-[28px] md:text-[32px] font-semibold text-white text-center mb-16">
                         Search muslim names with endless possibilities
                     </h1>
 
-                    <div>
-                        <h3>Search Section</h3>
-                    </div>
+                    <NameSearchSection />
                 </div>
             </section>
 
@@ -143,6 +143,8 @@ const HomeView = () => {
                     </div>
                 </div>
             </section>
+
+            <AddNameModal />
         </main>
     );
 };
