@@ -1,8 +1,8 @@
 'use client';
 
-import { userProfileUpdate } from '@/services/api';
+import { getUserProfile, userProfileUpdate } from '@/services/api';
 import { UserUpdateData } from '@/types';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Button from '../buttons/Button';
@@ -187,7 +187,9 @@ const ProfileComplete = () => {
     });
   };
 
-  const authToken = document.cookie;
+  const { data } = useQuery({ queryKey: ['profile'], queryFn: getUserProfile });
+
+  console.log('Profile', data);
 
   return (
     <div className="flex items-center justify-center py-24">
