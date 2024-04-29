@@ -144,7 +144,7 @@ const HomeView = () => {
                 </div>
             </section>
 
-            <AddNameModal />
+            {/* <AddNameModal /> */}
         </main>
     );
 };

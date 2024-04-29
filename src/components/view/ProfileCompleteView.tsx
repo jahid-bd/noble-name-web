@@ -1,13 +1,21 @@
 "use client";
 
+import { userProfileUpdate } from "@/services/api";
+import { UserUpdateData } from "@/types";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "../buttons/Button";
 import InputField from "../form/InputField";
 import RadioButton from "../form/RadioButton";
 import SelectInput from "../form/SelectInput";
 
-const BasicInfoView = () => {
+const ProfileComplete = () => {
     const childeAgeOptions = [
+        {
+            value: "",
+            label: "Select",
+        },
         {
             value: "1-6",
             label: "1-6 Years",
@@ -75,6 +83,10 @@ const BasicInfoView = () => {
 
     const childrenOptions = [
         {
+            value: "",
+            label: "Select",
+        },
+        {
             value: "1",
             label: "One",
         },
@@ -126,7 +138,6 @@ const BasicInfoView = () => {
         sect: sectOptions[0],
         children: childrenOptions[0],
         country: countryOptions[0],
-        ageGroup: childeAgeOptions[0],
         childAge: childeAgeOptions[0],
     });
 
@@ -135,6 +146,8 @@ const BasicInfoView = () => {
     );
 
     const [isParent, setIsParent] = useState<boolean | null>(null);
+
+    const [expectingDate, setExpectingDate] = useState<Date | null>(null);
 
     const handleSelect = (
         key: string,
@@ -145,6 +158,38 @@ const BasicInfoView = () => {
             [key]: option,
         });
     };
+
+    // Api call to update to the server
+    const [serverError, setserverError] = useState<string>();
+    const router = useRouter();
+
+    const { mutate: updateProfile, isPending } = useMutation({
+        mutationFn: (data: UserUpdateData) => userProfileUpdate(data),
+        onError: (error: any) => {
+            console.log("error", error);
+            setserverError(error.response.data.message);
+        },
+        onSuccess: (data) => {
+            console.log(data);
+        },
+    });
+
+    const handleSubmit = (event: any) => {
+        event.preventDefault();
+        updateProfile({
+            age: optionsState.age.value,
+            gender: optionsState.gender.value,
+            sect: optionsState.sect.value,
+            childrens: optionsState.children.value,
+            country: optionsState.country.value,
+            isExpectingBaby: isExpectingBaby || false,
+            expectedDate: expectingDate,
+            childAgeGroup: optionsState.childAge.value,
+            isAlreadyParent: isParent || false,
+        });
+    };
+
+    const authToken = document.cookie;
 
     return (
         <div className="flex items-center justify-center py-24">
@@ -159,7 +204,7 @@ const BasicInfoView = () => {
                     </p>
                 </div>
 
-                <div className="max-w-[500px] mx-auto">
+                <form className="max-w-[500px] mx-auto" onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-8">
                         <SelectInput
                             label="Age"
@@ -212,20 +257,20 @@ const BasicInfoView = () => {
                             </div>
                         </div>
 
-                        <InputField
-                            label="Expecting Date"
-                            name="date"
-                            value=""
-                            onChange={() => {}}
-                            type="date"
-                            min={"2024-01"}
-                        />
-
+                        {isExpectingBaby && (
+                            <InputField
+                                label="Expecting Date"
+                                name="date"
+                                value=""
+                                onChange={() => {}}
+                                type="date"
+                            />
+                        )}
                         <div className="w-full flex items-center gap-5">
                             <div className="w-full">
                                 <RadioButton
                                     active={isParent}
-                                    label="Are you expecting a baby"
+                                    label="Are you already a parent"
                                     text="Yes"
                                     onClick={() => {
                                         setIsParent(true);
@@ -244,31 +289,34 @@ const BasicInfoView = () => {
                             </div>
                         </div>
 
-                        <SelectInput
-                            label="How many children you have?"
-                            options={childrenOptions}
-                            handleSelect={(opt) =>
-                                handleSelect("children", opt)
-                            }
-                            selectedOption={optionsState.children}
-                        />
-
-                        <SelectInput
-                            label="Age group of children"
-                            options={childeAgeOptions}
-                            handleSelect={(opt) =>
-                                handleSelect("childAge", opt)
-                            }
-                            selectedOption={optionsState.childAge}
-                        />
+                        {isParent && (
+                            <>
+                                <SelectInput
+                                    label="How many children you have?"
+                                    options={childrenOptions}
+                                    handleSelect={(opt) =>
+                                        handleSelect("children", opt)
+                                    }
+                                    selectedOption={optionsState.children}
+                                />
+                                <SelectInput
+                                    label="Age group of children"
+                                    options={childeAgeOptions}
+                                    handleSelect={(opt) =>
+                                        handleSelect("childAge", opt)
+                                    }
+                                    selectedOption={optionsState.childAge}
+                                />
+                            </>
+                        )}
                     </div>
                     <div className="mt-[60px]">
                         <Button>Submit</Button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     );
 };
 
-export default BasicInfoView;
+export default ProfileComplete;
