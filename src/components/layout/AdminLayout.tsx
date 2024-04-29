@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import DashboardIcon from "@/assets/icons/DashboardIcon";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -48,10 +49,10 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                 {children}
             </div>
 
-            <div className="max-w-[1600px] mx-auto hidden md:flex gap-4">
-                <aside className="w-[310px] h-screen flex flex-col justify-between">
+            <div className="max-w-[1600px] mx-auto hidden md:flex">
+                <aside className="w-[310px] h-screen flex flex-col justify-between px-6 py-4 bg-white border-r border-border-secondary">
                     <div>
-                        <div className="md:h-16 md:w-44 relative w-[88px] h-8">
+                        <div className="md:h-16 md:w-44 relative w-[88px] h-8 mb-6">
                             <Link
                                 href="/"
                                 className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-row items-center justify-start"
@@ -64,21 +65,81 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                             </Link>
                         </div>
 
-                        <div>
-                            <Link href="/">Dashboard</Link>
-                            <Link href="/">Name</Link>
-                            <Link href="/">Name Request</Link>
-                            <Link href="/">Blog</Link>
-                        </div>
+                        <ul className="flex flex-col gap-5">
+                            <li className="flex gap-3 items-center">
+                                <DashboardIcon />
+
+                                <Link
+                                    href="/admin/dashboard"
+                                    className="text-text-secondary-hover font-semibold"
+                                >
+                                    Dashboard
+                                </Link>
+                            </li>
+
+                            <li className="flex gap-3 items-center">
+                                <DashboardIcon />
+
+                                <Link
+                                    href="/admin/name"
+                                    className="text-text-secondary-hover font-semibold"
+                                >
+                                    Name
+                                </Link>
+                            </li>
+
+                            <li className="flex gap-3 items-center">
+                                <DashboardIcon />
+
+                                <Link
+                                    href="/admin/name-requested"
+                                    className="text-text-secondary-hover font-semibold"
+                                >
+                                    Name Request
+                                </Link>
+                            </li>
+
+                            <li className="flex gap-3 items-center">
+                                <DashboardIcon />
+
+                                <Link
+                                    href="/admin/blog"
+                                    className="text-text-secondary-hover font-semibold"
+                                >
+                                    Blog
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div>
-                        <Link href="/">Support Request</Link>
-                        <Link href="/">Setting</Link>
+                    <div className="flex flex-col gap-5">
+                        <li className="flex gap-3 items-center">
+                            <DashboardIcon />
+
+                            <Link
+                                href="/"
+                                className="text-text-secondary-hover font-semibold"
+                            >
+                                Support Request
+                            </Link>
+                        </li>
+
+                        <li className="flex gap-3 items-center">
+                            <DashboardIcon />
+
+                            <Link
+                                href="/"
+                                className="text-text-secondary-hover font-semibold"
+                            >
+                                Setting
+                            </Link>
+                        </li>
                     </div>
                 </aside>
 
-                <div className="w-[1200px]">{children}</div>
+                <div className="w-[1200px] py-14 px-8 bg-gray-bg h-screen overflow-y-auto">
+                    {children}
+                </div>
             </div>
         </>
     );

@@ -23,6 +23,7 @@ const config: Config = {
                 "border-primary": "#D0D5DD",
                 "text-primary": "#101828",
                 "text-secondary": "#344054",
+                "text-secondary-hover": "#182230",
                 "text-black": "#313131",
                 "text-tertiary": "#475467",
                 "text-placeholder": "#667085",
