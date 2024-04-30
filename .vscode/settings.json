@@ -1,0 +1,68 @@
+{
+    "editor.fontSize": 16,
+    "workbench.iconTheme": "vscode-icons",
+    "editor.codeActionsOnSave": ["source.organizeImports", "source.fixAll"],
+    "editor.wordWrap": "on",
+    "editor.cursorBlinking": "expand",
+    "explorer.confirmDelete": false,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.fontWeight": "400",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
+    "liveSassCompile.settings.formats": [
+        // This is Default.
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+            "savePath": "/styles"
+        }
+        // // You can add more
+        // {
+        //     "format": "compressed",
+        //     "extensionName": ".min.css",
+        //     "savePath": "/dist/css"
+        // },
+        // // More Complex
+        // {
+        //     "format": "compressed",
+        //     "extensionName": ".min.css",
+        //     "savePath": "~/../css/"
+        // }
+    ],
+    "liveSassCompile.settings.includeItems": [],
+    "[javascriptreact]": {},
+    "prettier.insertPragma": false,
+    "prettier.singleQuote": true,
+    "editor.accessibilitySupport": "off",
+    "workbench.editorAssociations": {
+        "*.svg": "default",
+        "*.gz": "default"
+    },
+    "editor.unicodeHighlight.allowedLocales": {
+        "es": true
+    },
+    "editor.codeLensFontFamily": "'Fira Code', monospace",
+    "editor.minimap.enabled": false,
+    "CodeGPT.apiKey": "CodeGPT Plus Beta",
+    "workbench.colorTheme": "Dracula",
+    "terminal.integrated.fontFamily": "monospace",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+
+    "css.lint.unknownAtRules": "ignore",
+    "tabnine.experimentalAutoImports": true,
+    "editor.mouseWheelZoom": true
+}
