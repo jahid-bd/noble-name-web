@@ -1,7 +1,20 @@
+"use client";
+
+import { useState } from "react";
 import BlogCard from "@/components/cards/BlogCard";
 import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const AdminBlogView = () => {
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        const body = document.getElementsByTagName("body")[0];
+
+        body.style.overflow = "hidden";
+
+        setOpenModal(true);
+    };
+
     return (
         <div>
             <div className="flex justify-between items-center mb-6">
@@ -11,6 +24,7 @@ const AdminBlogView = () => {
 
                 <button
                     type="button"
+                    onClick={handleOpenModal}
                     className="bg-primary text-white text-sm px-5 py-1.5 rounded-md"
                 >
                     Create Blog
@@ -25,6 +39,12 @@ const AdminBlogView = () => {
             </div>
 
             <GlobalPagination />
+
+            {openModal && (
+                <div>
+                    <h1>Data open on modal</h1>
+                </div>
+            )}
         </div>
     );
 };
