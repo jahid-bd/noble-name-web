@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,18 +18,18 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    axios.interceptors.request.use(function (config: any) {
-        const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
-        const baseUrl = "http://localhost:8000";
 
-        if (!isAbsoluteURLRegex.test(config.url)) {
-            config.url = urlJoin(baseUrl, config.url);
-        }
+  axios.interceptors.request.use(function (config: any) {
+    const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
+    const baseUrl = 'http://localhost:8000';
 
-        config.withCredentials = true;
+    if (!isAbsoluteURLRegex.test(config.url)) {
+      config.url = urlJoin(baseUrl, config.url);
+    }
+    config.withCredentials = true;
+    return config;
+  });
 
-        return config;
-    });
 
     return (
         <html lang="en">

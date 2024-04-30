@@ -189,7 +189,12 @@ const ProfileComplete = () => {
         });
     };
 
-    const authToken = document.cookie;
+    const { data } = useQuery({
+        queryKey: ["profile"],
+        queryFn: getUserProfile,
+    });
+
+    console.log("Profile", data);
 
     return (
         <div className="flex items-center justify-center py-24">

@@ -7,11 +7,17 @@ import InputField from "@/components/form/InputField";
 import ChildHand from "@/assets/images/child_hand.jpg";
 import NameSearchSection from "@/components/section/NameSearchSection";
 import AddNameModal from "../modal/AddNameModal";
+import { getUserProfile } from "@/services/api";
+import { useQuery } from "@tanstack/react-query";
 
 const HomeView = () => {
     const handleChange = () => {
         console.log("hello");
     };
+    const { data } = useQuery({
+        queryKey: ["profile"],
+        queryFn: getUserProfile,
+    });
 
     return (
         <main className="bg-white pb-[60px] md:pb-[60px]">
