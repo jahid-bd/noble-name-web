@@ -1,5 +1,6 @@
 'use client';
 
+import { BASE_URL } from '@/constants';
 import { userRegister } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
@@ -96,7 +97,7 @@ const SignupView = () => {
   };
 
   const handleAuth = () => {
-    router.push(`http://localhost:8000/auth/google`);
+    router.push(`${BASE_URL}/auth/social`);
   };
 
   return (
@@ -180,7 +181,7 @@ const SignupView = () => {
             </div>
 
             <div className="mt-4">
-              <Link href={'http://localhost:8000/auth/google'}>
+              <Link href={`${BASE_URL}/auth/social`}>
                 <GoogleSignupBtn
                   text="Sign up with Google"
                   // onClick={handleAuth}

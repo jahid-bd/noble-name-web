@@ -157,7 +157,9 @@ const SignInView = () => {
                 </label>
               </div>
 
-              <PlanButton>Forgot password</PlanButton>
+              <Link href={'/auth/forgot-password'}>
+                <PlanButton>Forgot password</PlanButton>
+              </Link>
             </div>
 
             <div>

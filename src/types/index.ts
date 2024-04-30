@@ -14,8 +14,18 @@ export interface UserUpdateData {
   country: string;
   sect: string;
   isExpectingBaby: boolean;
-  expectedDate?: Date | null;
+  expectedDate?: Date | null | string;
   isAlreadyParent: boolean;
   childrens?: string;
   childAgeGroup?: string;
+}
+
+export interface OtpParams {
+  otp_code: number | undefined;
+  otp_id: string | null;
+}
+
+export interface ResetPassParams {
+  otp_id: string | null;
+  password: string;
 }

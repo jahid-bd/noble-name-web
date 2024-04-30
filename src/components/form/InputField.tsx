@@ -6,13 +6,13 @@ interface InputProps {
   name: string;
   placeholder?: string;
   type: string;
-  value: string;
+  value: string | Date | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   message?: string;
   className?: string;
   register?: any;
   defaultValue?: string;
-  error?: string;
+  error?: any;
 }
 
 const InputField = ({

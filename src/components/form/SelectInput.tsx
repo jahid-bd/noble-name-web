@@ -18,6 +18,7 @@ interface PropTypes {
     label: string;
   };
   handleSelect: (option: { value: string; label: string }) => void;
+  error?: boolean | string;
 }
 
 const SelectInput = ({
@@ -25,6 +26,7 @@ const SelectInput = ({
   options,
   selectedOption,
   handleSelect,
+  error,
 }: PropTypes) => {
   const [showOptions, setShowOptions] = useState(false);
 
@@ -53,7 +55,10 @@ const SelectInput = ({
         {label}
       </label>
       <div
-        className="w-full relative border border-border-primary px-[14px] py-[10px] flex items-center justify-between cursor-pointer rounded-md"
+        className={clsx(
+          'w-full relative border border-border-primary px-[14px] py-[10px] flex items-center justify-between cursor-pointer rounded-md',
+          error && 'border-red-500'
+        )}
         onClick={handleToggle}
         ref={ref}
       >
@@ -121,6 +126,7 @@ const SelectInput = ({
           </div>
         )}
       </div>
+      {error ? <p className="text-sm text-red-500 pt-[6px]">{error}</p> : null}
     </div>
   );
 };
