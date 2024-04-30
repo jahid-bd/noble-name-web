@@ -1,4 +1,5 @@
 import NameCard from "@/components/cards/NameCard";
+import EditableNameCard from "@/components/cards/EditableNameCard";
 import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const AdminNameView = () => {
@@ -18,10 +19,10 @@ const AdminNameView = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
-                <NameCard />
-                <NameCard />
-                <NameCard />
-                <NameCard />
+                <EditableNameCard />
+                <EditableNameCard />
+                <EditableNameCard />
+                <EditableNameCard />
             </div>
 
             <GlobalPagination />
