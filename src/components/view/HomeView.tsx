@@ -40,8 +40,8 @@ const HomeView = () => {
               <p className="text-base md:text-lg font-normal text-text-tertiary mb-4">
                 Welcome to Noble Names, your premier destination for unlocking
                 the spiritual significance of Muslim names. In Islam, naming
-                transcends mere labels; it's a sacred journey shaping identity
-                and destiny.
+                transcends mere labels; it&apos;s a sacred journey shaping
+                identity and destiny.
               </p>
 
               <p className="text-base md:text-lg font-normal text-text-tertiary mb-4">

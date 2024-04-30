@@ -65,7 +65,7 @@ const ProfileComplete = () => {
       label: 'Male',
     },
     {
-      value: 'female:',
+      value: 'female',
       label: 'Female',
     },
   ];
