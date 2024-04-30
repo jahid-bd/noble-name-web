@@ -2,6 +2,7 @@ import QueryProvider from '@/components/providers/QueryProvider';
 import axios from 'axios';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import urlJoin from 'url-join';
 import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -16,8 +17,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  axios.interceptors.request.use(function (config) {
+  axios.interceptors.request.use(function (config: any) {
+    const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
+    const baseUrl = 'http://localhost:8000';
+
+    if (!isAbsoluteURLRegex.test(config.url)) {
+      config.url = urlJoin(baseUrl, config.url);
+    }
+
     config.withCredentials = true;
+
     return config;
   });
 

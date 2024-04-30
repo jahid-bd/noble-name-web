@@ -14,7 +14,7 @@ export interface UserUpdateData {
   country: string;
   sect: string;
   isExpectingBaby: boolean;
-  expectedDate?: Date | null;
+  expectedDate?: Date | null | string;
   isAlreadyParent: boolean;
   childrens?: string;
   childAgeGroup?: string;
