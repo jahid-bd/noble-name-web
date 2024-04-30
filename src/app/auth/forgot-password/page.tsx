@@ -38,7 +38,8 @@ const ForgotPass = () => {
     },
     onSuccess: (data) => {
       setFormState(initialValues);
-      router.push('/auth/check-email');
+
+      router.push(`${'/auth/verify-otp'}?token=${data?.data?.data?.id}`);
     },
   });
 

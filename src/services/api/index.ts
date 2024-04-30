@@ -1,5 +1,11 @@
 import { BASE_URL } from '@/constants';
-import { RegisterData, SignInData, UserUpdateData } from '@/types';
+import {
+  OtpParams,
+  RegisterData,
+  ResetPassParams,
+  SignInData,
+  UserUpdateData,
+} from '@/types';
 import axios from 'axios';
 
 export const userRegister = (data: RegisterData) =>
@@ -13,6 +19,12 @@ export const userLogin = (data: SignInData) =>
 
 export const forgotPassword = (data: { email: string }) =>
   axios.post(`${BASE_URL}/auth/forget-password`, data);
+
+export const verifyOtp = (data: OtpParams) =>
+  axios.post(`${BASE_URL}/auth/verify-otp`, data);
+
+export const resetPassword = (data: ResetPassParams) =>
+  axios.post(`${BASE_URL}/auth/reset-password`, data);
 
 export const getUserProfile = () =>
   axios.get(`${BASE_URL}/users/profile`, { withCredentials: true });

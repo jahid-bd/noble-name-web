@@ -19,3 +19,13 @@ export interface UserUpdateData {
   childrens?: string;
   childAgeGroup?: string;
 }
+
+export interface OtpParams {
+  otp_code: number | undefined;
+  otp_id: string | null;
+}
+
+export interface ResetPassParams {
+  otp_id: string | null;
+  password: string;
+}

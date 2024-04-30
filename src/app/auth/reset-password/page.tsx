@@ -2,10 +2,13 @@
 
 import Button from '@/components/buttons/Button';
 import InputField from '@/components/form/InputField';
+import { resetPassword } from '@/services/api';
+import { ResetPassParams } from '@/types';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -29,32 +32,34 @@ const ResetPass = () => {
   const [serverError, setserverError] = useState<string>();
   const router = useRouter();
 
-  // const { mutate: reset, isPending } = useMutation({
-  //   mutationFn:,
-  //   onError: (error: any) => {
-  //     console.log('error', error.message);
-  //     setserverError(error.response.data.message);
-  //   },
-  //   onSuccess: (data) => {
-  //     setFormState(initialValues);
-  //     router.push('/auth/check-email');
-  //   },
-  // });
+  const searchParams = useSearchParams();
+  const otp_id = searchParams.get('token');
 
-  const schema = yup
-    .object({
-      newPassword: yup
-        .string()
-        .trim()
-        .min(8, 'At least 8 characters')
-        .required('Please set a new password'),
-      confirmPassword: yup
-        .string()
-        .trim()
-        .min(8, 'At least 8 characters')
-        .required('Please confirm password'),
-    })
-    .required();
+  const { mutate: reset, isPending } = useMutation({
+    mutationFn: (data: ResetPassParams) => resetPassword(data),
+    onError: (error: any) => {
+      console.log('error', error.message);
+      setserverError(error.response.data.message);
+    },
+    onSuccess: (data) => {
+      setFormState(initialValues);
+      router.push('/auth/sign-in');
+    },
+  });
+
+  const schema = yup.object().shape({
+    newPassword: yup
+      .string()
+      .trim()
+      .min(8, 'At least 8 characters')
+      .required('Please set a new password'),
+    confirmPassword: yup
+      .string()
+      .trim()
+      .min(8, 'At least 8 characters')
+      .oneOf([yup.ref('newPassword'), undefined], 'Passwords must match')
+      .required('Please confirm password'),
+  });
 
   const {
     register,
@@ -68,6 +73,11 @@ const ResetPass = () => {
 
   const onSubmit = (data: any) => {
     setserverError('');
+
+    reset({
+      otp_id,
+      password: data.confirmPassword,
+    });
   };
 
   return (
@@ -110,6 +120,7 @@ const ResetPass = () => {
                 value={formState.newPassword}
                 register={register}
                 className={serverError ? 'border-red-500' : ''}
+                error={errors.newPassword?.message}
               />
             </div>
             <div className="mb-5">
@@ -122,6 +133,7 @@ const ResetPass = () => {
                 value={formState.newPassword}
                 register={register}
                 className={serverError ? 'border-red-500' : ''}
+                error={errors.confirmPassword?.message}
               />
             </div>
 
@@ -133,7 +145,7 @@ const ResetPass = () => {
                   </p>
                 </div>
               ) : null}
-              <Button>Reset Password</Button>
+              <Button isLoading={isPending}>Reset Password</Button>
             </div>
           </form>
         </div>

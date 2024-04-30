@@ -1,13 +1,41 @@
 'use client';
 import Button from '@/components/buttons/Button';
-import PlanButton from '@/components/buttons/PlanButton';
+import { verifyOtp } from '@/services/api';
+import { OtpParams } from '@/types';
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import OtpInput from 'react-otp-input';
 
 const EmailVerification = () => {
   const [otp, setOtp] = useState('');
+  const searchParams = useSearchParams();
+
+  const otp_id = searchParams.get('token');
+
+  const [serverError, setserverError] = useState<string>();
+  const router = useRouter();
+
+  const { mutate: verify, isPending } = useMutation({
+    mutationFn: (data: OtpParams) => verifyOtp(data),
+    onError: (error: any) => {
+      console.log('error', error.message);
+      setserverError(error.response.data.message);
+    },
+    onSuccess: (data) => {
+      router.push(`${'/auth/reset-password'}?token=${data?.data?.data?.id}`);
+    },
+  });
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    verify({
+      otp_code: Number(otp),
+      otp_id,
+    });
+  };
 
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
@@ -37,7 +65,7 @@ const EmailVerification = () => {
           </p>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="my-5 flex items-center gap-3 max-w-[280px] mx-auto">
             <OtpInput
               value={otp}
@@ -61,28 +89,46 @@ const EmailVerification = () => {
             />
           </div>
 
+          {serverError ? (
+            <div className="pb-3">
+              <p className="text-sm text-center text-red-500">{serverError}</p>
+            </div>
+          ) : null}
+
           <div>
             {false ? (
               <div className="pb-3">
                 <p className="text-sm text-center text-red-500"></p>
               </div>
             ) : null}
-            <Button>Verify OTP</Button>
+            <Button isLoading={isPending}>Verify OTP</Button>
           </div>
         </form>
 
         <Link
-          href={'/auth/sign-in'}
+          href={'/auth/forgot-password'}
           className="flex items-center justify-center"
         >
-          <div className="mt-5 flex items-center justify-center gap-2">
-            <div className="text-text-tertiary flex items-center gap-1">
-              Didn&rsquo;t receive code?
-              <div title="You can only resend the OTP after a 2-minute cooldown period.">
-                <PlanButton> Resend</PlanButton>
-              </div>
+          <button className="mt-5 flex items-center justify-center gap-2">
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M20 12H4M4 12L10 6M4 12L10 18"
+                  stroke="#808284"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
             </div>
-          </div>
+            <div className="text-text-tertiary">Back to forgot</div>
+          </button>
         </Link>
       </div>
     </div>
