@@ -12,7 +12,6 @@ const BookmarkCardSection = ({
   bookmarks: any;
   isLoading: any;
 }) => {
-  console.log(bookmarks);
   return (
     <>
       {isLoading && <PreLoader />}

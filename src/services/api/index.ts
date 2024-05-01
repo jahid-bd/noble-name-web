@@ -35,11 +35,23 @@ export const getUserFavorites = (page: number) =>
     withCredentials: true,
   });
 
-export const getUserBookmarks = () =>
-  axios.get(`${BASE_URL}/user/bookmarks`, { withCredentials: true });
+export const getUserBookmarks = (page: number) =>
+  axios.get(`${BASE_URL}/user/bookmarks`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
 
-export const getUserSuggestedName = () =>
-  axios.get(`${BASE_URL}/user/suggestion-names`, { withCredentials: true });
+export const getUserSuggestedName = (page: number) =>
+  axios.get(`${BASE_URL}/user/suggestion-names`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
+
+export const getAllBlog = (page: number) =>
+  axios.get(`${BASE_URL}/blogs`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
 
 export const getAllPlans = async () => {
   try {

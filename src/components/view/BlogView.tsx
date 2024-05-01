@@ -1,23 +1,35 @@
-import BlogCard from "@/components/cards/BlogCard";
-import GlobalPagination from "@/components/pagination/GlobalPagination";
+'use client';
+
+import { getAllBlog } from '@/services/api';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
+import BlogCardSection from '../section/BlogCardSection';
 
 const BlogView = () => {
-    return (
-        <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
-            <div className="container mx-auto px-[6px]">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                </div>
+  const searchParams = useSearchParams();
 
-                <GlobalPagination />
-            </div>
-        </main>
-    );
+  const activePage = searchParams.get('page');
+
+  const {
+    data: blogs,
+    isLoading,
+    error: isError,
+  } = useQuery({
+    queryKey: ['blogs', activePage],
+    queryFn: () => getAllBlog(Number(activePage)),
+  });
+
+  return (
+    <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
+      <div className="container mx-auto px-[6px]">
+        <BlogCardSection
+          blogs={blogs}
+          isError={isError}
+          isLoading={isLoading}
+        />
+      </div>
+    </main>
+  );
 };
 
 export default BlogView;

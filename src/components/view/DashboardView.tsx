@@ -34,7 +34,7 @@ const DashboardView = () => {
     error: bookmarkError,
   } = useQuery({
     queryKey: ['bookmarks', activePage],
-    queryFn: getUserBookmarks,
+    queryFn: () => getUserBookmarks(Number(activePage)),
   });
 
   const {
@@ -43,7 +43,7 @@ const DashboardView = () => {
     error: suggestedNameError,
   } = useQuery({
     queryKey: ['suggestedName', activePage],
-    queryFn: getUserSuggestedName,
+    queryFn: () => getUserSuggestedName(Number(activePage)),
   });
 
   return (
