@@ -29,9 +29,9 @@ export const resetPassword = (data: ResetPassParams) =>
 export const getUserProfile = () =>
   axios.get(`${BASE_URL}/users/profile`, { withCredentials: true });
 
-export const getUserFavorites = () =>
+export const getUserFavorites = (page: number) =>
   axios.get(`${BASE_URL}/user/favorites`, {
-    params: { limit: 9 },
+    params: { limit: 9, page },
     withCredentials: true,
   });
 

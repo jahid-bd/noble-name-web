@@ -1,8 +1,6 @@
 'use client';
 import NameTypeGroupBtn from '@/components/buttons/NameTypeGroupBtn';
-import NameCard from '@/components/cards/NameCard';
 import UserDashboardNav from '@/components/navs/UserDashboardNav';
-import GlobalPagination from '@/components/pagination/GlobalPagination';
 import DashboardTab from '@/components/tab/DashboardTab';
 import {
   getUserBookmarks,
@@ -11,33 +9,42 @@ import {
 } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
-import SuggestedNameCard from '../cards/SuggestedNameCard';
+import BookmarkCardSection from '../section/BookmarkCardSection';
+import FavoriteCardSection from '../section/FavoriteCardSection';
+import NameAddedCardSection from '../section/NameAddedCardSection';
 
 const DashboardView = () => {
   const searchParams = useSearchParams();
 
+  const tab = searchParams.get('tab');
+  const activePage = searchParams.get('page');
+
   const {
     data: favorites,
-    isLoading,
-    error,
+    isLoading: favoriteLoading,
+    error: favoriteError,
   } = useQuery({
-    queryKey: ['favorites'],
-    queryFn: getUserFavorites,
+    queryKey: ['favorites', activePage],
+    queryFn: () => getUserFavorites(Number(activePage)),
   });
 
-  const tab = searchParams.get('tab');
-
-  const { data: bookmarks } = useQuery({
-    queryKey: ['bookmarks'],
+  const {
+    data: bookmarks,
+    isLoading: bookmarkLoading,
+    error: bookmarkError,
+  } = useQuery({
+    queryKey: ['bookmarks', activePage],
     queryFn: getUserBookmarks,
   });
 
-  const { data: suggestedName } = useQuery({
-    queryKey: ['suggestedName'],
+  const {
+    data: suggestedName,
+    isLoading: suggestedNameLoading,
+    error: suggestedNameError,
+  } = useQuery({
+    queryKey: ['suggestedName', activePage],
     queryFn: getUserSuggestedName,
   });
-
-  console.log(favorites, bookmarks, suggestedName);
 
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
@@ -55,57 +62,27 @@ const DashboardView = () => {
         </div>
 
         {tab === 'favorites' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-              {favorites?.data?.data?.map((item: any) => (
-                <NameCard name={item} />
-              ))}
-            </div>
-
-            {favorites?.data.pagination?.totalItems >
-              favorites?.data?.pagination?.limit && (
-              <GlobalPagination
-                page={favorites?.data?.pagination?.page}
-                totalPage={favorites?.data?.pagination?.totalPage}
-              />
-            )}
-          </>
+          <FavoriteCardSection
+            favorites={favorites}
+            isError={favoriteError}
+            isLoading={favoriteLoading}
+          />
         )}
 
         {tab === 'bookmarks' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-              {bookmarks?.data?.data?.map((item: any) => (
-                <NameCard name={item} />
-              ))}
-            </div>
-
-            {bookmarks?.data.pagination?.totalItems >
-              bookmarks?.data?.pagination?.limit && (
-              <GlobalPagination
-                page={bookmarks?.data?.pagination?.page}
-                totalPage={bookmarks?.data?.pagination?.totalPage}
-              />
-            )}
-          </>
+          <BookmarkCardSection
+            bookmarks={bookmarks}
+            isError={bookmarkError}
+            isLoading={bookmarkLoading}
+          />
         )}
 
         {tab === 'names-added' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-              {suggestedName?.data?.data?.map((item: any) => (
-                <SuggestedNameCard name={item} />
-              ))}
-            </div>
-
-            {suggestedName?.data.pagination?.totalItems >
-              suggestedName?.data?.pagination?.limit && (
-              <GlobalPagination
-                page={suggestedName?.data?.pagination?.page}
-                totalPage={suggestedName?.data?.pagination?.totalPage}
-              />
-            )}
-          </>
+          <NameAddedCardSection
+            suggestedName={suggestedName}
+            isError={suggestedNameError}
+            isLoading={suggestedNameLoading}
+          />
         )}
       </div>
     </main>
