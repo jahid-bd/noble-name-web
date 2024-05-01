@@ -1,16 +1,15 @@
 import FilterIcon from "@/assets/icons/FilterIcon";
 import NameCard from "@/components/cards/NameCard";
+import NameSearchSection from "@/components/section/NameSearchSection";
 import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const NameSearchView = () => {
     return (
         <main className="bg-white pb-[60px] md:pb-[60px]">
             <div className="container mx-auto px-[6px]">
-                <section className="bg-black py-16 mb-11">
+                <section className="bg-white pt-10 mb-9">
                     <div className="container mx-auto px-[6px]">
-                        <div>
-                            <h3>Search Section</h3>
-                        </div>
+                        <NameSearchSection />
                     </div>
                 </section>
 

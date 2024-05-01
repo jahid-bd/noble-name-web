@@ -1,62 +1,92 @@
-import NameCard from "@/components/cards/NameCard";
-import UserDashboardNav from "@/components/navs/UserDashboardNav";
-import NameTypeGroupBtn from "@/components/buttons/NameTypeGroupBtn";
-import GlobalPagination from "@/components/pagination/GlobalPagination";
+'use client';
+import NameTypeGroupBtn from '@/components/buttons/NameTypeGroupBtn';
+import UserDashboardNav from '@/components/navs/UserDashboardNav';
+import DashboardTab from '@/components/tab/DashboardTab';
+import {
+  getUserBookmarks,
+  getUserFavorites,
+  getUserSuggestedName,
+} from '@/services/api';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
+import BookmarkCardSection from '../section/BookmarkCardSection';
+import FavoriteCardSection from '../section/FavoriteCardSection';
+import NameAddedCardSection from '../section/NameAddedCardSection';
 
 const DashboardView = () => {
-    return (
-        <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
-            <div className="container mx-auto px-[6px]">
-                <UserDashboardNav />
+  const searchParams = useSearchParams();
 
-                <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 md:gap-0 mb-10">
-                    <div className="flex items-center gap-1">
-                        <button
-                            type="button"
-                            className="px-2 md:px-3 py-2 flex items-center gap-2 text-xs md:text-base font-semibold text-text-secondary border-[2px] border-border-success rounded-md bg-green-light-50"
-                        >
-                            Loved
-                            <span className="border-border-secondary border bg-gray-bg rounded-full py-0.5 px-2.5 text-xs md:text-sm font-medium">
-                                223
-                            </span>
-                        </button>
+  const tab = searchParams.get('tab');
+  const activePage = searchParams.get('page');
 
-                        <button
-                            type="button"
-                            className="px-2 md:px-3 py-2 flex items-center gap-2 text-xs md:text-base font-semibold text-text-secondary"
-                        >
-                            Favorites
-                            <span className="border-border-secondary border bg-gray-bg rounded-full py-0.5 px-2.5 text-xs md:text-sm font-medium">
-                                159
-                            </span>
-                        </button>
+  const {
+    data: favorites,
+    isLoading: favoriteLoading,
+    error: favoriteError,
+  } = useQuery({
+    queryKey: ['favorites', activePage],
+    queryFn: () => getUserFavorites(Number(activePage)),
+  });
 
-                        <button
-                            type="button"
-                            className="px-2 md:px-3 py-2 flex items-center gap-2 text-xs md:text-base font-semibold text-text-secondary"
-                        >
-                            Names Added
-                            <span className="border-border-secondary border bg-gray-bg rounded-full py-0.5 px-2.5 text-xs md:text-sm font-medium">
-                                89
-                            </span>
-                        </button>
-                    </div>
+  const {
+    data: bookmarks,
+    isLoading: bookmarkLoading,
+    error: bookmarkError,
+  } = useQuery({
+    queryKey: ['bookmarks', activePage],
+    queryFn: () => getUserBookmarks(Number(activePage)),
+  });
 
-                    <NameTypeGroupBtn />
-                </div>
+  const {
+    data: suggestedName,
+    isLoading: suggestedNameLoading,
+    error: suggestedNameError,
+  } = useQuery({
+    queryKey: ['suggestedName', activePage],
+    queryFn: () => getUserSuggestedName(Number(activePage)),
+  });
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-                    <NameCard />
-                    <NameCard />
-                    <NameCard />
-                    <NameCard />
-                    <NameCard />
-                </div>
+  return (
+    <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
+      <div className="container mx-auto px-[6px]">
+        <UserDashboardNav />
 
-                <GlobalPagination />
-            </div>
-        </main>
-    );
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 md:gap-0 mb-10">
+          <DashboardTab
+            totalFavorites={favorites?.data.pagination?.totalItems}
+            totalBookmarked={bookmarks?.data.pagination?.totalItems}
+            totalNameAdded={suggestedName?.data.pagination?.totalItems}
+          />
+
+          <NameTypeGroupBtn />
+        </div>
+
+        {tab === 'favorites' && (
+          <FavoriteCardSection
+            favorites={favorites}
+            isError={favoriteError}
+            isLoading={favoriteLoading}
+          />
+        )}
+
+        {tab === 'bookmarks' && (
+          <BookmarkCardSection
+            bookmarks={bookmarks}
+            isError={bookmarkError}
+            isLoading={bookmarkLoading}
+          />
+        )}
+
+        {tab === 'names-added' && (
+          <NameAddedCardSection
+            suggestedName={suggestedName}
+            isError={suggestedNameError}
+            isLoading={suggestedNameLoading}
+          />
+        )}
+      </div>
+    </main>
+  );
 };
 
 export default DashboardView;
