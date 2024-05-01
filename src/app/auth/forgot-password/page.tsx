@@ -128,7 +128,7 @@ const ForgotPass = () => {
           </form>
 
           <Link
-            href={'/auth/signin'}
+            href={'/auth/sign-in'}
             className="flex items-center justify-center"
           >
             <button className="mt-5 flex items-center justify-center gap-2">

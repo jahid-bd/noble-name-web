@@ -56,3 +56,12 @@ export const subscribePlan = async (data: {
   user_id: string;
 }) =>
   axios.post(`${BASE_URL}/checkout-session`, data, { withCredentials: true });
+
+export const cancelSubscription = async (id: string) =>
+  axios.put(
+    `${BASE_URL}/cancel-subscription/${id}`,
+    {},
+    {
+      withCredentials: true,
+    }
+  );
