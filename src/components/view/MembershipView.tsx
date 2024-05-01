@@ -1,9 +1,15 @@
 'use client';
 
 import PlanCard from '@/components/cards/PlanCard';
-import { getActivePlan, getAllPlans, subscribePlan } from '@/services/api';
+import {
+  getActivePlan,
+  getAllPlans,
+  getUserProfile,
+  subscribePlan,
+} from '@/services/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const MembershipPlanView = () => {
   // api need
@@ -17,9 +23,19 @@ const MembershipPlanView = () => {
     queryFn: getActivePlan,
   });
 
-  const { data } = useQuery({ queryKey: ['plans'], queryFn: getAllPlans });
-  console.log('Plans', data);
+  const { data: user } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getUserProfile,
+  });
+
+  const { data: allPlans } = useQuery({
+    queryKey: ['plans'],
+    queryFn: getAllPlans,
+  });
+  console.log('Plans', allPlans);
   console.log('active', activePlan);
+
+  const [loadingId, setLoadingId] = useState('');
 
   const { mutate: subscribeNow, isPending } = useMutation({
     mutationFn: (data: { planId: string; userId: string }) =>
@@ -37,10 +53,11 @@ const MembershipPlanView = () => {
   });
 
   // checkout-session
-  const handleSubscription = async () => {
+  const handleSubscription = (id: string) => {
+    setLoadingId(id);
     subscribeNow({
-      planId: '662e66508f46ba0ab35c58c0',
-      userId: activePlan.user,
+      planId: id,
+      userId: user?.data?.data?._id,
     });
   };
 
@@ -55,32 +72,22 @@ const MembershipPlanView = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 md:mt-16">
-          <PlanCard
-            price={0}
-            title="Basic Plan"
-            default_plan={true}
-            features={['active']}
-            button_title="Current Plan"
-            description="For basic users"
-          />
-
-          <PlanCard
-            price={1}
-            title="Couple Plan"
-            active_plan={true}
-            features={['active']}
-            button_title="Upgrade"
-            description="Our most popular plan for couples"
-            onClick={handleSubscription}
-          />
-
-          <PlanCard
-            price={10}
-            title="Family Plan"
-            features={['active']}
-            button_title="Upgrade"
-            description="Our most popular plan for family"
-          />
+          {allPlans?.map((plan: any) => (
+            <PlanCard
+              key={plan._id}
+              price={plan.price}
+              title={plan.title}
+              features={plan.features}
+              description={plan.description}
+              button_title={
+                plan._id === activePlan?._id ? 'Current Plan' : 'Upgrade'
+              }
+              active_plan={plan._id === activePlan?._id}
+              default_plan={plan._id === activePlan?._id}
+              onClick={() => handleSubscription(plan._id)}
+              is_loading={plan._id === loadingId && isPending}
+            />
+          ))}
         </div>
       </div>
     </main>
