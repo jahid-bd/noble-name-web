@@ -1,17 +1,25 @@
 import CheckIcon from '@/assets/icons/CheckIcon';
+import LoadingIcon from '@/assets/icons/LoadingIcon';
 import XIcon from '@/assets/icons/XIcon';
 import Link from 'next/link';
 
 interface PlanProps {
   title: string;
   price: number;
-  features: string[];
+  features: {
+    _id: string;
+    title: string;
+    value: boolean | number;
+  }[];
   description: string;
   button_title: string;
   active_plan?: boolean;
   default_plan?: boolean;
+  free_plan?: boolean;
+  is_loading?: boolean;
   active_membership?: boolean;
   onClick?: () => void;
+  handleCancel?: () => void;
 }
 
 const PlanCard = ({
@@ -24,6 +32,9 @@ const PlanCard = ({
   default_plan,
   button_title,
   active_membership,
+  free_plan,
+  is_loading,
+  handleCancel,
 }: PlanProps) => {
   return (
     <div
@@ -60,11 +71,13 @@ const PlanCard = ({
         </h4>
 
         <ul className="flex flex-col gap-5">
-          <li className="flex gap-3 items-center">
-            <CheckIcon /> <span>3 searches a day</span>
-          </li>
+          {features?.map((item) => (
+            <li key={item._id} className="flex gap-3 items-center">
+              {item.value ? <CheckIcon /> : <XIcon />} <span>{item.title}</span>
+            </li>
+          ))}
 
-          <li className="flex gap-3 items-center">
+          {/* <li className="flex gap-3 items-center">
             <CheckIcon /> <span>Add to love</span>
           </li>
 
@@ -85,11 +98,55 @@ const PlanCard = ({
           <li className="flex gap-3 items-center">
             <XIcon />
             <span>No Ads</span>
-          </li>
+          </li> */}
         </ul>
       </div>
 
       <div className="p-8">
+        {active_membership ? (
+          <div className="grid grid-flow-row gap-[14px]">
+            <Link
+              href="/membership-plan"
+              className="w-full rounded-lg text-white py-4 bg-primary text-center"
+            >
+              Change Plan
+            </Link>
+
+            {!free_plan ? (
+              <button
+                type="button"
+                className="w-full rounded-lg  text-white py-4 bg-error-secondary"
+                onClick={handleCancel}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <span className="mr-2">
+                    {is_loading ? <LoadingIcon /> : null}
+                  </span>
+
+                  <span>{button_title}</span>
+                </div>
+              </button>
+            ) : null}
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={onClick}
+            className={`w-full rounded-lg  text-white py-4 ${
+              default_plan ? 'bg-green-light' : 'bg-primary'
+            }`}
+          >
+            <div className="flex items-center justify-center">
+              <span className="mr-2">
+                {is_loading ? <LoadingIcon /> : null}
+              </span>
+              <span>{button_title}</span>
+            </div>
+          </button>
+        )}
+      </div>
+
+      {/* <div className="p-8">
         {active_membership ? (
           <div className="grid grid-flow-row gap-[14px]">
             <Link
@@ -117,7 +174,7 @@ const PlanCard = ({
             {button_title}
           </button>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
