@@ -33,15 +33,6 @@ const AdminNameRequestView = () => {
         isError={isError}
         isLoading={isLoading}
       />
-
-      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
-        <NameCard />
-        <NameCard />
-        <NameCard />
-        <NameCard />
-      </div>
-
-      <GlobalPagination /> */}
     </div>
   );
 };
