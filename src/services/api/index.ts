@@ -29,6 +29,18 @@ export const resetPassword = (data: ResetPassParams) =>
 export const getUserProfile = () =>
   axios.get(`${BASE_URL}/users/profile`, { withCredentials: true });
 
+export const getUserFavorites = () =>
+  axios.get(`${BASE_URL}/user/favorites`, {
+    params: { limit: 9 },
+    withCredentials: true,
+  });
+
+export const getUserBookmarks = () =>
+  axios.get(`${BASE_URL}/user/bookmarks`, { withCredentials: true });
+
+export const getUserSuggestedName = () =>
+  axios.get(`${BASE_URL}/user/suggestion-names`, { withCredentials: true });
+
 export const getAllPlans = async () => {
   try {
     const res = await axios.get(`${BASE_URL}/plans`, { withCredentials: true });
