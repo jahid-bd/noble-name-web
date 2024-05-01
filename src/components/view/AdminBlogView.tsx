@@ -1,10 +1,25 @@
 'use client';
 
-import BlogCard from '@/components/cards/BlogCard';
-import GlobalPagination from '@/components/pagination/GlobalPagination';
+import { getAllBlog } from '@/services/api';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import AdminBlogCardSection from '../section/AdminBlogCardSection';
 
 const AdminBlogView = () => {
+  const searchParams = useSearchParams();
+
+  const activePage = searchParams.get('page');
+
+  const {
+    data: blogs,
+    isLoading,
+    error: isError,
+  } = useQuery({
+    queryKey: ['blogs', activePage],
+    queryFn: () => getAllBlog(Number(activePage)),
+  });
+
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -29,14 +44,11 @@ const AdminBlogView = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-      </div>
-
-      <GlobalPagination />
+      <AdminBlogCardSection
+        blogs={blogs}
+        isError={isError}
+        isLoading={isLoading}
+      />
 
       {openModal && (
         <div>

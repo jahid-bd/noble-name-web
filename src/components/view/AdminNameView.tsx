@@ -1,33 +1,44 @@
-import NameCard from "@/components/cards/NameCard";
-import EditableNameCard from "@/components/cards/EditableNameCard";
-import GlobalPagination from "@/components/pagination/GlobalPagination";
+'use client';
+
+import { getAllName } from '@/services/api';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
+import AdminNameCardSection from '../section/AdminNameCardSection';
 
 const AdminNameView = () => {
-    return (
-        <div>
-            <div className="flex justify-between items-center mb-6">
-                <p className="text-2xl font-semibold text-text-primary">
-                    Name List
-                </p>
+  const searchParams = useSearchParams();
 
-                <button
-                    type="button"
-                    className="bg-primary text-white text-sm px-5 py-1.5 rounded-md"
-                >
-                    Create Name
-                </button>
-            </div>
+  const activePage = searchParams.get('page');
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
-                <EditableNameCard />
-                <EditableNameCard />
-                <EditableNameCard />
-                <EditableNameCard />
-            </div>
+  const {
+    data: names,
+    isLoading,
+    error: isError,
+  } = useQuery({
+    queryKey: ['names', activePage],
+    queryFn: () => getAllName(Number(activePage)),
+  });
 
-            <GlobalPagination />
-        </div>
-    );
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <p className="text-2xl font-semibold text-text-primary">Name List</p>
+
+        <button
+          type="button"
+          className="bg-primary text-white text-sm px-5 py-1.5 rounded-md"
+        >
+          Create Name
+        </button>
+      </div>
+
+      <AdminNameCardSection
+        names={names}
+        isError={isError}
+        isLoading={isLoading}
+      />
+    </div>
+  );
 };
 
 export default AdminNameView;

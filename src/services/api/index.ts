@@ -53,6 +53,18 @@ export const getAllBlog = (page: number) =>
     withCredentials: true,
   });
 
+export const getAllName = (page: number) =>
+  axios.get(`${BASE_URL}/names`, {
+    params: { limit: 9, page: page ? page : 1 },
+    withCredentials: true,
+  });
+
+export const getAllRequestedName = (page: number) =>
+  axios.get(`${BASE_URL}/suggestion-names`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
+
 export const getAllPlans = async () => {
   try {
     const res = await axios.get(`${BASE_URL}/plans`, { withCredentials: true });
