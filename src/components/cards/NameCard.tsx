@@ -10,6 +10,12 @@ const NameCard = ({ name }: { name: any }) => {
   const socialRef = useRef<HTMLDivElement>(null);
   const [openSocial, setOpenSocial] = useState(false);
 
+  const handleSpeech = (text: string) => {
+    const value = new SpeechSynthesisUtterance(text);
+
+    window.speechSynthesis.speak(value);
+  };
+
   const handleClickOutside = useCallback((event: any) => {
     if (socialRef.current && socialRef?.current?.contains(event.target)) {
       return setOpenSocial(true);
@@ -36,7 +42,13 @@ const NameCard = ({ name }: { name: any }) => {
           <p className="text-white text-base font-bold">
             {name?.name?.english_name}
           </p>
-          <VolumeIcon />
+
+          <span
+            className="cursor-pointer"
+            onClick={() => handleSpeech(name?.name?.english_name)}
+          >
+            <VolumeIcon />
+          </span>
         </div>
 
         <p className="text-white text-base font-bold">

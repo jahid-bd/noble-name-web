@@ -1,6 +1,12 @@
 import VolumeIcon from '@/assets/icons/VolumeIcon';
 
 const SuggestedNameCard = ({ name }: { name: any }) => {
+  const handleSpeech = (text: string) => {
+    const value = new SpeechSynthesisUtterance(text);
+
+    window.speechSynthesis.speak(value);
+  };
+
   return (
     <div
       className={`p-5 rounded-xl flex flex-col gap-4 ${
@@ -10,7 +16,10 @@ const SuggestedNameCard = ({ name }: { name: any }) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <p className="text-white text-base font-bold">{name?.english_name}</p>
-          <VolumeIcon />
+
+          <span onClick={() => handleSpeech(name?.english_name)}>
+            <VolumeIcon />
+          </span>
         </div>
 
         <p className="text-white text-base font-bold">{name?.arabic_name}</p>

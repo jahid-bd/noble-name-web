@@ -11,15 +11,13 @@ const NameTypeGroupBtn = () => {
   return (
     <div className="border rounded-md border-border-primary overflow-hidden w-fit">
       <Link
-        href={{ query: { tab: tab, type: 'all' } }}
+        href={{ query: { tab: tab } }}
         type="button"
         className="text-text-secondary font-semibol"
       >
         <button
           type="button"
-          className={`px-3 py-2 font-semibold ${
-            type == 'all' ? 'bg-gray-bg' : ''
-          }`}
+          className={`px-3 py-2 font-semibold ${type ? '' : 'bg-gray-bg'}`}
         >
           All
         </button>

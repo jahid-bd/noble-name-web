@@ -29,7 +29,7 @@ const UserDashboardNav = () => {
     <div className="grid grid-cols-3 bg-teal rounded-md mb-6">
       <NavLink
         path="/dashboard"
-        query={{ tab: 'favorites', type: 'all' }}
+        query={{ tab: 'favorites' }}
         title="Dashboard"
       />
       <NavLink path="/settings" title="Settings" />
