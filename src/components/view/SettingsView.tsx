@@ -137,7 +137,7 @@ const SettingsView = () => {
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string }
+    option: { value: string; label: string },
   ) => {
     setOptionsState({
       ...optionsState,
@@ -154,7 +154,7 @@ const SettingsView = () => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -312,7 +312,7 @@ const SettingsView = () => {
                 value=""
                 onChange={() => {}}
                 type="date"
-                min={'2024-01'}
+                // min={'2024-01'}
               />
             </div>
           </div>

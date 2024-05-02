@@ -1,32 +1,56 @@
-import BlogCard from "@/components/cards/BlogCard";
-import GlobalPagination from "@/components/pagination/GlobalPagination";
+import AnalyticsFilterGroupBtn from '../buttons/AnalysticsFilterBtnGroup';
+import AccountCard from '../cards/AccountCard';
+import AnalyticsCard from '../cards/AnalyticsCard';
 
 const AdminDashboardView = () => {
-    return (
-        <div>
-            <div className="flex justify-between items-center mb-6">
-                <p className="text-2xl font-semibold text-text-primary">
-                    Blog List
-                </p>
+  return (
+    <div className="mx-1.5">
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
+        <AnalyticsFilterGroupBtn />
 
-                <button
-                    type="button"
-                    className="bg-primary text-white text-sm px-5 py-1.5 rounded-md"
-                >
-                    Create Blog
-                </button>
-            </div>
+        <button
+          type="button"
+          className=" text-text-placeholder bg-white text-sm px-3.5 py-2.5 rounded-md flex items-center gap-1 border border-border-secondary"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.5 8.33268H2.5M13.3333 1.66602V4.99935M6.66667 1.66602V4.99935M6.5 18.3327H13.5C14.9001 18.3327 15.6002 18.3327 16.135 18.0602C16.6054 17.8205 16.9878 17.4381 17.2275 16.9677C17.5 16.4329 17.5 15.7328 17.5 14.3327V7.33268C17.5 5.93255 17.5 5.23249 17.2275 4.69771C16.9878 4.2273 16.6054 3.84485 16.135 3.60517C15.6002 3.33268 14.9001 3.33268 13.5 3.33268H6.5C5.09987 3.33268 4.3998 3.33268 3.86502 3.60517C3.39462 3.84485 3.01217 4.2273 2.77248 4.69771C2.5 5.23249 2.5 5.93255 2.5 7.33268V14.3327C2.5 15.7328 2.5 16.4329 2.77248 16.9677C3.01217 17.4381 3.39462 17.8205 3.86502 18.0602C4.3998 18.3327 5.09987 18.3327 6.5 18.3327Z"
+              stroke="#344054"
+              stroke-width="1.66667"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
-                <BlogCard />
-                <BlogCard />
-                <BlogCard />
-                <BlogCard />
-            </div>
+          <span>Select dates</span>
+        </button>
+      </div>
 
-            <GlobalPagination />
-        </div>
-    );
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+        <AnalyticsCard />
+        <AnalyticsCard />
+        <AnalyticsCard />
+        <AnalyticsCard />
+      </div>
+
+      <div className="mb-6">
+        <AccountCard />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-5">
+        <AnalyticsCard />
+        <AnalyticsCard />
+        <AnalyticsCard />
+        <AnalyticsCard />
+      </div>
+    </div>
+  );
 };
 
 export default AdminDashboardView;

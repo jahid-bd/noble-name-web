@@ -8,15 +8,18 @@ import {
   getUserSuggestedName,
 } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import NotFound from '../loader/NotFound';
 import BookmarkCardSection from '../section/BookmarkCardSection';
 import FavoriteCardSection from '../section/FavoriteCardSection';
 import NameAddedCardSection from '../section/NameAddedCardSection';
 
 const DashboardView = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
-  const tab = searchParams.get('tab');
+  const tab: string | null = searchParams.get('tab');
   const activePage = searchParams.get('page');
 
   const {
@@ -45,6 +48,12 @@ const DashboardView = () => {
     queryKey: ['suggestedName', activePage],
     queryFn: () => getUserSuggestedName(Number(activePage)),
   });
+
+  useEffect(() => {
+    if (!tab) {
+      router.push(`/dashboard?tab=favorites`);
+    }
+  }, [tab]);
 
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
@@ -83,6 +92,10 @@ const DashboardView = () => {
             isError={suggestedNameError}
             isLoading={suggestedNameLoading}
           />
+        )}
+
+        {!['favorites', 'bookmarks', 'names-added'].includes(tab) && (
+          <NotFound />
         )}
       </div>
     </main>
