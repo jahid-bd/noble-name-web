@@ -3,12 +3,65 @@ import BookmarkIcon from '@/assets/icons/BookmarkIcon';
 import LoveIcon from '@/assets/icons/LoveIcon';
 import ShareIcon from '@/assets/icons/ShareIcon';
 import VolumeIcon from '@/assets/icons/VolumeIcon';
+import {
+  addUserBookmark,
+  addUserFavorite,
+  removeUserBookmark,
+  removeUserFavorite,
+} from '@/services/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import SocialMedia from '../buttons/SocailMedia';
 
 const NameCard = ({ name }: { name: any }) => {
+  const queryClient = useQueryClient();
   const socialRef = useRef<HTMLDivElement>(null);
   const [openSocial, setOpenSocial] = useState(false);
+
+  const { mutate: addFavorite } = useMutation({
+    mutationFn: (nameID: string) => addUserFavorite(nameID),
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      toast.success('Name favorite successfully.');
+      queryClient.invalidateQueries({ queryKey: ['favorites', 'bookmarks'] });
+    },
+  });
+
+  const { mutate: removeFavorite } = useMutation({
+    mutationFn: (id: string) => removeUserFavorite(id),
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      toast.success('Name favorite remove successfully.');
+      queryClient.invalidateQueries({ queryKey: ['favorites', 'bookmarks'] });
+    },
+  });
+
+  const { mutate: addBookmark } = useMutation({
+    mutationFn: (nameID: string) => addUserBookmark(nameID),
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      toast.success('Name bookmark successfully.');
+      queryClient.invalidateQueries({ queryKey: ['favorites', 'bookmarks'] });
+    },
+  });
+
+  const { mutate: removeBookmark } = useMutation({
+    mutationFn: (id: string) => removeUserBookmark(id),
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      toast.success('Name bookmark remove successfully.');
+      queryClient.invalidateQueries({ queryKey: ['favorites', 'bookmarks'] });
+    },
+  });
 
   const handleSpeech = (text: string) => {
     const value = new SpeechSynthesisUtterance(text);
@@ -30,6 +83,8 @@ const NameCard = ({ name }: { name: any }) => {
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, [handleClickOutside]);
+
+  console.log(name);
 
   return (
     <div
@@ -76,11 +131,25 @@ const NameCard = ({ name }: { name: any }) => {
         </div>
 
         <div className="flex gap-3 items-center">
-          <button type="button">
+          <button
+            type="button"
+            onClick={() =>
+              name?.isFavorite
+                ? removeFavorite(name?.name?._id)
+                : addFavorite(name?.name?._id)
+            }
+          >
             <LoveIcon isFavorite={name?.isFavorite} />
           </button>
 
-          <button type="button">
+          <button
+            type="button"
+            onClick={() =>
+              name?.isBookmarked
+                ? removeBookmark(name?.name?._id)
+                : addBookmark(name?.name?._id)
+            }
+          >
             <BookmarkIcon isBookmarked={name?.isBookmarked} />
           </button>
 

@@ -3,12 +3,24 @@
 import { getAllName } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import AddNameModal from '../modal/AddNameModal';
 import AdminNameCardSection from '../section/AdminNameCardSection';
 
 const AdminNameView = () => {
   const searchParams = useSearchParams();
-
   const activePage = searchParams.get('page');
+  const [openAddName, setOpenAddName] = useState(false);
+
+  useEffect(() => {
+    if (openAddName) {
+      document.body.style.scrollBehavior = 'smooth';
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [openAddName]);
 
   const {
     data: names,
@@ -26,6 +38,7 @@ const AdminNameView = () => {
 
         <button
           type="button"
+          onClick={() => setOpenAddName(true)}
           className="bg-primary text-white text-sm px-5 py-1.5 rounded-md"
         >
           Create Name
@@ -36,7 +49,12 @@ const AdminNameView = () => {
         names={names}
         isError={isError}
         isLoading={isLoading}
+        handleEdit={() => setOpenAddName(true)}
       />
+
+      {openAddName && (
+        <AddNameModal handleClose={() => setOpenAddName(false)} />
+      )}
     </div>
   );
 };

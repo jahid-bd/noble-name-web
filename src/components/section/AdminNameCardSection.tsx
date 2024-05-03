@@ -7,10 +7,12 @@ const AdminNameCardSection = ({
   names,
   isError,
   isLoading,
+  handleEdit,
 }: {
   names: any;
   isError: any;
   isLoading: any;
+  handleEdit: () => void;
 }) => {
   return (
     <>
@@ -20,7 +22,7 @@ const AdminNameCardSection = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
         {names?.data?.data?.map((item: any) => (
-          <EditableNameCard name={item} />
+          <EditableNameCard name={item} handleEdit={handleEdit} />
         ))}
       </div>
 

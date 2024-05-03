@@ -68,7 +68,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
             <InputField
               type="text"
               label="Name"
-              name="name"
+              name="english_name"
               placeholder="First name"
               onChange={(e) => console.log(e)}
               value={''}
@@ -86,7 +86,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
             <InputField
               type="text"
               label="Arabic Spelling"
-              name="name"
+              name="arabic_name"
               placeholder="Enter Arabic spelling of the name"
               onChange={(e) => console.log(e)}
               value={''}
@@ -103,7 +103,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
           <div className="grid grid-cols-1 gap-[14px] mb-4">
             <TextareaField
               label="Meaning"
-              name="name"
+              name="meanings"
               placeholder="Enter Arabic spelling of the name"
               onChange={(e) => console.log(e)}
               value={''}
