@@ -19,7 +19,7 @@ const DashboardView = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const tab: string | null = searchParams.get('tab');
+  const tab = searchParams.get('tab');
   const activePage = searchParams.get('page');
 
   const {
@@ -94,7 +94,7 @@ const DashboardView = () => {
           />
         )}
 
-        {!['favorites', 'bookmarks', 'names-added'].includes(tab) && (
+        {!['favorites', 'bookmarks', 'names-added'].includes(tab as string) && (
           <NotFound />
         )}
       </div>

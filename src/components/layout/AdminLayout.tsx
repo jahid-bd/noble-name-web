@@ -4,6 +4,8 @@ import DashboardIcon from '@/assets/icons/DashboardIcon';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import AdminNavList from '../navs/AdminNavList';
 
 const AdminLink = ({ href, title }: { href: string; title: string }) => {
   const activePath = usePathname();
@@ -23,10 +25,28 @@ const AdminLink = ({ href, title }: { href: string; title: string }) => {
 };
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+  const navRef = useRef<HTMLDivElement>(null);
+  const [openNav, setOpenNav] = useState(false);
+
+  const handleClickOutside = useCallback((event: any) => {
+    if (navRef.current && navRef?.current?.contains(event.target)) {
+      return setOpenNav(true);
+    }
+
+    return setOpenNav(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [handleClickOutside]);
+
   return (
     <>
       <div className="max-w-[1600px] mx-auto md:hidden">
-        <header className="bg-white py-4 px-[6px]">
+        <header className="bg-white py-4 px-[6px] relative">
           <div className="w-full flex justify-between items-center mx-auto">
             <div className="md:h-16 md:w-44 relative w-[88px] h-8">
               <Link
@@ -39,6 +59,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
             <div className="p-2">
               <svg
+                className="cursor-pointer"
+                onClick={() => setOpenNav((prev) => !prev)}
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -58,6 +80,12 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               </svg>
             </div>
           </div>
+
+          {openNav && (
+            <div ref={navRef}>
+              <AdminNavList />
+            </div>
+          )}
         </header>
 
         {children}

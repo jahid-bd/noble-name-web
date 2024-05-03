@@ -46,7 +46,7 @@ const AdminNameRequestView = () => {
   });
 
   return (
-    <div>
+    <div className="px-1.5">
       <div className="flex justify-between items-center mb-6">
         <p className="text-2xl font-semibold text-text-primary">
           Name Request List

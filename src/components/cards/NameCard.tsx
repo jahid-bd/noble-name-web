@@ -26,7 +26,7 @@ const NameCard = ({ name }: { name: any }) => {
     },
     onSuccess: (data: any) => {
       toast.success('Name favorite successfully.');
-      queryClient.invalidateQueries({ queryKey: ['favorites', 'bookmarks'] });
+      queryClient.invalidateQueries();
     },
   });
 
@@ -37,7 +37,7 @@ const NameCard = ({ name }: { name: any }) => {
     },
     onSuccess: (data: any) => {
       toast.success('Name favorite remove successfully.');
-      queryClient.invalidateQueries({ queryKey: ['favorites', 'bookmarks'] });
+      queryClient.invalidateQueries();
     },
   });
 
@@ -48,7 +48,7 @@ const NameCard = ({ name }: { name: any }) => {
     },
     onSuccess: (data: any) => {
       toast.success('Name bookmark successfully.');
-      queryClient.invalidateQueries({ queryKey: ['favorites', 'bookmarks'] });
+      queryClient.invalidateQueries();
     },
   });
 
@@ -59,7 +59,7 @@ const NameCard = ({ name }: { name: any }) => {
     },
     onSuccess: (data: any) => {
       toast.success('Name bookmark remove successfully.');
-      queryClient.invalidateQueries({ queryKey: ['favorites', 'bookmarks'] });
+      queryClient.invalidateQueries();
     },
   });
 

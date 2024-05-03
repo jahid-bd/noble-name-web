@@ -1,4 +1,4 @@
-import BlogCard from '../cards/BlogCard';
+import EditableBlogCard from '../cards/EditableBlogCard';
 import PreLoader from '../loader/Loader';
 import NotFound from '../loader/NotFound';
 import GlobalPagination from '../pagination/GlobalPagination';
@@ -20,7 +20,7 @@ const AdminBlogCardSection = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
         {blogs?.data?.data?.map((item: any) => (
-          <BlogCard blog={item} />
+          <EditableBlogCard blog={item} />
         ))}
       </div>
 
