@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import * as yup from 'yup';
 import InputField from '../form/InputField';
 import SelectInput from '../form/SelectInput';
 import TextareaField from '../form/TextareaField';
@@ -19,8 +20,70 @@ const genderOptions = [
   },
 ];
 
+const originOptions = [
+  {
+    value: '',
+    label: 'Select origin',
+  },
+  {
+    value: 'arabic',
+    label: 'Arabic',
+  },
+  {
+    value: 'turkois:',
+    label: 'Turkois',
+  },
+];
+
 const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
-  const [modal, setmodal] = useState(false);
+  const initialValues = {
+    gender: genderOptions[0].value,
+    origin: originOptions[0].value,
+    meanings: '',
+    arabic_name: '',
+    english_name: '',
+  };
+  const [formState, setFormState] = useState({ ...initialValues });
+
+  const schema = yup
+    .object({
+      english_name: yup
+        .string()
+        .trim()
+        .nullable()
+        .required('Please enter an email address')
+        .min(3, 'Name must be at least 3 characters'),
+      arabic_name: yup
+        .string()
+        .trim()
+        .required('Please enter a valid name')
+        .min(3, 'Name must be at least 3 characters'),
+      gender: yup.string().trim().required('Please select gender'),
+      origin: yup.string().trim().required('Please select origin'),
+      meanings: yup.array().required('Please enter meaning'),
+    })
+    .required();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(formState);
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleChangeTextarea = (e: any) => {
+    console.log(formState);
+    const meaningArray = e.target.value.split(',');
+    setFormState((prev) => ({ ...prev, [e.target.name]: meaningArray }));
+  };
+
+  const handleSelect = (
+    key: string,
+    option: { value: string; label: string },
+  ) => {
+    setFormState({
+      ...formState,
+      [key]: option,
+    });
+  };
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
@@ -64,60 +127,64 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
-            <InputField
-              type="text"
-              label="Name"
-              name="english_name"
-              placeholder="First name"
-              onChange={(e) => console.log(e)}
-              value={''}
-            />
+          <form
+          // onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
+              <InputField
+                type="text"
+                label="Name"
+                name="english_name"
+                onChange={handleChange}
+                placeholder="First name"
+                value={formState.english_name}
+              />
 
-            <SelectInput
-              label="Gender"
-              options={genderOptions}
-              handleSelect={(opt) => setmodal(true)}
-              selectedOption={{ value: 'male', label: 'Male' }}
-            />
-          </div>
+              <SelectInput
+                label="Gender"
+                options={genderOptions}
+                selectedOption={formState.gender}
+                handleSelect={(opt) => handleSelect('gender', opt)}
+              />
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
-            <InputField
-              type="text"
-              label="Arabic Spelling"
-              name="arabic_name"
-              placeholder="Enter Arabic spelling of the name"
-              onChange={(e) => console.log(e)}
-              value={''}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
+              <InputField
+                type="text"
+                name="arabic_name"
+                label="Arabic Spelling"
+                onChange={handleChange}
+                value={formState.arabic_name}
+                placeholder="Enter Arabic spelling of the name"
+              />
 
-            <SelectInput
-              label="Origin"
-              options={genderOptions}
-              handleSelect={(opt) => setmodal(true)}
-              selectedOption={{ value: 'male', label: 'Male' }}
-            />
-          </div>
+              <SelectInput
+                label="Origin"
+                options={originOptions}
+                selectedOption={formState.origin}
+                handleSelect={(opt) => handleSelect('origin', opt)}
+              />
+            </div>
 
-          <div className="grid grid-cols-1 gap-[14px] mb-4">
-            <TextareaField
-              label="Meaning"
-              name="meanings"
-              placeholder="Enter Arabic spelling of the name"
-              onChange={(e) => console.log(e)}
-              value={''}
-            />
-          </div>
+            <div className="grid grid-cols-1 gap-[14px] mb-4">
+              <TextareaField
+                label="Meaning"
+                name="meanings"
+                onChange={handleChangeTextarea}
+                value={formState?.meanings?.toString()}
+                placeholder="Enter Arabic spelling of the name"
+              />
+            </div>
 
-          <div className="flex justify-center md:justify-start">
-            <button
-              type="button"
-              className="py-2.5 px-20 rounded-lg bg-primary text-white text-base font-medium"
-            >
-              Submit For Approval
-            </button>
-          </div>
+            <div className="flex justify-center md:justify-start">
+              <button
+                type="button"
+                className="py-2.5 px-20 rounded-lg bg-primary text-white text-base font-medium"
+              >
+                Submit For Approval
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

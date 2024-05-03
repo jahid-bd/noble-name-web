@@ -2,16 +2,21 @@
 
 import ChildHand from '@/assets/images/child_hand.jpg';
 import Button from '@/components/buttons/Button';
-import BlogCard from '@/components/cards/BlogCard';
 import InputField from '@/components/form/InputField';
 import NameSearchSection from '@/components/section/NameSearchSection';
-import { getUserProfile } from '@/services/api';
+import { getAllBlog, getUserProfile } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import AddNameModal from '../modal/AddNameModal';
+import BlogHomeCardSection from '../section/BlogHomeCardSection';
 
 const HomeView = () => {
+  const { data: blogs } = useQuery({
+    queryKey: ['blogs'],
+    queryFn: () => getAllBlog(1, 3),
+  });
+
   const [openAddName, setOpenAddName] = useState(false);
 
   useEffect(() => {
@@ -126,11 +131,7 @@ const HomeView = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-          </div>
+          <BlogHomeCardSection blogs={blogs} />
         </div>
       </section>
 

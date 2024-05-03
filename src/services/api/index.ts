@@ -75,9 +75,9 @@ export const getUserSuggestedName = (page: number) =>
     withCredentials: true,
   });
 
-export const getAllBlog = (page: number) =>
+export const getAllBlog = (page?: number, limit?: number) =>
   axios.get(`${BASE_URL}/blogs`, {
-    params: { limit: 9, page },
+    params: { limit: limit ? limit : 9, page },
     withCredentials: true,
   });
 
