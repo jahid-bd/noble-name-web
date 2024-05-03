@@ -18,6 +18,7 @@ export interface UserUpdateData {
   isAlreadyParent: boolean;
   childrens?: string;
   childAgeGroup?: string;
+  name?: string;
 }
 
 export interface OtpParams {

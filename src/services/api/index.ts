@@ -26,8 +26,17 @@ export const verifyOtp = (data: OtpParams) =>
 export const resetPassword = (data: ResetPassParams) =>
   axios.post(`${BASE_URL}/auth/reset-password`, data);
 
-export const getUserProfile = () =>
-  axios.get(`${BASE_URL}/users/profile`, { withCredentials: true });
+export const getUserProfile = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/users/profile`, {
+      withCredentials: true,
+    });
+    return res.data.data;
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    throw error;
+  }
+};
 
 export const getAllPlans = async () => {
   try {

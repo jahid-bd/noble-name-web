@@ -64,7 +64,7 @@ const SelectInput = ({
       >
         <div>
           <span className="font-medium text-text-primary ">
-            {selectedOption.label}
+            {selectedOption?.label}
           </span>
         </div>
         <div>
@@ -91,18 +91,18 @@ const SelectInput = ({
             {options?.map((opt) => (
               <>
                 <div
-                  key={opt.value}
+                  key={opt?.value}
                   className={clsx(
                     'py-[11px] px-[14px] transition-all duration-300  hover:bg-gray-100 flex items-center justify-between',
-                    selectedOption.value === opt.value && 'bg-gray-100'
+                    selectedOption?.value === opt.value && 'bg-gray-100'
                   )}
                   onClick={() => handleSelect(opt)}
                 >
                   <span className="font-medium text-text-primary ">
-                    {opt.label}
+                    {opt?.label}
                   </span>
                   <span>
-                    {selectedOption.value === opt.value && (
+                    {selectedOption?.value === opt?.value && (
                       <svg
                         width="16"
                         height="11"

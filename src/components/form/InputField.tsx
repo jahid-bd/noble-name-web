@@ -13,6 +13,7 @@ interface InputProps {
   register?: any;
   defaultValue?: string;
   error?: any;
+  disabled?: boolean;
 }
 
 const InputField = ({
@@ -26,6 +27,8 @@ const InputField = ({
   register = () => {},
   defaultValue,
   error,
+  disabled,
+  value,
 }: InputProps) => {
   return (
     <div className="w-full">
@@ -41,9 +44,11 @@ const InputField = ({
       <input
         type={type}
         id={name}
+        value={value}
         placeholder={placeholder}
         onChange={onChange}
         name={name}
+        disabled={disabled}
         className={clsx(
           'w-full outline-none border border-border-primary px-[14px] py-[10px] rounded-md shadow-sm placeholder:text-text-placeholder ',
           className,
