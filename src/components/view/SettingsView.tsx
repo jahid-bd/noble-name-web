@@ -246,7 +246,6 @@ const SettingsView = () => {
   const [formState, setFormState] = useState({
     firstName: fName,
     lastName: lName,
-
     email: 'jahidhossainbd24@gmail.com',
   });
 
@@ -500,6 +499,7 @@ const SettingsView = () => {
               <div className="w-full">
                 <InputField
                   type="text"
+                  isCustom={true}
                   label="First Name"
                   name="firstName"
                   placeholder="First name"
@@ -515,6 +515,7 @@ const SettingsView = () => {
                   type="text"
                   label="Last Name"
                   name="lastName"
+                  isCustom={true}
                   placeholder="Last name"
                   onChange={handleChange}
                   value={formState.lastName}
@@ -556,6 +557,7 @@ const SettingsView = () => {
                   onChange={handleChange}
                   value={formState.email}
                   disabled={true}
+                  isCustom={true}
                 />
               </div>
               <div className="w-full">
@@ -680,6 +682,7 @@ const SettingsView = () => {
                       errors.childExpectingDate.error &&
                       errors.childExpectingDate.message
                     }
+                    isCustom={true}
                   />
                 </div>
               )}

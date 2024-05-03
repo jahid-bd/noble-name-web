@@ -1,5 +1,6 @@
 import { BASE_URL } from '@/constants';
 import {
+  ContactParams,
   OtpParams,
   RegisterData,
   ResetPassParams,
@@ -74,3 +75,6 @@ export const cancelSubscription = async (id: string) =>
       withCredentials: true,
     }
   );
+
+export const sendMessage = (data: ContactParams) =>
+  axios.post(`${BASE_URL}/contact-us`, data);

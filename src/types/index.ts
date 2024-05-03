@@ -30,3 +30,11 @@ export interface ResetPassParams {
   otp_id: string | null;
   password: string;
 }
+
+export interface ContactParams {
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  full_name: string;
+}
