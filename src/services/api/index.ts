@@ -45,6 +45,34 @@ export const getUserFavorites = (page: number) =>
     withCredentials: true,
   });
 
+export const addUserFavorite = (name: string) =>
+  axios.post(
+    `${BASE_URL}/user/favorites`,
+    { name },
+    {
+      withCredentials: true,
+    },
+  );
+
+export const removeUserFavorite = (id: string) =>
+  axios.delete(`${BASE_URL}/user/favorites/${id}`, {
+    withCredentials: true,
+  });
+
+export const addUserBookmark = (name: string) =>
+  axios.post(
+    `${BASE_URL}/user/bookmarks`,
+    { name },
+    {
+      withCredentials: true,
+    },
+  );
+
+export const removeUserBookmark = (id: string) =>
+  axios.delete(`${BASE_URL}/user/bookmarks/${id}`, {
+    withCredentials: true,
+  });
+
 export const getUserBookmarks = (page: number) =>
   axios.get(`${BASE_URL}/user/bookmarks`, {
     params: { limit: 9, page },
@@ -63,6 +91,11 @@ export const getAllBlog = (page: number) =>
     withCredentials: true,
   });
 
+export const deleteBlogApi = (id: string) =>
+  axios.delete(`${BASE_URL}/blogs/${id}`, {
+    withCredentials: true,
+  });
+
 export const getAllName = (page: number) =>
   axios.get(`${BASE_URL}/names`, {
     params: { limit: 9, page: page ? page : 1 },
@@ -74,6 +107,23 @@ export const getAllRequestedName = (page: number) =>
     params: { limit: 9, page },
     withCredentials: true,
   });
+export const approveRequestedName = (id: string) =>
+  axios.put(
+    `${BASE_URL}/suggestion-names/${id}/approve`,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+
+export const rejectRequestedName = (id: string) =>
+  axios.put(
+    `${BASE_URL}/suggestion-names/${id}/reject`,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
 
 export const getAllPlans = async () => {
   try {
@@ -109,7 +159,7 @@ export const cancelSubscription = async (id: string) =>
     {},
     {
       withCredentials: true,
-    }
+    },
   );
 
 export const sendMessage = (data: ContactParams) =>

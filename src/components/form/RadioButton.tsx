@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 interface PropTypes {
-  label: string;
+  label?: string;
   text: string;
   active: boolean | null;
   onClick: () => void;
@@ -21,7 +21,7 @@ const RadioButton = ({ label, text, active, onClick, error }: PropTypes) => {
       <div
         className={clsx(
           'w-full  border border-border-primary px-4 py-[10px] flex items-center gap-2 cursor-pointer rounded-md',
-          error && 'border-red-500'
+          error && 'border-red-500',
         )}
       >
         <div className="w-4 h-4 rounded-full border border-border-primary p-[2px]">

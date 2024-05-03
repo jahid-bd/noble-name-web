@@ -3,12 +3,50 @@
 import DashboardIcon from '@/assets/icons/DashboardIcon';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import AdminNavList from '../navs/AdminNavList';
+
+const AdminLink = ({ href, title }: { href: string; title: string }) => {
+  const activePath = usePathname();
+
+  return (
+    <Link
+      href={href}
+      className={`text-text-secondary-hover font-semibold flex gap-3 items-center hover:bg-border-secondary p-1 rounded-md ${
+        activePath === href && 'bg-border-secondary'
+      }`}
+    >
+      <DashboardIcon />
+
+      <span>{title}</span>
+    </Link>
+  );
+};
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+  const navRef = useRef<HTMLDivElement>(null);
+  const [openNav, setOpenNav] = useState(false);
+
+  const handleClickOutside = useCallback((event: any) => {
+    if (navRef.current && navRef?.current?.contains(event.target)) {
+      return setOpenNav(true);
+    }
+
+    return setOpenNav(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [handleClickOutside]);
+
   return (
     <>
       <div className="max-w-[1600px] mx-auto md:hidden">
-        <header className="bg-white py-4 px-[6px]">
+        <header className="bg-white py-4 px-[6px] relative">
           <div className="w-full flex justify-between items-center mx-auto">
             <div className="md:h-16 md:w-44 relative w-[88px] h-8">
               <Link
@@ -21,6 +59,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
             <div className="p-2">
               <svg
+                className="cursor-pointer"
+                onClick={() => setOpenNav((prev) => !prev)}
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -40,6 +80,12 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               </svg>
             </div>
           </div>
+
+          {openNav && (
+            <div ref={navRef}>
+              <AdminNavList />
+            </div>
+          )}
         </header>
 
         {children}
@@ -57,76 +103,18 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               </Link>
             </div>
 
-            <ul className="flex flex-col gap-5">
-              <li className="flex gap-3 items-center">
-                <DashboardIcon />
-
-                <Link
-                  href="/admin/dashboard"
-                  className="text-text-secondary-hover font-semibold"
-                >
-                  Dashboard
-                </Link>
-              </li>
-
-              <li className="flex gap-3 items-center">
-                <DashboardIcon />
-
-                <Link
-                  href="/admin/name"
-                  className="text-text-secondary-hover font-semibold"
-                >
-                  Name
-                </Link>
-              </li>
-
-              <li className="flex gap-3 items-center">
-                <DashboardIcon />
-
-                <Link
-                  href="/admin/name-requested"
-                  className="text-text-secondary-hover font-semibold"
-                >
-                  Name Request
-                </Link>
-              </li>
-
-              <li className="flex gap-3 items-center">
-                <DashboardIcon />
-
-                <Link
-                  href="/admin/blog"
-                  className="text-text-secondary-hover font-semibold"
-                >
-                  Blog
-                </Link>
-              </li>
-            </ul>
+            <div className="flex flex-col gap-5">
+              <AdminLink href="/admin/dashboard" title="Dashboard" />
+              <AdminLink href="/admin/name" title="Name" />
+              <AdminLink href="/admin/name-requested" title="Name Request" />
+              <AdminLink href="/admin/blog" title="Blog" />
+            </div>
           </div>
 
           {/* <div className="flex flex-col gap-5">
-                        <li className="flex gap-3 items-center">
-                            <DashboardIcon />
-
-                            <Link
-                                href="/"
-                                className="text-text-secondary-hover font-semibold"
-                            >
-                                Support Request
-                            </Link>
-                        </li>
-
-                        <li className="flex gap-3 items-center">
-                            <DashboardIcon />
-
-                            <Link
-                                href="/"
-                                className="text-text-secondary-hover font-semibold"
-                            >
-                                Setting
-                            </Link>
-                        </li>
-                    </div> */}
+            <AdminLink href="/" title="Support Request" />
+            <AdminLink href="/" title="Setting" />
+          </div> */}
         </aside>
 
         <div className="w-[1200px] py-14 px-8 bg-gray-bg h-screen overflow-y-auto">

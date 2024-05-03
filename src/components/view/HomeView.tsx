@@ -8,8 +8,22 @@ import NameSearchSection from '@/components/section/NameSearchSection';
 import { getUserProfile } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import AddNameModal from '../modal/AddNameModal';
 
 const HomeView = () => {
+  const [openAddName, setOpenAddName] = useState(false);
+
+  useEffect(() => {
+    if (openAddName) {
+      document.body.style.scrollBehavior = 'smooth';
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [openAddName]);
+
   const handleChange = () => {
     console.log('hello');
   };
@@ -135,7 +149,10 @@ const HomeView = () => {
             </div>
 
             <div className="w-full md:w-[165px]">
-              <Button className="text-base w-full py-2.5 px-4">
+              <Button
+                className="text-base w-full py-2.5 px-4"
+                onClick={() => setOpenAddName(true)}
+              >
                 Add New Name
               </Button>
             </div>
@@ -143,7 +160,9 @@ const HomeView = () => {
         </div>
       </section>
 
-      {/* <AddNameModal /> */}
+      {openAddName && (
+        <AddNameModal handleClose={() => setOpenAddName(false)} />
+      )}
     </main>
   );
 };
