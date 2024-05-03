@@ -7,6 +7,8 @@ const SuggestedNameCard = ({ name }: { name: any }) => {
     window.speechSynthesis.speak(value);
   };
 
+  console.log(name);
+
   return (
     <div
       className={`p-5 rounded-xl flex flex-col gap-4 ${
@@ -40,6 +42,26 @@ const SuggestedNameCard = ({ name }: { name: any }) => {
               {tag}
             </p>
           ))}
+        </div>
+
+        <div>
+          {name?.status === 'approved' && (
+            <p className="text-sm font-semibold px-2 py-1 text-white bg-primary rounded-md">
+              Approved
+            </p>
+          )}
+
+          {name?.status === 'rejected' && (
+            <p className="text-sm font-semibold px-2 py-1 text-white bg-dark-pink rounded-md">
+              Rejected
+            </p>
+          )}
+
+          {name?.status === 'pending' && (
+            <p className="text-sm font-semibold px-2 py-1 text-white bg-green-600 rounded-md">
+              Pending
+            </p>
+          )}
         </div>
 
         {/* <div className="flex gap-3 items-center">

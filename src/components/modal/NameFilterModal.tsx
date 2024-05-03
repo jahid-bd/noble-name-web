@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import InputField from '../form/InputField';
+import RadioButton from '../form/RadioButton';
 import SelectInput from '../form/SelectInput';
-import TextareaField from '../form/TextareaField';
+import LetterInput from '../inputs/LetterInput';
 
 const genderOptions = [
   {
@@ -19,8 +19,12 @@ const genderOptions = [
   },
 ];
 
-const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
-  const [modal, setmodal] = useState(false);
+const NameFilterModal = ({
+  handleCloseFilter,
+}: {
+  handleCloseFilter: () => void;
+}) => {
+  const [modal, setmodal] = useState(true);
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
@@ -28,10 +32,10 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
         <div className="px-4 py-8 md:px-8 bg-white rounded-[10px] shadow-modal">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-text-tertiary ">
-              Fill the above fields to add a name!
+              Filter Names By
             </h3>
 
-            <button type="button" onClick={handleClose}>
+            <button type="button" onClick={handleCloseFilter}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -64,34 +68,32 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
-            <InputField
-              type="text"
-              label="Name"
-              name="english_name"
-              placeholder="First name"
-              onChange={(e) => console.log(e)}
-              value={''}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px] mb-4">
+            <RadioButton
+              active={true}
+              onClick={() => setmodal(true)}
+              text="Short names (upto 4 letters)"
             />
 
-            <SelectInput
-              label="Gender"
-              options={genderOptions}
-              handleSelect={(opt) => setmodal(true)}
-              selectedOption={{ value: 'male', label: 'Male' }}
+            <RadioButton
+              active={false}
+              onClick={() => setmodal(true)}
+              text="Medium Name (4-6 letters) "
+            />
+
+            <RadioButton
+              active={false}
+              text="Long Names (7+ letters)"
+              onClick={() => setmodal(true)}
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
-            <InputField
-              type="text"
-              label="Arabic Spelling"
-              name="arabic_name"
-              placeholder="Enter Arabic spelling of the name"
-              onChange={(e) => console.log(e)}
-              value={''}
-            />
+            <LetterInput label="Letter Starts With" />
+            <LetterInput label="Letter Ends With" />
+          </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
             <SelectInput
               label="Origin"
               options={genderOptions}
@@ -100,22 +102,12 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-[14px] mb-4">
-            <TextareaField
-              label="Meaning"
-              name="meanings"
-              placeholder="Enter Arabic spelling of the name"
-              onChange={(e) => console.log(e)}
-              value={''}
-            />
-          </div>
-
           <div className="flex justify-center md:justify-start">
             <button
               type="button"
               className="py-2.5 px-20 rounded-lg bg-primary text-white text-base font-medium"
             >
-              Submit For Approval
+              Filter Results
             </button>
           </div>
         </div>
@@ -124,4 +116,4 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
   );
 };
 
-export default AddNameModal;
+export default NameFilterModal;

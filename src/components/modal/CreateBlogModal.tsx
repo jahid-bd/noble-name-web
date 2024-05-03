@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import InputField from '../form/InputField';
-import SelectInput from '../form/SelectInput';
 import TextareaField from '../form/TextareaField';
 
 const genderOptions = [
@@ -19,7 +18,7 @@ const genderOptions = [
   },
 ];
 
-const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
+const CreateBlogModal = ({ handleClose }: { handleClose: () => void }) => {
   const [modal, setmodal] = useState(false);
 
   return (
@@ -28,7 +27,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
         <div className="px-4 py-8 md:px-8 bg-white rounded-[10px] shadow-modal">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-text-tertiary ">
-              Fill the above fields to add a name!
+              Create Blog
             </h3>
 
             <button type="button" onClick={handleClose}>
@@ -67,44 +66,57 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
             <InputField
               type="text"
-              label="Name"
-              name="english_name"
-              placeholder="First name"
+              label="Title"
+              name="title"
+              placeholder="Enter blog title"
               onChange={(e) => console.log(e)}
               value={''}
             />
 
-            <SelectInput
-              label="Gender"
-              options={genderOptions}
-              handleSelect={(opt) => setmodal(true)}
-              selectedOption={{ value: 'male', label: 'Male' }}
+            <InputField
+              type="text"
+              label="Meta Tittle"
+              name="metaTittle"
+              placeholder="Enter blog meta title"
+              onChange={(e) => console.log(e)}
+              value={''}
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
-            <InputField
-              type="text"
-              label="Arabic Spelling"
-              name="arabic_name"
-              placeholder="Enter Arabic spelling of the name"
+            <TextareaField
+              label="Description"
+              name="description"
+              placeholder="Write your blog description"
               onChange={(e) => console.log(e)}
               value={''}
             />
 
-            <SelectInput
-              label="Origin"
-              options={genderOptions}
-              handleSelect={(opt) => setmodal(true)}
-              selectedOption={{ value: 'male', label: 'Male' }}
+            <TextareaField
+              label="Meta description"
+              name="metaDescription"
+              placeholder="Write your blog meta description"
+              onChange={(e) => console.log(e)}
+              value={''}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-[14px] mb-4">
+            <InputField
+              type="text"
+              label="Slug"
+              name="slug"
+              placeholder="Enter blog slug"
+              onChange={(e) => console.log(e)}
+              value={''}
             />
           </div>
 
           <div className="grid grid-cols-1 gap-[14px] mb-4">
             <TextareaField
-              label="Meaning"
-              name="meanings"
-              placeholder="Enter Arabic spelling of the name"
+              label="Content"
+              name="content"
+              placeholder="Write your blog content"
               onChange={(e) => console.log(e)}
               value={''}
             />
@@ -115,7 +127,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
               type="button"
               className="py-2.5 px-20 rounded-lg bg-primary text-white text-base font-medium"
             >
-              Submit For Approval
+              Submit
             </button>
           </div>
         </div>
@@ -124,4 +136,4 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
   );
 };
 
-export default AddNameModal;
+export default CreateBlogModal;
