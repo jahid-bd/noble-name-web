@@ -1,14 +1,18 @@
 'use client';
 
-import { getAllBlog } from '@/services/api';
-import { useQuery } from '@tanstack/react-query';
+import { deleteBlogApi, getAllBlog } from '@/services/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import CreateBlogModal from '../modal/CreateBlogModal';
 import AdminBlogCardSection from '../section/AdminBlogCardSection';
 
 const AdminBlogView = () => {
-  const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
+  const [openForm, setOpenForm] = useState(false);
 
+  const searchParams = useSearchParams();
   const activePage = searchParams.get('page');
 
   const {
@@ -20,15 +24,26 @@ const AdminBlogView = () => {
     queryFn: () => getAllBlog(Number(activePage)),
   });
 
-  const [openModal, setOpenModal] = useState(false);
+  const { mutate: deleteBlog } = useMutation({
+    mutationFn: (id: string) => deleteBlogApi(id),
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      toast.success('Blog delete successfully.');
+      queryClient.invalidateQueries();
+    },
+  });
 
-  const handleOpenModal = () => {
-    const body = document.getElementsByTagName('body')[0];
-
-    body.style.overflow = 'hidden';
-
-    setOpenModal(true);
-  };
+  useEffect(() => {
+    if (openForm) {
+      document.body.style.scrollBehavior = 'smooth';
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [openForm]);
 
   return (
     <div className="px-1.5">
@@ -37,7 +52,7 @@ const AdminBlogView = () => {
 
         <button
           type="button"
-          onClick={handleOpenModal}
+          onClick={() => setOpenForm(true)}
           className="bg-primary text-white text-sm px-5 py-1.5 rounded-md"
         >
           Create Blog
@@ -48,13 +63,10 @@ const AdminBlogView = () => {
         blogs={blogs}
         isError={isError}
         isLoading={isLoading}
+        handleDelete={deleteBlog}
       />
 
-      {openModal && (
-        <div>
-          <h1>Data open on modal</h1>
-        </div>
-      )}
+      {openForm && <CreateBlogModal handleClose={() => setOpenForm(false)} />}
     </div>
   );
 };

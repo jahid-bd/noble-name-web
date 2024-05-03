@@ -4,13 +4,15 @@ import NotFound from '../loader/NotFound';
 import GlobalPagination from '../pagination/GlobalPagination';
 
 const AdminBlogCardSection = ({
+  blogs,
   isError,
   isLoading,
-  blogs,
+  handleDelete,
 }: {
-  isError: any;
   blogs: any;
+  isError: any;
   isLoading: any;
+  handleDelete: any;
 }) => {
   return (
     <>
@@ -20,7 +22,7 @@ const AdminBlogCardSection = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
         {blogs?.data?.data?.map((item: any) => (
-          <EditableBlogCard blog={item} />
+          <EditableBlogCard blog={item} handleDelete={handleDelete} />
         ))}
       </div>
 

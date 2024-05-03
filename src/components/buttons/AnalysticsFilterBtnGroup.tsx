@@ -39,7 +39,7 @@ const AnalyticsFilterGroupBtn = () => {
 
       <Link
         href={{ query: { tab: tab, type: 'girl' } }}
-        className="text-text-secondary font-semibold"
+        className="text-text-secondary font-semibold py-2 border-r border-border-primary"
       >
         <button
           type="button"

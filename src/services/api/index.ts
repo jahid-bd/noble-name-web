@@ -81,6 +81,11 @@ export const getAllBlog = (page: number) =>
     withCredentials: true,
   });
 
+export const deleteBlogApi = (id: string) =>
+  axios.delete(`${BASE_URL}/blogs/${id}`, {
+    withCredentials: true,
+  });
+
 export const getAllName = (page: number) =>
   axios.get(`${BASE_URL}/names`, {
     params: { limit: 9, page: page ? page : 1 },
