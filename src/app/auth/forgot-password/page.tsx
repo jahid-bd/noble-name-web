@@ -71,89 +71,91 @@ const ForgotPass = () => {
 
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
-      <div className="w-full max-w-[450px] h-[622px] mx-auto">
-        {/* logo */}
-        <div className="mb-6">
-          <Link
-            href="/"
-            className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-row items-center justify-start"
-          >
-            <Image
-              className="h-16 w-44 relative object-cover mx-auto"
-              alt="Noble Names Logo"
-              src="/images/logo.png"
-              width={176}
-              height={64}
-            />
-          </Link>
-        </div>
-
-        {/* Title */}
-        <div>
-          <h1 className="heading-text text-center">Forgot your password?</h1>
-          <p className="pt-3 text-center text-text-tertiary">
-            We&rsquo;ve sent you an OTP (One-Time Password) to verify your
-            identity and reset your password. Please check your registered email
-            or mobile number for the OTP.
-          </p>
-        </div>
-
-        {/* Signup Form */}
-        <div className="my-8 ">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-5">
-              <InputField
-                type="text"
-                label="Email*"
-                name="email"
-                placeholder="Enter your email address"
-                onChange={handleChange}
-                value={formState.email}
-                register={register}
-                error={errors.email?.message}
-                className={serverError ? 'border-red-500' : ''}
+      <form>
+        <div className="w-full max-w-[450px]  mx-auto">
+          {/* logo */}
+          <div className="mb-6">
+            <Link
+              href="/"
+              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-row items-center justify-start"
+            >
+              <Image
+                className="h-16 w-44 relative object-cover mx-auto"
+                alt="Noble Names Logo"
+                src="/images/logo.png"
+                width={176}
+                height={64}
               />
-            </div>
+            </Link>
+          </div>
 
-            <div>
-              {serverError ? (
-                <div className="pb-3">
-                  <p className="text-sm text-center text-red-500">
-                    {serverError}
-                  </p>
-                </div>
-              ) : null}
-              <Button isLoading={isPending}>Send</Button>
-            </div>
-          </form>
+          {/* Title */}
+          <div>
+            <h1 className="heading-text text-center">Forgot your password?</h1>
+            <p className="pt-3 text-center text-text-tertiary">
+              We&rsquo;ve sent you an OTP (One-Time Password) to verify your
+              identity and reset your password. Please check your registered
+              email or mobile number for the OTP.
+            </p>
+          </div>
 
-          <Link
-            href={'/auth/sign-in'}
-            className="flex items-center justify-center"
-          >
-            <button className="mt-5 flex items-center justify-center gap-2">
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M20 12H4M4 12L10 6M4 12L10 18"
-                    stroke="#808284"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></path>
-                </svg>
+          {/* Signup Form */}
+          <div className="my-8 ">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-5">
+                <InputField
+                  type="text"
+                  label="Email*"
+                  name="email"
+                  placeholder="Enter your email address"
+                  onChange={handleChange}
+                  value={formState.email}
+                  register={register}
+                  error={errors.email?.message}
+                  className={serverError ? 'border-red-500' : ''}
+                />
               </div>
-              <div className="text-text-tertiary">Back to Signin</div>
-            </button>
-          </Link>
+
+              <div>
+                {serverError ? (
+                  <div className="pb-3">
+                    <p className="text-sm text-center text-red-500">
+                      {serverError}
+                    </p>
+                  </div>
+                ) : null}
+                <Button isLoading={isPending}>Send</Button>
+              </div>
+            </form>
+
+            <Link
+              href={'/auth/sign-in'}
+              className="flex items-center justify-center"
+            >
+              <button className="mt-5 flex items-center justify-center gap-2">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M20 12H4M4 12L10 6M4 12L10 18"
+                      stroke="#808284"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div className="text-text-tertiary">Back to Sign in</div>
+              </button>
+            </Link>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

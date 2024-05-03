@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const Error = () => {
+
   const router = useRouter();
 
   useEffect(() => {
@@ -12,9 +13,9 @@ const Error = () => {
     }, 3000);
   }, []);
   return (
-    <div className="my-40">
-      <h1 className="text-center text-5xl text-red-500">Error</h1>
-    </div>
+   <div className="my-40">
+            <h1 className="text-center text-xl text-red-500">Payment Error</h1>
+        </div>
   );
 };
 

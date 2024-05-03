@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { sendMessage } from '@/services/api';
 import { ContactParams } from '@/types';

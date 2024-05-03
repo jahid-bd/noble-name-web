@@ -39,6 +39,42 @@ export const getUserProfile = async () => {
   }
 };
 
+export const getUserFavorites = (page: number) =>
+  axios.get(`${BASE_URL}/user/favorites`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
+
+export const getUserBookmarks = (page: number) =>
+  axios.get(`${BASE_URL}/user/bookmarks`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
+
+export const getUserSuggestedName = (page: number) =>
+  axios.get(`${BASE_URL}/user/suggestion-names`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
+
+export const getAllBlog = (page: number) =>
+  axios.get(`${BASE_URL}/blogs`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
+
+export const getAllName = (page: number) =>
+  axios.get(`${BASE_URL}/names`, {
+    params: { limit: 9, page: page ? page : 1 },
+    withCredentials: true,
+  });
+
+export const getAllRequestedName = (page: number) =>
+  axios.get(`${BASE_URL}/suggestion-names`, {
+    params: { limit: 9, page },
+    withCredentials: true,
+  });
+
 export const getAllPlans = async () => {
   try {
     const res = await axios.get(`${BASE_URL}/plans`, { withCredentials: true });

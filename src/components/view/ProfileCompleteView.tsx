@@ -65,7 +65,7 @@ const ProfileComplete = () => {
       label: 'Male',
     },
     {
-      value: 'female',
+      value: 'female:',
       label: 'Female',
     },
   ];
@@ -150,12 +150,12 @@ const ProfileComplete = () => {
   const [isParent, setIsParent] = useState<boolean | null>(null);
 
   const [expectingDate, setExpectingDate] = useState<Date | null | string>(
-    null
+    null,
   );
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string }
+    option: { value: string; label: string },
   ) => {
     setOptionsState({
       ...optionsState,
