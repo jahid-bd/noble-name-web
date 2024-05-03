@@ -18,6 +18,7 @@ export interface UserUpdateData {
   isAlreadyParent: boolean;
   childrens?: string;
   childAgeGroup?: string;
+  name?: string;
 }
 
 export interface OtpParams {
@@ -28,4 +29,12 @@ export interface OtpParams {
 export interface ResetPassParams {
   otp_id: string | null;
   password: string;
+}
+
+export interface ContactParams {
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  full_name: string;
 }

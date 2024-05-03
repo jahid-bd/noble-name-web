@@ -10,6 +10,7 @@ interface ButtonProps {
   variant?: string;
   onClick?: () => void;
   isLoading?: boolean;
+  type?: any;
 }
 
 const Button = ({ children, className, onClick, isLoading }: ButtonProps) => {

@@ -1,0 +1,65 @@
+// import { NextRequest, NextResponse } from 'next/server';
+
+// // 1. Specify protected and public routes
+// const protectedRoutes = ['/dashboard'];
+// const publicRoutes = ['/auth/sign-in', '/auth/sign-up'];
+
+// // Secret key used to generate tokens
+// const secret = 'my-token-secret';
+
+// export default async function middleware(req: NextRequest) {
+//   // 2. Check if the current route is protected or public
+//   const path = req.nextUrl.pathname;
+//   const isProtectedRoute = protectedRoutes.includes(path);
+//   const isPublicRoute = publicRoutes.includes(path);
+
+//   // 3. Get the cookie from the request headers
+//   const cookieHeader = req.headers.get('cookie');
+//   const cookie = cookieHeader
+//     ? cookieHeader.split(';').find((c) => c.trim().startsWith('access_token='))
+//     : null;
+//   const accessTokenCookie = cookie ? cookie.split('=')[1] : null;
+
+//   // 4. Decode the access token cookie
+//   let accessToken = accessTokenCookie
+//     ? decodeURIComponent(accessTokenCookie)
+//     : null;
+
+//   accessToken = accessToken ? accessToken.replace('s:', '') : null;
+
+//   // 5. Log the cookie value
+//   console.log('access_token:', accessToken);
+
+//   // 6. Redirect to /auth/sign-in if the user is not authenticated for protected routes
+//   if (isProtectedRoute && !accessToken) {
+//     return NextResponse.redirect(new URL('/auth/sign-in', req.nextUrl));
+//   }
+
+//   // // 7. Decrypt the access token cookie to extract payload
+//   // let payload;
+//   // if (accessToken) {
+//   //   try {
+//   //     // payload = jwt.verify(accessToken, secret, {
+//   //     //   algorithms: ['HS256'],
+//   //     // });
+
+//   //     console.log('Decrypted payload:', payload);
+//   //   } catch (error) {
+//   //     console.error('Error decrypting access token:', error);
+//   //     // Redirect to sign-in page or handle error as per your application's logic
+//   //     // return NextResponse.redirect(new URL('/auth/sign-in', req.nextUrl));
+//   //   }
+//   // }
+
+//   // 8. Redirect to /dashboard if the user is authenticated for public routes
+//   if (isPublicRoute && accessToken) {
+//     return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
+//   }
+
+//   return NextResponse.next();
+// }
+
+// // Routes Middleware should not run on
+// export const config = {
+//   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+// };
