@@ -2,8 +2,28 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import UserNavList from '../navs/UserNavList';
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
+  const navRef = useRef<HTMLDivElement>(null);
+  const [openNav, setOpenNav] = useState(false);
+
+  const handleClickOutside = useCallback((event: any) => {
+    if (navRef.current && navRef?.current?.contains(event.target)) {
+      return setOpenNav(true);
+    }
+
+    return setOpenNav(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [handleClickOutside]);
+
   return (
     <>
       <header className="bg-border-tertiary py-4 px-[6px]">
@@ -19,9 +39,11 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
           {/* <Link href="/sign-in">Sign In</Link> */}
 
-          <div>
+          <div className="relative">
             <div className="flex gap-4 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
               <svg
+                className="cursor-pointer"
+                onClick={() => setOpenNav((prev) => !prev)}
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -41,6 +63,12 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
                 <Image fill alt="Noble Names Logo" src="/images/Avatar.png" />
               </div>
             </div>
+
+            {openNav && (
+              <div ref={navRef}>
+                <UserNavList />
+              </div>
+            )}
           </div>
         </div>
       </header>

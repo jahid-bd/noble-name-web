@@ -84,8 +84,6 @@ const NameCard = ({ name }: { name: any }) => {
     };
   }, [handleClickOutside]);
 
-  console.log(name);
-
   return (
     <div
       className={`p-5 rounded-xl flex flex-col gap-4 relative ${
