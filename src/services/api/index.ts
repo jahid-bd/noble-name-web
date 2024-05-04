@@ -18,6 +18,9 @@ export const userProfileUpdate = (data: UserUpdateData) =>
 export const userLogin = (data: SignInData) =>
   axios.post(`${BASE_URL}/auth/signin`, data, { withCredentials: true });
 
+export const userLogout = () =>
+  axios.post(`${BASE_URL}/auth/logout`, {}, { withCredentials: true });
+
 export const forgotPassword = (data: { email: string }) =>
   axios.post(`${BASE_URL}/auth/forget-password`, data);
 
