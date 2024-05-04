@@ -1,21 +1,22 @@
 'use client';
-import { useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useState } from 'react';
 import RadioButton from '../form/RadioButton';
 import SelectInput from '../form/SelectInput';
 import LetterInput from '../inputs/LetterInput';
 
-const genderOptions = [
+const originOptions = [
   {
     value: '',
     label: 'Select origin',
   },
   {
-    value: 'male',
-    label: 'Male',
+    value: 'arabic',
+    label: 'Arabic',
   },
   {
-    value: 'female:',
-    label: 'Female',
+    value: 'english:',
+    label: 'English',
   },
 ];
 
@@ -24,7 +25,65 @@ const NameFilterModal = ({
 }: {
   handleCloseFilter: () => void;
 }) => {
-  const [modal, setmodal] = useState(true);
+  const [tab, setTab] = useState('0to4');
+  const [origin, setOrigin] = useState(originOptions[0]);
+  const [startLetter, setStartLetter] = useState('');
+  const [endLetter, setEndLetter] = useState('');
+
+  const handleStartLetter = (value: string) => {
+    setStartLetter(value);
+  };
+
+  const handleEndLetter = (value: string) => {
+    setEndLetter(value);
+  };
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const createQueryString = useCallback(
+    (paramsObject: object) => {
+      const params = new URLSearchParams(searchParams.toString());
+      for (const [key, value] of Object.entries(paramsObject)) {
+        params.set(key, value);
+      }
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const onFilter = () => {
+    const queryParams: any = {};
+
+    if (origin.value) {
+      queryParams.origin = origin.value;
+    }
+
+    if (startLetter) {
+      queryParams.strting_letter = startLetter;
+    }
+
+    if (endLetter) {
+      queryParams.ending_letter = endLetter;
+    }
+
+    if (tab === '0to4') {
+      queryParams.letter_range_from = 0;
+      queryParams.letter_range_to = 4;
+    }
+    if (tab === '4to6') {
+      queryParams.letter_range_from = 4;
+      queryParams.letter_range_to = 6;
+    }
+    if (tab === '7+') {
+      queryParams.letter_range_from = 7;
+      queryParams.letter_range_to = null;
+    }
+
+    router.push(pathname + '?' + createQueryString(queryParams));
+    handleCloseFilter();
+  };
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
@@ -70,35 +129,43 @@ const NameFilterModal = ({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px] mb-4">
             <RadioButton
-              active={true}
-              onClick={() => setmodal(true)}
+              active={tab === '0to4'}
+              onClick={() => setTab('0to4')}
               text="Short names (upto 4 letters)"
             />
 
             <RadioButton
-              active={false}
-              onClick={() => setmodal(true)}
+              active={tab === '4to6'}
+              onClick={() => setTab('4to6')}
               text="Medium Name (4-6 letters) "
             />
 
             <RadioButton
-              active={false}
+              active={tab === '7+'}
               text="Long Names (7+ letters)"
-              onClick={() => setmodal(true)}
+              onClick={() => setTab('7+')}
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
-            <LetterInput label="Letter Starts With" />
-            <LetterInput label="Letter Ends With" />
+            <LetterInput
+              onClick={handleStartLetter}
+              label="Letter Starts With"
+              selected={startLetter}
+            />
+            <LetterInput
+              selected={endLetter}
+              onClick={handleEndLetter}
+              label="Letter Ends With"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
             <SelectInput
               label="Origin"
-              options={genderOptions}
-              handleSelect={(opt) => setmodal(true)}
-              selectedOption={{ value: 'male', label: 'Male' }}
+              options={originOptions}
+              handleSelect={(opt) => setOrigin(opt)}
+              selectedOption={originOptions[0]}
             />
           </div>
 
@@ -106,6 +173,7 @@ const NameFilterModal = ({
             <button
               type="button"
               className="py-2.5 px-20 rounded-lg bg-primary text-white text-base font-medium"
+              onClick={onFilter}
             >
               Filter Results
             </button>
