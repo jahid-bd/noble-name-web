@@ -13,10 +13,12 @@ interface PropTypes {
     value: string;
     label: string;
   }[];
-  selectedOption: {
-    value: string;
-    label: string;
-  };
+  selectedOption:
+    | {
+        value: string;
+        label: string;
+      }
+    | undefined;
   handleSelect: (option: { value: string; label: string }) => void;
   error?: boolean | string;
 }
@@ -57,7 +59,7 @@ const SelectInput = ({
       <div
         className={clsx(
           'w-full relative border border-border-primary px-[14px] py-[10px] flex items-center justify-between cursor-pointer rounded-md',
-          error && 'border-red-500'
+          error && 'border-red-500',
         )}
         onClick={handleToggle}
         ref={ref}
@@ -94,7 +96,7 @@ const SelectInput = ({
                   key={opt?.value}
                   className={clsx(
                     'py-[11px] px-[14px] transition-all duration-300  hover:bg-gray-100 flex items-center justify-between',
-                    selectedOption?.value === opt.value && 'bg-gray-100'
+                    selectedOption?.value === opt.value && 'bg-gray-100',
                   )}
                   onClick={() => handleSelect(opt)}
                 >

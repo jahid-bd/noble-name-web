@@ -85,9 +85,14 @@ export const getUserSuggestedName = (page: number) =>
     withCredentials: true,
   });
 
-export const getAllBlog = (page: number) =>
+export const createSuggestedName = (data: object) =>
+  axios.post(`${BASE_URL}/suggestion-names`, data, {
+    withCredentials: true,
+  });
+
+export const getAllBlog = (page?: number, limit?: number) =>
   axios.get(`${BASE_URL}/blogs`, {
-    params: { limit: 9, page },
+    params: { limit: limit ? limit : 9, page },
     withCredentials: true,
   });
 
@@ -99,6 +104,19 @@ export const deleteBlogApi = (id: string) =>
 export const getAllName = (page: number) =>
   axios.get(`${BASE_URL}/names`, {
     params: { limit: 9, page: page ? page : 1 },
+    withCredentials: true,
+  });
+
+export const createNameUsingCSV = (data: any) =>
+  axios.post(`${BASE_URL}/names/csv`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    withCredentials: true,
+  });
+
+export const createNameUsingForm = (data: object) =>
+  axios.post(`${BASE_URL}/names`, data, {
     withCredentials: true,
   });
 

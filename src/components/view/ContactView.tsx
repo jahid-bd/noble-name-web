@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { sendMessage } from '@/services/api';
 import { ContactParams } from '@/types';
@@ -24,7 +24,7 @@ const ContactView = () => {
   const [formState, setFormState] = useState({ ...initialValues });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -105,11 +105,9 @@ const ContactView = () => {
     });
   };
 
-  console.log(errors);
-
   return (
     <main>
-      <div className="max-w-[1280px] mx-auto md:px-2 px-10 0 min-h-screen pt-[64px] pb-[96px]">
+      <div className="container mx-auto px-1.5 min-h-screen pt-[64px] pb-[96px]">
         <div className="flex items-center justify-between">
           <div className="lg:w-1/2 w-full md:mr-[64px]">
             <div>
@@ -191,7 +189,7 @@ const ContactView = () => {
                   {...register('message', { value: formState.message })}
                   className={clsx(
                     'w-full h-[134px] outline-none border border-border-primary px-[14px] py-[10px] rounded-md shadow-sm placeholder:text-text-placeholder resize-none',
-                    errors.message?.message && 'border-red-500'
+                    errors.message?.message && 'border-red-500',
                   )}
                 />
                 {errors.message?.message ? (

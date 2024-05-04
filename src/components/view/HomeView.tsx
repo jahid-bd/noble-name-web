@@ -2,17 +2,40 @@
 
 import ChildHand from '@/assets/images/child_hand.jpg';
 import Button from '@/components/buttons/Button';
-import BlogCard from '@/components/cards/BlogCard';
 import InputField from '@/components/form/InputField';
 import NameSearchSection from '@/components/section/NameSearchSection';
-import { getUserProfile } from '@/services/api';
-import { useQuery } from '@tanstack/react-query';
+import {
+  createSuggestedName,
+  getAllBlog,
+  getUserProfile,
+} from '@/services/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import AddNameModal from '../modal/AddNameModal';
+import BlogHomeCardSection from '../section/BlogHomeCardSection';
 
 const HomeView = () => {
   const [openAddName, setOpenAddName] = useState(false);
+
+  const { data: blogs } = useQuery({
+    queryKey: ['blogs'],
+    queryFn: () => getAllBlog(1, 3),
+  });
+
+  const { mutate: addSuggestedName, isPending } = useMutation({
+    mutationFn: (data: any) => createSuggestedName(data),
+    onError: (error: any) => {
+      console.log('error', error.message);
+      toast.error('Suggested name not be added');
+    },
+    onSuccess: (data) => {
+      // setFormState(initialValues);
+      toast.success('Add suggested name successfully');
+      setOpenAddName(false);
+    },
+  });
 
   useEffect(() => {
     if (openAddName) {
@@ -126,11 +149,7 @@ const HomeView = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-          </div>
+          <BlogHomeCardSection blogs={blogs} />
         </div>
       </section>
 
@@ -161,7 +180,10 @@ const HomeView = () => {
       </section>
 
       {openAddName && (
-        <AddNameModal handleClose={() => setOpenAddName(false)} />
+        <AddNameModal
+          handleClose={() => setOpenAddName(false)}
+          handleSubmitForm={addSuggestedName}
+        />
       )}
     </main>
   );

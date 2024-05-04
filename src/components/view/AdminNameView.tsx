@@ -1,9 +1,14 @@
 'use client';
 
-import { getAllName } from '@/services/api';
-import { useQuery } from '@tanstack/react-query';
+import {
+  createNameUsingCSV,
+  createNameUsingForm,
+  getAllName,
+} from '@/services/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import AddNameModal from '../modal/AddNameModal';
 import ChooseInputType from '../modal/ChooseInputType';
 import AdminNameCardSection from '../section/AdminNameCardSection';
@@ -14,15 +19,10 @@ const AdminNameView = () => {
   const [openAddName, setOpenAddName] = useState(false);
   const [chooseOne, setChooseOne] = useState(false);
 
-  useEffect(() => {
-    if (openAddName) {
-      document.body.style.scrollBehavior = 'smooth';
-      window.scrollTo(0, 0);
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [openAddName]);
+  const handleOpenForm = () => {
+    setOpenAddName(true);
+    setChooseOne(false);
+  };
 
   const {
     data: names,
@@ -32,6 +32,41 @@ const AdminNameView = () => {
     queryKey: ['names', activePage],
     queryFn: () => getAllName(Number(activePage)),
   });
+
+  const { mutate: createNameByForm, isPending } = useMutation({
+    mutationFn: (data: any) => createNameUsingForm(data),
+    onError: (error: any) => {
+      console.log('error', error.message);
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      setOpenAddName(false);
+      toast.success('Name create successfully');
+    },
+  });
+
+  const { mutate: createNameByCSV } = useMutation({
+    mutationFn: (data: any) => createNameUsingCSV(data),
+    onError: (error: any) => {
+      console.log('error', error.message);
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      console.log('hello');
+      setChooseOne(false);
+      toast.success('Name create successfully');
+    },
+  });
+
+  useEffect(() => {
+    if (openAddName) {
+      document.body.style.scrollBehavior = 'smooth';
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [openAddName]);
 
   return (
     <div className="px-1.5">
@@ -54,10 +89,19 @@ const AdminNameView = () => {
         handleEdit={() => setOpenAddName(true)}
       />
 
-      {chooseOne && <ChooseInputType handleClose={() => setChooseOne(false)} />}
+      {chooseOne && (
+        <ChooseInputType
+          handleClose={() => setChooseOne(false)}
+          handleOpenForm={handleOpenForm}
+          handleCSVfileUpload={createNameByCSV}
+        />
+      )}
 
       {openAddName && (
-        <AddNameModal handleClose={() => setOpenAddName(false)} />
+        <AddNameModal
+          handleClose={() => setOpenAddName(false)}
+          handleSubmitForm={createNameByForm}
+        />
       )}
     </div>
   );

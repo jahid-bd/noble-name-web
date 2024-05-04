@@ -1,7 +1,15 @@
 'use client';
 import { useCallback, useRef, useState } from 'react';
 
-const ChooseInputType = ({ handleClose }: { handleClose: () => void }) => {
+const ChooseInputType = ({
+  handleClose,
+  handleOpenForm,
+  handleCSVfileUpload,
+}: {
+  handleClose: () => void;
+  handleOpenForm: () => void;
+  handleCSVfileUpload: (data: any) => void;
+}) => {
   const [fieldValue, setFieldValue] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -9,6 +17,9 @@ const ChooseInputType = ({ handleClose }: { handleClose: () => void }) => {
     const file = event.target.files[0];
     // Do something with the selected file
     console.log('Selected file:', file);
+    const formData = new FormData();
+    formData.append('file', file);
+    handleCSVfileUpload(formData);
   };
 
   const handleClick = useCallback((): void => {
@@ -80,6 +91,7 @@ const ChooseInputType = ({ handleClose }: { handleClose: () => void }) => {
 
             <button
               type="button"
+              onClick={handleOpenForm}
               className="py-2.5 w-full rounded-lg bg-primary text-white text-base font-medium"
             >
               Form Fill Up
