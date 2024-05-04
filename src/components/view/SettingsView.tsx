@@ -420,7 +420,14 @@ const SettingsView = () => {
     if (hasErrors) return;
 
     // If errors exist, return without submitting the form
-    if (!hasErrors) {
+    if (
+      !hasErrors &&
+      optionsState.age.value &&
+      formState.firstName &&
+      formState.lastName &&
+      optionsState.gender.value &&
+      optionsState.sect.value
+    ) {
       updateProfile({
         age: optionsState.age.value,
         name: formState.firstName + ' ' + formState.lastName,
@@ -438,7 +445,7 @@ const SettingsView = () => {
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string }
+    option: { value: string; label: string },
   ) => {
     setOptionsState({
       ...optionsState,
@@ -447,7 +454,7 @@ const SettingsView = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -461,7 +468,7 @@ const SettingsView = () => {
         children: childrenOptions.find((item) => item.value === user.childrens),
         country: countryOptions.find((item) => item.value === user.country),
         childAge: childeAgeOptions.find(
-          (item) => item.value === user.childAgeGroup
+          (item) => item.value === user.childAgeGroup,
         ),
       });
 
@@ -479,8 +486,9 @@ const SettingsView = () => {
       setIsexpectionBaby(user.isExpectingBaby);
       setIsParent(user.isAlreadyParent);
 
-      const formattedDate = moment(user?.expectedDate).format('YYYY-MM-DD');
-      console.log('FormattedDate-->', formattedDate);
+      const formattedDate = user?.expectedDate
+        ? moment(user?.expectedDate).format('YYYY-MM-DD')
+        : null;
       setExpectingDate(formattedDate);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

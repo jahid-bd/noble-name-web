@@ -359,8 +359,13 @@ const ProfileComplete = () => {
 
     if (hasErrors) return;
 
-    // If errors exist, return without submitting the form
-    if (!hasErrors) {
+    if (
+      !hasErrors &&
+      optionsState.age.value &&
+      optionsState.sect.value &&
+      optionsState.gender.value &&
+      optionsState.country.value
+    ) {
       updateProfile({
         age: optionsState.age.value,
         gender: optionsState.gender.value,

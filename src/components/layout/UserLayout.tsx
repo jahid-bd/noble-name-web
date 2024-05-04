@@ -1,5 +1,7 @@
 'use client';
 
+import { getUserProfile } from '@/services/api';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -17,6 +19,12 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     return setOpenNav(false);
   }, []);
 
+  const { data: user, isError } = useQuery({
+    queryKey: ['logged-in-user'],
+    queryFn: getUserProfile,
+    // enabled: isUserRoute || isAdminRoute,
+  });
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
     return () => {
@@ -27,7 +35,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <header className="bg-border-tertiary py-4 px-[6px]">
-        <div className="container flex justify-between items-center mx-auto">
+        <div className="container px-1.5 flex justify-between items-center mx-auto">
           <div className="md:h-16 md:w-44 relative w-[88px] h-8">
             <Link
               href="/"
@@ -37,39 +45,45 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             </Link>
           </div>
 
-          {/* <Link href="/sign-in">Sign In</Link> */}
+          {!user && (
+            <Link href="/auth/sign-in" className="text-primary">
+              Sign In
+            </Link>
+          )}
 
-          <div className="relative">
-            <div className="flex gap-4 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
-              <svg
-                className="cursor-pointer"
-                onClick={() => setOpenNav((prev) => !prev)}
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 12H21M3 6H21M3 18H21"
-                  stroke="#344054"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+          {!isError && user && (
+            <div className="relative">
+              <div className="flex gap-4 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
+                <svg
+                  className="cursor-pointer"
+                  onClick={() => setOpenNav((prev) => !prev)}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 12H21M3 6H21M3 18H21"
+                    stroke="#344054"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
 
-              <div className="md:h-10 md:w-10 relative w-[30px] h-[30px] rounded-full overflow-hidden">
-                <Image fill alt="Noble Names Logo" src="/images/Avatar.png" />
+                <div className="md:h-10 md:w-10 relative w-[30px] h-[30px] rounded-full overflow-hidden">
+                  <Image fill alt="Noble Names Logo" src="/images/Avatar.png" />
+                </div>
               </div>
+
+              {openNav && !isError && user && (
+                <div ref={navRef}>
+                  <UserNavList />
+                </div>
+              )}
             </div>
-
-            {openNav && (
-              <div ref={navRef}>
-                <UserNavList />
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </header>
 

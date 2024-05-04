@@ -26,8 +26,7 @@ const AdminNameCardSection = ({
         ))}
       </div>
 
-      {Number(names?.data?.pagination?.totalItems) >
-        Number(names?.data?.pagination?.limit) && (
+      {names?.data?.pagination?.totalItems > names?.data?.pagination?.limit && (
         <GlobalPagination
           page={Number(names?.data?.pagination?.page)}
           totalPage={Number(names?.data?.pagination?.totalPage)}

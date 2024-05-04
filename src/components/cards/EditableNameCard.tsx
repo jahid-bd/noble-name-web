@@ -59,7 +59,7 @@ const EditableNameCard = ({
         </div>
       </div>
 
-      <div
+      {/* <div
         className={`absolute h-[70px] left-0 right-0 bottom-0 bg-white bg-opacity-80 cursor-pointer ${
           isHover ? 'block' : 'hidden'
         }`}
@@ -79,7 +79,7 @@ const EditableNameCard = ({
             Edit
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

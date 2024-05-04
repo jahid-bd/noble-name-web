@@ -8,7 +8,6 @@ import PreLoader from '../loader/Loader';
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const userRoutes = [
-    '/',
     '/settings',
     '/name-search',
     '/subscription',
