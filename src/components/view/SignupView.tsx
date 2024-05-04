@@ -26,6 +26,7 @@ const SignupView = () => {
     email: '',
     password: '',
   };
+
   const [formState, setFormState] = useState({ ...initialValues });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

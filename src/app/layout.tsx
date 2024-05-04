@@ -1,7 +1,10 @@
+import AuthProvider from '@/components/layout/AuthProvider';
 import QueryProvider from '@/components/providers/QueryProvider';
+import { Inter } from 'next/font/google';
+
 import axios from 'axios';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import urlJoin from 'url-join';
@@ -33,7 +36,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryProvider>
         <ToastContainer />
       </body>
     </html>
