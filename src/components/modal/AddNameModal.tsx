@@ -1,5 +1,9 @@
 'use client';
+import { createSuggestedName } from '@/services/api';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import InputField from '../form/InputField';
 import SelectInput from '../form/SelectInput';
@@ -37,13 +41,26 @@ const originOptions = [
 
 const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
   const initialValues = {
-    gender: genderOptions[0].value,
-    origin: originOptions[0].value,
+    gender: '',
+    origin: '',
     meanings: '',
     arabic_name: '',
     english_name: '',
   };
+  const [serverError, setserverError] = useState<string>();
   const [formState, setFormState] = useState({ ...initialValues });
+
+  const { mutate: addSuggestedName, isPending } = useMutation({
+    mutationFn: (data: any) => createSuggestedName(data),
+    onError: (error: any) => {
+      console.log('error', error.message);
+      setserverError(error.response.data.message);
+    },
+    onSuccess: (data) => {
+      setFormState(initialValues);
+      handleClose();
+    },
+  });
 
   const schema = yup
     .object({
@@ -65,12 +82,10 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
     .required();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(formState);
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleChangeTextarea = (e: any) => {
-    console.log(formState);
     const meaningArray = e.target.value.split(',');
     setFormState((prev) => ({ ...prev, [e.target.name]: meaningArray }));
   };
@@ -81,9 +96,27 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
   ) => {
     setFormState({
       ...formState,
-      [key]: option,
+      [key]: option.value,
     });
   };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    criteriaMode: 'all',
+    mode: 'all',
+  });
+
+  const onSubmit = (data: any) => {
+    console.log(data, 'data');
+    addSuggestedName(data);
+    console.log(data, 'submit');
+  };
+
+  // console.log(formState, errors);
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
@@ -127,9 +160,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
             </button>
           </div>
 
-          <form
-          // onSubmit={handleSubmit(onSubmit)}
-          >
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
               <InputField
                 type="text"
@@ -138,12 +169,16 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
                 onChange={handleChange}
                 placeholder="First name"
                 value={formState.english_name}
+                error={errors.english_name?.message}
               />
 
               <SelectInput
                 label="Gender"
                 options={genderOptions}
-                selectedOption={formState.gender}
+                error={errors.gender?.message}
+                selectedOption={genderOptions.find(
+                  (item) => item.value === formState?.gender,
+                )}
                 handleSelect={(opt) => handleSelect('gender', opt)}
               />
             </div>
@@ -155,13 +190,17 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
                 label="Arabic Spelling"
                 onChange={handleChange}
                 value={formState.arabic_name}
+                error={errors.arabic_name?.message}
                 placeholder="Enter Arabic spelling of the name"
               />
 
               <SelectInput
                 label="Origin"
                 options={originOptions}
-                selectedOption={formState.origin}
+                error={errors.origin?.message}
+                selectedOption={originOptions.find(
+                  (item) => item.value === formState?.origin,
+                )}
                 handleSelect={(opt) => handleSelect('origin', opt)}
               />
             </div>
@@ -171,6 +210,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
                 label="Meaning"
                 name="meanings"
                 onChange={handleChangeTextarea}
+                error={errors.meanings?.message}
                 value={formState?.meanings?.toString()}
                 placeholder="Enter Arabic spelling of the name"
               />
@@ -178,7 +218,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
 
             <div className="flex justify-center md:justify-start">
               <button
-                type="button"
+                type="submit"
                 className="py-2.5 px-20 rounded-lg bg-primary text-white text-base font-medium"
               >
                 Submit For Approval
