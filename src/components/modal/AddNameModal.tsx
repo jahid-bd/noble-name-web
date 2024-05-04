@@ -1,10 +1,5 @@
 'use client';
-import { createSuggestedName } from '@/services/api';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import InputField from '../form/InputField';
 import SelectInput from '../form/SelectInput';
 import TextareaField from '../form/TextareaField';
@@ -39,7 +34,13 @@ const originOptions = [
   },
 ];
 
-const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
+const AddNameModal = ({
+  handleClose,
+  handleSubmitForm,
+}: {
+  handleClose: () => void;
+  handleSubmitForm: (data: any) => void;
+}) => {
   const initialValues = {
     gender: '',
     origin: '',
@@ -49,45 +50,42 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
   };
   const [serverError, setserverError] = useState<string>();
   const [formState, setFormState] = useState({ ...initialValues });
-
-  const { mutate: addSuggestedName, isPending } = useMutation({
-    mutationFn: (data: any) => createSuggestedName(data),
-    onError: (error: any) => {
-      console.log('error', error.message);
-      setserverError(error.response.data.message);
+  const [errors, setErrors] = useState({
+    english_name: {
+      message: 'Please enter english name',
+      error: false,
     },
-    onSuccess: (data) => {
-      setFormState(initialValues);
-      handleClose();
+    arabic_name: {
+      message: 'Please enter arabic name',
+      error: false,
+    },
+    gender: {
+      message: 'Please select gender',
+      error: false,
+    },
+    origin: {
+      message: 'Please select origin',
+      error: false,
+    },
+    meanings: {
+      message: 'Please enter name meanings',
+      error: false,
     },
   });
-
-  const schema = yup
-    .object({
-      english_name: yup
-        .string()
-        .trim()
-        .nullable()
-        .required('Please enter an email address')
-        .min(3, 'Name must be at least 3 characters'),
-      arabic_name: yup
-        .string()
-        .trim()
-        .required('Please enter a valid name')
-        .min(3, 'Name must be at least 3 characters'),
-      gender: yup.string().trim().required('Please select gender'),
-      origin: yup.string().trim().required('Please select origin'),
-      meanings: yup.array().required('Please enter meaning'),
-    })
-    .required();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleChangeTextarea = (e: any) => {
-    const meaningArray = e.target.value.split(',');
-    setFormState((prev) => ({ ...prev, [e.target.name]: meaningArray }));
+    if (e.target.value.length > 0) {
+      const meaningArray = e.target.value.split(',');
+      return setFormState((prev) => ({
+        ...prev,
+        [e.target.name]: meaningArray,
+      }));
+    }
+    setFormState((prev) => ({ ...prev, [e.target.name]: '' }));
   };
 
   const handleSelect = (
@@ -100,23 +98,100 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
     });
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    criteriaMode: 'all',
-    mode: 'all',
-  });
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
 
-  const onSubmit = (data: any) => {
-    console.log(data, 'data');
-    addSuggestedName(data);
-    console.log(data, 'submit');
+    setErrors({
+      english_name: {
+        message: 'Please enter english name',
+        error: false,
+      },
+      arabic_name: {
+        message: 'Please enter arabic name',
+        error: false,
+      },
+      gender: {
+        message: 'Please select gender',
+        error: false,
+      },
+      origin: {
+        message: 'Please select origin',
+        error: false,
+      },
+      meanings: {
+        message: 'Please enter name meanings',
+        error: false,
+      },
+    });
+
+    // Update error states based on form values
+    if (!formState?.english_name) {
+      setErrors((prev) => ({
+        ...prev,
+        english_name: {
+          ...prev.english_name,
+          error: true,
+        },
+      }));
+    }
+
+    if (!formState?.arabic_name) {
+      setErrors((prev) => ({
+        ...prev,
+        arabic_name: {
+          ...prev.arabic_name,
+          error: true,
+        },
+      }));
+    }
+
+    if (!formState?.gender) {
+      setErrors((prev) => ({
+        ...prev,
+        gender: {
+          ...prev.gender,
+          error: true,
+        },
+      }));
+    }
+
+    if (!formState?.origin) {
+      setErrors((prev) => ({
+        ...prev,
+        origin: {
+          ...prev.origin,
+          error: true,
+        },
+      }));
+    }
+
+    if (!formState?.meanings) {
+      setErrors((prev) => ({
+        ...prev,
+        meanings: {
+          ...prev.meanings,
+          error: true,
+        },
+      }));
+    }
+
+    // Check if any errors exist
+    const hasErrors = Object.values(errors).some((field) => field.error);
+
+    if (hasErrors) return;
+
+    if (
+      !hasErrors &&
+      formState.english_name &&
+      formState?.english_name &&
+      formState?.gender &&
+      formState?.origin &&
+      formState?.meanings?.length > 0
+    ) {
+      handleSubmitForm(formState);
+      // addSuggestedName(formState);
+    }
   };
-
-  // console.log(formState, errors);
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
@@ -160,7 +235,7 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
               <InputField
                 type="text"
@@ -169,13 +244,15 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
                 onChange={handleChange}
                 placeholder="First name"
                 value={formState.english_name}
-                error={errors.english_name?.message}
+                error={
+                  errors.english_name?.error && errors.english_name?.message
+                }
               />
 
               <SelectInput
                 label="Gender"
                 options={genderOptions}
-                error={errors.gender?.message}
+                error={errors.english_name?.error && errors.gender?.message}
                 selectedOption={genderOptions.find(
                   (item) => item.value === formState?.gender,
                 )}
@@ -190,18 +267,18 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
                 label="Arabic Spelling"
                 onChange={handleChange}
                 value={formState.arabic_name}
-                error={errors.arabic_name?.message}
+                error={errors.arabic_name?.error && errors.arabic_name?.message}
                 placeholder="Enter Arabic spelling of the name"
               />
 
               <SelectInput
                 label="Origin"
                 options={originOptions}
-                error={errors.origin?.message}
                 selectedOption={originOptions.find(
                   (item) => item.value === formState?.origin,
                 )}
                 handleSelect={(opt) => handleSelect('origin', opt)}
+                error={errors.origin?.error && errors.origin?.message}
               />
             </div>
 
@@ -210,11 +287,19 @@ const AddNameModal = ({ handleClose }: { handleClose: () => void }) => {
                 label="Meaning"
                 name="meanings"
                 onChange={handleChangeTextarea}
-                error={errors.meanings?.message}
                 value={formState?.meanings?.toString()}
                 placeholder="Enter Arabic spelling of the name"
+                error={errors.meanings?.error && errors.meanings?.message}
               />
             </div>
+
+            {serverError && (
+              <div className="pb-3">
+                <p className="text-sm text-center text-red-500">
+                  {serverError}
+                </p>
+              </div>
+            )}
 
             <div className="flex justify-center md:justify-start">
               <button

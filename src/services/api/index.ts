@@ -107,6 +107,19 @@ export const getAllName = (page: number) =>
     withCredentials: true,
   });
 
+export const createNameUsingCSV = (data: any) =>
+  axios.post(`${BASE_URL}/names/csv`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    withCredentials: true,
+  });
+
+export const createNameUsingForm = (data: object) =>
+  axios.post(`${BASE_URL}/names`, data, {
+    withCredentials: true,
+  });
+
 export const getAllRequestedName = (page: number) =>
   axios.get(`${BASE_URL}/suggestion-names`, {
     params: { limit: 9, page },

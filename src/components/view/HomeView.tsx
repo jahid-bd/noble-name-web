@@ -4,20 +4,38 @@ import ChildHand from '@/assets/images/child_hand.jpg';
 import Button from '@/components/buttons/Button';
 import InputField from '@/components/form/InputField';
 import NameSearchSection from '@/components/section/NameSearchSection';
-import { getAllBlog, getUserProfile } from '@/services/api';
-import { useQuery } from '@tanstack/react-query';
+import {
+  createSuggestedName,
+  getAllBlog,
+  getUserProfile,
+} from '@/services/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import AddNameModal from '../modal/AddNameModal';
 import BlogHomeCardSection from '../section/BlogHomeCardSection';
 
 const HomeView = () => {
+  const [openAddName, setOpenAddName] = useState(false);
+
   const { data: blogs } = useQuery({
     queryKey: ['blogs'],
     queryFn: () => getAllBlog(1, 3),
   });
 
-  const [openAddName, setOpenAddName] = useState(false);
+  const { mutate: addSuggestedName, isPending } = useMutation({
+    mutationFn: (data: any) => createSuggestedName(data),
+    onError: (error: any) => {
+      console.log('error', error.message);
+      toast.error('Suggested name not be added');
+    },
+    onSuccess: (data) => {
+      // setFormState(initialValues);
+      toast.success('Add suggested name successfully');
+      setOpenAddName(false);
+    },
+  });
 
   useEffect(() => {
     if (openAddName) {
@@ -162,7 +180,10 @@ const HomeView = () => {
       </section>
 
       {openAddName && (
-        <AddNameModal handleClose={() => setOpenAddName(false)} />
+        <AddNameModal
+          handleClose={() => setOpenAddName(false)}
+          handleSubmitForm={addSuggestedName}
+        />
       )}
     </main>
   );
