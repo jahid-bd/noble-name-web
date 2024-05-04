@@ -117,6 +117,7 @@ const NameCard = ({ name }: { name: any }) => {
         <div className="flex items-center gap-2">
           {name?.name?.tags?.map((tag: string) => (
             <p
+              key={tag}
               className={`px-2 py-0.5 rounded-full text-white text-xs font-medium ${
                 name?.name?.gender === 'female'
                   ? 'bg-dark-pink'

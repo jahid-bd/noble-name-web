@@ -22,7 +22,11 @@ const AdminBlogCardSection = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
         {blogs?.data?.data?.map((item: any) => (
-          <EditableBlogCard blog={item} handleDelete={handleDelete} />
+          <EditableBlogCard
+            key={item?._id}
+            blog={item}
+            handleDelete={handleDelete}
+          />
         ))}
       </div>
 

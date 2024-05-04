@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 const LETTER = [
   { id: 1, value: 'a' },
   { id: 2, value: 'b' },
@@ -27,7 +29,15 @@ const LETTER = [
   { id: 26, value: 'z' },
 ];
 
-const LetterInput = ({ label }: { label: string }) => {
+const LetterInput = ({
+  label,
+  onClick,
+  selected,
+}: {
+  label: string;
+  onClick: (value: string) => void;
+  selected: string;
+}) => {
   return (
     <div>
       <p className="font-medium text-sm text-text-secondary pb-[6px] block">
@@ -39,7 +49,11 @@ const LetterInput = ({ label }: { label: string }) => {
           <button
             type="button"
             key={item?.id}
-            className="px-2 py-1 shadow-modal rounded-lg border  border-border-primary text-sm font-medium text-text-secondary capitalize"
+            className={clsx(
+              'px-2 py-1 shadow-modal rounded-lg border  border-border-primary text-sm font-medium text-text-secondary capitalize',
+              selected === item.value && 'bg-primary text-white'
+            )}
+            onClick={() => onClick(item.value)}
           >
             {item.value}
           </button>
