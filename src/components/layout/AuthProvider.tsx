@@ -4,15 +4,36 @@ import { getUserProfile } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import { redirect, usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
+import PreLoader from '../loader/Loader';
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const userRoutes = ['/'];
-  const adminRoutes = [''];
+  const userRoutes = [
+    '/',
+    '/settings',
+    '/name-search',
+    '/subscription',
+    'dashboard?tab=favorites',
+  ];
+  const adminRoutes = [
+    '/admin/name',
+    '/admin/blog',
+    '/admin/dashboard',
+    '/admin/name-requested',
+  ];
+  const publicRoutes = [
+    '/auth/sign-in',
+    '/auth/sign-up',
+    '/auth/verify-otp',
+    '/auth/forgot-password',
+    '/auth/reset-password',
+    '/auth/reset-password',
+  ];
 
   const path = usePathname();
 
   const isUserRoute = userRoutes.includes(path);
   const isAdminRoute = adminRoutes.includes(path);
+  const isPublicRoute = publicRoutes.includes(path);
 
   const { data: user, isFetching } = useQuery({
     queryKey: ['user'],
@@ -23,16 +44,26 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAuthneticate = Boolean(user?._id);
   const isAdmin = user?.role === 'admin';
 
+  if (isAuthneticate && isPublicRoute && !isAdmin) {
+    redirect('/');
+  }
+
+  if (isAuthneticate && isPublicRoute && isAdmin) {
+    redirect('/admin/dashboard');
+  }
+
   if (!isFetching) {
     if (isUserRoute && !isAuthneticate) return redirect('auth/sign-in');
 
     if (isAdminRoute && !isAdmin) return redirect('/');
   }
 
-  // if (isFetching)
-  //   return (
-  //     <h1 className="text-primary text-4xl text-center mt-10">Loading...</h1>
-  //   );
+  if (isFetching)
+    return (
+      <div className="w-full h-screen justify-center items-center">
+        <PreLoader />
+      </div>
+    );
 
   return <>{children}</>;
 };

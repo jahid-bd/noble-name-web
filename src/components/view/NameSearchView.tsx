@@ -51,7 +51,7 @@ const NameSearchView = () => {
 
         <div className="flex justify-between items-center mb-4 md:mb-6">
           <p className="text-base font-semibold text-text-tertiary">
-            {names?.data?.data?.length} results
+            {names?.data?.pagination?.totalItems} results
           </p>
 
           <button
@@ -90,19 +90,22 @@ const NameSearchView = () => {
                     meanings: item.meanings,
                     tags: item.tags,
                     gender: item.gender,
-                    isFavorite: item.isFavorite,
-                    isBookmarked: item.isBookmarked,
                   },
+                  isFavorite: item.isFavorite,
+                  isBookmarked: item.isBookmarked,
                 }}
               />
             ))}
           </>
         </div>
 
-        <GlobalPagination
-          page={names?.data?.pagination?.page}
-          totalPage={names?.data?.pagination?.totalPage}
-        />
+        {names?.data?.pagination?.totalItems >
+          names?.data?.pagination?.limit && (
+          <GlobalPagination
+            page={names?.data?.pagination?.page}
+            totalPage={names?.data?.pagination?.totalPage}
+          />
+        )}
       </div>
 
       {openFilter && (

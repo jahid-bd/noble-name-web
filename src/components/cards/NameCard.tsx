@@ -84,6 +84,8 @@ const NameCard = ({ name }: { name: any }) => {
     };
   }, [handleClickOutside]);
 
+  console.log(name);
+
   return (
     <div
       className={`p-5 rounded-xl flex flex-col gap-4 relative ${
@@ -110,7 +112,7 @@ const NameCard = ({ name }: { name: any }) => {
       </div>
 
       <p className="mb-10 text-white text-xs font-normal">
-        {name?.name?.meanings.toString()}
+        {name?.name?.meanings?.toString()}
       </p>
 
       <div className="flex justify-between items-center">

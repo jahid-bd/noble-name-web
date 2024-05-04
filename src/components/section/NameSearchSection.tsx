@@ -13,11 +13,11 @@ const genderOptions = [
     label: 'Select gender',
   },
   {
-    value: 'boy',
+    value: 'male',
     label: 'Boy',
   },
   {
-    value: 'girl',
+    value: 'female',
     label: 'Girl',
   },
 ];
@@ -46,7 +46,7 @@ const NameSearchSection = () => {
       }
       return params.toString();
     },
-    [searchParams]
+    [searchParams],
   );
 
   const [optionsState, setOptionsState] = useState({
@@ -58,7 +58,7 @@ const NameSearchSection = () => {
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string }
+    option: { value: string; label: string },
   ) => {
     setOptionsState({
       ...optionsState,
@@ -75,14 +75,21 @@ const NameSearchSection = () => {
   };
 
   const onSearch = () => {
-    const queryParams = {
-      search: searchValue,
+    const queryParams: any = {
       language: optionsState.language.value,
-      gender: optionsState.gender.value,
+
       search_by: searchBy,
     };
 
-    router.push(pathname + '?' + createQueryString(queryParams));
+    if (optionsState.gender.value) {
+      queryParams.gender = optionsState.gender.value;
+    }
+
+    if (searchValue) {
+      queryParams.search = searchValue;
+    }
+
+    router.push('/name-search' + '?' + createQueryString(queryParams));
   };
 
   useEffect(() => {
