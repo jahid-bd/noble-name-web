@@ -1,11 +1,23 @@
-const AnalyticsCard = () => {
+interface cardPropsType {
+  title: string;
+  value: string;
+  comparer?: string;
+  progress?: boolean;
+  progressValue: number;
+}
+
+const AnalyticsCard = ({
+  title,
+  value,
+  comparer,
+  progress,
+  progressValue,
+}: cardPropsType) => {
   return (
     <div className="shadow-sm p-6 rounded-xl bg-white">
-      <p className="text-base font-semibold text-text-primary mb-6">
-        Total Searches
-      </p>
+      <p className="text-base font-semibold text-text-primary mb-6">{title}</p>
 
-      <p className="text-4xl font-semibold text-text-primary mb-4">20.8k</p>
+      <p className="text-4xl font-semibold text-text-primary mb-4">{value}</p>
 
       <p className="flex items-center text-sm">
         <svg
@@ -24,7 +36,7 @@ const AnalyticsCard = () => {
           />
         </svg>
 
-        <span className="text-border-success">12%</span>
+        <span className="text-border-success">{progressValue}%</span>
         <span className="text-text-tertiary">vs last month</span>
       </p>
     </div>

@@ -33,10 +33,29 @@ const AdminDashboardView = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <AnalyticsCard />
-        <AnalyticsCard />
-        <AnalyticsCard />
-        <AnalyticsCard />
+        <AnalyticsCard
+          value="20.8k"
+          progressValue={12}
+          title="Total Searches"
+        />
+
+        <AnalyticsCard
+          value="26.4k"
+          progressValue={2}
+          title="Total Search Page Visit"
+        />
+
+        <AnalyticsCard
+          value="300k"
+          progressValue={2}
+          title="Total Registered Users"
+        />
+
+        <AnalyticsCard
+          value="14k"
+          progressValue={12}
+          title="Total Unregistered Users"
+        />
       </div>
 
       <div className="mb-6">
@@ -44,10 +63,13 @@ const AdminDashboardView = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-5">
-        <AnalyticsCard />
-        <AnalyticsCard />
-        <AnalyticsCard />
-        <AnalyticsCard />
+        <AnalyticsCard value="90000" progressValue={12} title="Bounce Rate %" />
+
+        <AnalyticsCard value="3899" title="Loved" progressValue={2} />
+
+        <AnalyticsCard value="4300" title="Favorites" progressValue={2} />
+
+        <AnalyticsCard value="2378" progressValue={12} title="Shared" />
       </div>
     </div>
   );

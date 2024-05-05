@@ -14,11 +14,11 @@ import NotFound from '../loader/NotFound';
 import NameFilterModal from '../modal/NameFilterModal';
 
 const NameSearchView = () => {
-  const [openFilter, setOpenFilter] = useState(false);
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const [openFilter, setOpenFilter] = useState(false);
 
   const params = searchParams.toString();
-  const router = useRouter();
 
   const handleReset = () => {
     router.push('/name-search');
@@ -42,8 +42,6 @@ const NameSearchView = () => {
     queryKey: ['names', params],
     queryFn: () => getNames(params),
   });
-
-  console.log(names);
 
   return (
     <main className="bg-white pb-[60px] md:pb-[60px]">

@@ -1,6 +1,7 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import useSearchQueryParam from '@/hooks/useSearchQueryParam';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import RadioButton from '../form/RadioButton';
 import SelectInput from '../form/SelectInput';
 import LetterInput from '../inputs/LetterInput';
@@ -26,9 +27,11 @@ const NameFilterModal = ({
   handleCloseFilter: () => void;
 }) => {
   const [tab, setTab] = useState('');
-  const [origin, setOrigin] = useState(originOptions[0]);
-  const [startLetter, setStartLetter] = useState('');
+  const searchParams = useSearchParams();
   const [endLetter, setEndLetter] = useState('');
+  const [startLetter, setStartLetter] = useState('');
+  const [origin, setOrigin] = useState(originOptions[0]);
+  const { setQueryParams, deleteParams } = useSearchQueryParam();
 
   const handleStartLetter = (value: string) => {
     setStartLetter(value);
@@ -38,66 +41,63 @@ const NameFilterModal = ({
     setEndLetter(value);
   };
 
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const pathname = usePathname();
-
-  const createQueryString = useCallback(
-    (paramsObject: object) => {
-      const params = new URLSearchParams(searchParams.toString());
-      for (const [key, value] of Object.entries(paramsObject)) {
-        params.set(key, value);
-      }
-      return params.toString();
-    },
-    [searchParams],
-  );
 
   const onFilter = () => {
     const queryParams: any = {};
+    let url: string = searchParams.toString();
+    console.log(origin);
 
-    if (origin.value) {
-      queryParams.origin = origin.value;
-    }
-
-    if (startLetter) {
-      queryParams.strting_letter = startLetter;
-    }
-
-    if (endLetter) {
-      queryParams.ending_letter = endLetter;
-    }
+    url = origin.value
+      ? setQueryParams(url, 'origin', origin.value)
+      : deleteParams(url, 'origin');
+    url = startLetter
+      ? setQueryParams(url, 'starting_letter', startLetter)
+      : deleteParams(url, 'starting_letter');
+    url = endLetter
+      ? setQueryParams(url, 'ending_letter', endLetter)
+      : deleteParams(url, 'ending_letter');
 
     if (tab === '0to4') {
-      queryParams.letter_range_from = 0;
-      queryParams.letter_range_to = 4;
-    }
-    if (tab === '4to6') {
-      queryParams.letter_range_from = 4;
-      queryParams.letter_range_to = 6;
-    }
-    if (tab === '7+') {
-      queryParams.letter_range_from = 7;
-      queryParams.letter_range_to = null;
+      url = setQueryParams(url, 'letter_range_from', '0');
+      url = setQueryParams(url, 'letter_range_to', '4');
+    } else if (tab === '4to6') {
+      url = setQueryParams(url, 'letter_range_from', '4');
+      url = setQueryParams(url, 'letter_range_to', '6');
+    } else if (tab === '7+') {
+      url = setQueryParams(url, 'letter_range_from', '7');
+      url = setQueryParams(url, 'letter_range_to', 'null');
+    } else {
+      url = deleteParams(url, 'letter_range_from');
+      url = deleteParams(url, 'letter_range_to');
     }
 
-    router.push(pathname + '?' + createQueryString(queryParams));
+    router.push(`/name-search${url ? `?${url}` : ''}`);
     handleCloseFilter();
   };
 
-  // useEffect(() => {
-  //   const newParams: any = {};
+  useEffect(() => {
+    const origin = searchParams.get('origin');
+    const starting_letter = searchParams.get('starting_letter');
+    const ending_letter = searchParams.get('ending_letter');
+    const letter_range_from = searchParams.get('letter_range_from');
+    const letter_range_to = searchParams.get('letter_range_to');
 
-  //   if (
-  //     searchParams.get('letter_range_from') &&
-  //     searchParams.get('letter_range_to')
-  //   ) {
-  //     newParams.letter_range_from = searchParams.get('letter_range_from');
-  //     newParams.letter_range_to = searchParams.get('letter_range_to');
-  //   }
-  // }, []);
+    if (origin) {
+      const find = originOptions.find((item) => item.value === origin);
 
-  console.log(searchParams);
+      find && setOrigin(find);
+    }
+
+    ending_letter && setEndLetter(ending_letter);
+    starting_letter && setStartLetter(starting_letter);
+
+    if (letter_range_from && letter_range_to) {
+      letter_range_from === '0' && letter_range_to === '4' && setTab('0to4');
+      letter_range_from === '4' && letter_range_to === '6' && setTab('4to6');
+      letter_range_from === '7' && letter_range_to === 'null' && setTab('7+');
+    }
+  }, []);
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
@@ -178,8 +178,8 @@ const NameFilterModal = ({
             <SelectInput
               label="Origin"
               options={originOptions}
+              selectedOption={origin}
               handleSelect={(opt) => setOrigin(opt)}
-              selectedOption={originOptions[0]}
             />
           </div>
 

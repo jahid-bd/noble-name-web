@@ -7,8 +7,8 @@ import SelectInput from '@/components/form/SelectInput';
 import useSearchQueryParam from '@/hooks/useSearchQueryParam';
 import { getUserProfile } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const genderOptions = [
@@ -39,25 +39,14 @@ const languageOptions = [
 
 const NameSearchSection = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [searchBy, setSearchBy] = useState('name');
-  const { deleteParams } = useSearchQueryParam();
+  const [searchValue, setSearchValue] = useState('');
+  const { setQueryParams, deleteParams } = useSearchQueryParam();
   const [optionsState, setOptionsState] = useState({
     gender: genderOptions[0],
     language: languageOptions[0],
   });
-
-  const createQueryString = useCallback(
-    (paramsObject: object) => {
-      const params = new URLSearchParams(searchParams.toString());
-      for (const [key, value] of Object.entries(paramsObject)) {
-        params.set(key, value);
-      }
-      return params.toString();
-    },
-    [searchParams],
-  );
 
   const { data } = useQuery({
     queryKey: ['profile'],
@@ -72,84 +61,54 @@ const NameSearchSection = () => {
       ...optionsState,
       [key]: option,
     });
-
-    // router.push(pathname + '?' + createQueryString(key, option.label));
   };
-
-  const [searchValue, setSearchValue] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
   const onSearch = () => {
-    const queryParams = {
-      search: searchValue,
-      language: optionsState.language.value,
-      gender: optionsState.gender.value,
-      search_by: searchBy,
-    };
+    let url: any = searchParams.toString();
+
+    url = searchValue
+      ? setQueryParams(url, 'search', searchValue)
+      : deleteParams(url, 'search');
+    url = optionsState.language.value
+      ? setQueryParams(url, 'language', optionsState.language.value)
+      : deleteParams(url, 'language');
+    url = optionsState.gender.value
+      ? setQueryParams(url, 'gender', optionsState.gender.value)
+      : deleteParams(url, 'gender');
+    url = searchValue
+      ? setQueryParams(url, 'search_by', searchBy)
+      : deleteParams(url, 'search_by');
 
     if (data) {
-      router.push('/name-search' + '?' + createQueryString(queryParams));
+      router.push(`/name-search${url ? `?${url}` : ''}`);
     } else {
       toast.error('Please login before search');
     }
   };
 
   useEffect(() => {
-    const languageParam = searchParams.get('language');
-    const genderParam = searchParams.get('gender');
-
-    if (languageParam === 'english') {
-      setOptionsState((prev) => ({
-        ...prev,
-        language: {
-          value: 'english',
-          label: 'English',
-        },
-      }));
-    }
-
-    if (languageParam === 'arabic') {
-      setOptionsState((prev) => ({
-        ...prev,
-        language: {
-          value: 'arabic',
-          label: 'Arabic',
-        },
-      }));
-    }
-
-    if (genderParam === 'boy') {
-      setOptionsState((prev) => ({
-        ...prev,
-        gender: {
-          value: 'boy',
-          label: 'Boy',
-        },
-      }));
-    }
-
-    if (genderParam === 'girl') {
-      setOptionsState((prev) => ({
-        ...prev,
-        gender: {
-          value: 'girl',
-          label: 'Girl',
-        },
-      }));
-    }
-
     const search = searchParams.get('search');
-    console.log({ search });
-    if (search) {
-      setSearchValue(search);
+    const gender = searchParams.get('gender');
+    const language = searchParams.get('language');
+    const search_by = searchParams.get('search_by');
+
+    search && setSearchValue(search);
+    search_by && setSearchBy(search_by);
+
+    if (gender) {
+      const find = genderOptions.find((item) => item.value === gender);
+
+      find && setOptionsState((prev) => ({ ...prev, gender: find }));
     }
 
-    const serachBy = searchParams.get('search_by');
-    if (serachBy) {
-      setSearchBy(serachBy);
+    if (language) {
+      const find = languageOptions.find((item) => item.value === language);
+
+      find && setOptionsState((prev) => ({ ...prev, language: find }));
     }
   }, []);
 

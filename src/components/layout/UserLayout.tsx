@@ -31,8 +31,6 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     };
   }, [handleClickOutside]);
 
-  console.log(user);
-
   return (
     <>
       <header className="bg-border-tertiary py-4 px-[6px]">
