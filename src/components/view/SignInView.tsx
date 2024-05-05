@@ -172,11 +172,11 @@ const SignInView = () => {
               ) : null}
               <Button isLoading={isPending}>Sign in</Button>
             </div>
-
-            <div className="mt-4">
-              <GoogleSignupBtn text="Sign in with Google" />
-            </div>
           </form>
+
+          <div className="mt-4">
+            <GoogleSignupBtn text="Sign in with Google" />
+          </div>
         </div>
 
         {/* signin link */}

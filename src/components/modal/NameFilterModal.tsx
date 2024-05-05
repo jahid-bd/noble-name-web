@@ -25,7 +25,7 @@ const NameFilterModal = ({
 }: {
   handleCloseFilter: () => void;
 }) => {
-  const [tab, setTab] = useState('0to4');
+  const [tab, setTab] = useState('');
   const [origin, setOrigin] = useState(originOptions[0]);
   const [startLetter, setStartLetter] = useState('');
   const [endLetter, setEndLetter] = useState('');
@@ -50,7 +50,7 @@ const NameFilterModal = ({
       }
       return params.toString();
     },
-    [searchParams]
+    [searchParams],
   );
 
   const onFilter = () => {
@@ -84,6 +84,20 @@ const NameFilterModal = ({
     router.push(pathname + '?' + createQueryString(queryParams));
     handleCloseFilter();
   };
+
+  // useEffect(() => {
+  //   const newParams: any = {};
+
+  //   if (
+  //     searchParams.get('letter_range_from') &&
+  //     searchParams.get('letter_range_to')
+  //   ) {
+  //     newParams.letter_range_from = searchParams.get('letter_range_from');
+  //     newParams.letter_range_to = searchParams.get('letter_range_to');
+  //   }
+  // }, []);
+
+  console.log(searchParams);
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">

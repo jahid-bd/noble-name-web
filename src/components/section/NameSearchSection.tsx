@@ -4,8 +4,12 @@ import SearchBtn from '@/assets/icons/SarchBtn';
 import NameSearchBy from '@/components/buttons/NameSearchBy';
 import InputField from '@/components/form/InputField';
 import SelectInput from '@/components/form/SelectInput';
+import useSearchQueryParam from '@/hooks/useSearchQueryParam';
+import { getUserProfile } from '@/services/api';
+import { useQuery } from '@tanstack/react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const genderOptions = [
   {
@@ -37,6 +41,12 @@ const NameSearchSection = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [searchBy, setSearchBy] = useState('name');
+  const { deleteParams } = useSearchQueryParam();
+  const [optionsState, setOptionsState] = useState({
+    gender: genderOptions[0],
+    language: languageOptions[0],
+  });
 
   const createQueryString = useCallback(
     (paramsObject: object) => {
@@ -49,12 +59,10 @@ const NameSearchSection = () => {
     [searchParams],
   );
 
-  const [optionsState, setOptionsState] = useState({
-    gender: genderOptions[0],
-    language: languageOptions[0],
+  const { data } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getUserProfile,
   });
-
-  const [searchBy, setSearchBy] = useState('name');
 
   const handleSelect = (
     key: string,
@@ -75,26 +83,22 @@ const NameSearchSection = () => {
   };
 
   const onSearch = () => {
-    const queryParams: any = {
+    const queryParams = {
+      search: searchValue,
       language: optionsState.language.value,
-
+      gender: optionsState.gender.value,
       search_by: searchBy,
     };
 
-    if (optionsState.gender.value) {
-      queryParams.gender = optionsState.gender.value;
+    if (data) {
+      router.push('/name-search' + '?' + createQueryString(queryParams));
+    } else {
+      toast.error('Please login before search');
     }
-
-    if (searchValue) {
-      queryParams.search = searchValue;
-    }
-
-    router.push('/name-search' + '?' + createQueryString(queryParams));
   };
 
   useEffect(() => {
     const languageParam = searchParams.get('language');
-    console.log(languageParam);
     const genderParam = searchParams.get('gender');
 
     if (languageParam === 'english') {

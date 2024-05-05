@@ -1,6 +1,7 @@
 'use client';
 
 import FilterIcon from '@/assets/icons/FilterIcon';
+import ResetIcon from '@/assets/icons/ResetIcon';
 import NameCard from '@/components/cards/NameCard';
 import GlobalPagination from '@/components/pagination/GlobalPagination';
 import NameSearchSection from '@/components/section/NameSearchSection';
@@ -18,6 +19,10 @@ const NameSearchView = () => {
 
   const params = searchParams.toString();
   const router = useRouter();
+
+  const handleReset = () => {
+    router.push('/name-search');
+  };
 
   useEffect(() => {
     if (openFilter) {
@@ -54,15 +59,27 @@ const NameSearchView = () => {
             {names?.data?.pagination?.totalItems} results
           </p>
 
-          <button
-            type="button"
-            onClick={() => setOpenFilter(true)}
-            className="flex items-center gap-1.5 text-text-secondary border border-border-primary rounded-lg drop-shadow-btn-shadow-xs px-3.5 py-2.5"
-          >
-            <FilterIcon />
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleReset}
+              className="flex items-center gap-1.5 text-text-secondary border border-border-primary rounded-lg drop-shadow-btn-shadow-xs px-3.5 py-2.5"
+            >
+              <ResetIcon />
 
-            <span>Filter Results</span>
-          </button>
+              <span>Reset</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setOpenFilter(true)}
+              className="flex items-center gap-1.5 text-text-secondary border border-border-primary rounded-lg drop-shadow-btn-shadow-xs px-3.5 py-2.5"
+            >
+              <FilterIcon />
+
+              <span>Filter Results</span>
+            </button>
+          </div>
         </div>
 
         {isLoading && (

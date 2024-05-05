@@ -7,15 +7,15 @@ import TextareaField from '../form/TextareaField';
 const genderOptions = [
   {
     value: '',
-    label: 'Select origin',
+    label: 'Select gender',
   },
   {
-    value: 'male',
-    label: 'Male',
+    value: 'boy',
+    label: 'Boy',
   },
   {
-    value: 'female:',
-    label: 'Female',
+    value: 'girl',
+    label: 'Girl',
   },
 ];
 
@@ -29,8 +29,20 @@ const originOptions = [
     label: 'Arabic',
   },
   {
-    value: 'turkois:',
-    label: 'Turkois',
+    value: 'turkish',
+    label: 'Turkish',
+  },
+  {
+    value: 'urdu',
+    label: 'Urdu',
+  },
+  {
+    value: 'persian',
+    label: 'Persian',
+  },
+  {
+    value: 'kurdish',
+    label: 'Kurdish',
   },
 ];
 
@@ -48,7 +60,6 @@ const AddNameModal = ({
     arabic_name: '',
     english_name: '',
   };
-  const [serverError, setserverError] = useState<string>();
   const [formState, setFormState] = useState({ ...initialValues });
   const [errors, setErrors] = useState({
     english_name: {
@@ -189,7 +200,6 @@ const AddNameModal = ({
       formState?.meanings?.length > 0
     ) {
       handleSubmitForm(formState);
-      // addSuggestedName(formState);
     }
   };
 
@@ -199,7 +209,7 @@ const AddNameModal = ({
         <div className="px-4 py-8 md:px-8 bg-white rounded-[10px] shadow-modal">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-text-tertiary ">
-              Fill the above fields to add a name!
+              Add a New Name
             </h3>
 
             <button type="button" onClick={handleClose}>
@@ -242,7 +252,7 @@ const AddNameModal = ({
                 label="Name"
                 name="english_name"
                 onChange={handleChange}
-                placeholder="First name"
+                placeholder="Enter the name"
                 value={formState.english_name}
                 error={
                   errors.english_name?.error && errors.english_name?.message
@@ -288,18 +298,10 @@ const AddNameModal = ({
                 name="meanings"
                 onChange={handleChangeTextarea}
                 value={formState?.meanings?.toString()}
-                placeholder="Enter Arabic spelling of the name"
+                placeholder="What’s the meaning of the name "
                 error={errors.meanings?.error && errors.meanings?.message}
               />
             </div>
-
-            {serverError && (
-              <div className="pb-3">
-                <p className="text-sm text-center text-red-500">
-                  {serverError}
-                </p>
-              </div>
-            )}
 
             <div className="flex justify-center md:justify-start">
               <button

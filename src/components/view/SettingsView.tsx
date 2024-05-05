@@ -5,6 +5,7 @@ import { UserUpdateData } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import Button from '../buttons/Button';
 import InputField from '../form/InputField';
 import RadioButton from '../form/RadioButton';
@@ -151,14 +152,10 @@ const SettingsView = () => {
     },
   ];
 
-  // back data from state
   const { data: user } = useQuery({
     queryKey: ['profile'],
     queryFn: getUserProfile,
-    // enabled: isUserRoute || isAdminRoute,
   });
-
-  console.log(user);
 
   const [optionsState, setOptionsState] = useState<any>({
     age: ageOptions[0],
@@ -174,8 +171,6 @@ const SettingsView = () => {
   const [isParent, setIsParent] = useState<boolean | null>(null);
 
   const [expectingDate, setExpectingDate] = useState<Date | null | string>('');
-
-  console.log('date-->', expectingDate);
 
   const [serverError, setserverError] = useState<string>();
 
@@ -231,12 +226,11 @@ const SettingsView = () => {
   const { mutate: updateProfile, isPending } = useMutation({
     mutationFn: (data: UserUpdateData) => userProfileUpdate(data),
     onError: (error: any) => {
-      console.log('error', error);
       setserverError(error.response.data.message);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['profile'] });
-      console.log(data);
+      toast.success('User profile update successfully');
     },
   });
 
@@ -493,9 +487,6 @@ const SettingsView = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-
-  console.log('Form', formState);
-  console.log({ errors });
 
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px] ">

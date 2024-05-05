@@ -2,19 +2,15 @@
 
 import ChildHand from '@/assets/images/child_hand.jpg';
 import Button from '@/components/buttons/Button';
-import InputField from '@/components/form/InputField';
 import NameSearchSection from '@/components/section/NameSearchSection';
-import {
-  createSuggestedName,
-  getAllBlog,
-  getUserProfile,
-} from '@/services/api';
+import { createSuggestedName, getAllBlog } from '@/services/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AddNameModal from '../modal/AddNameModal';
 import BlogHomeCardSection from '../section/BlogHomeCardSection';
+import NewsLetterSection from '../section/NewsLetterSection';
 
 const HomeView = () => {
   const [openAddName, setOpenAddName] = useState(false);
@@ -24,14 +20,12 @@ const HomeView = () => {
     queryFn: () => getAllBlog(1, 3),
   });
 
-  const { mutate: addSuggestedName, isPending } = useMutation({
+  const { mutate: addSuggestedName } = useMutation({
     mutationFn: (data: any) => createSuggestedName(data),
     onError: (error: any) => {
-      console.log('error', error.message);
-      toast.error('Suggested name not be added');
+      toast.error(error?.response?.data?.message);
     },
-    onSuccess: (data) => {
-      // setFormState(initialValues);
+    onSuccess: () => {
       toast.success('Add suggested name successfully');
       setOpenAddName(false);
     },
@@ -46,14 +40,6 @@ const HomeView = () => {
       document.body.style.overflow = 'auto';
     }
   }, [openAddName]);
-
-  const handleChange = () => {
-    console.log('hello');
-  };
-  const { data } = useQuery({
-    queryKey: ['profile'],
-    queryFn: getUserProfile,
-  });
 
   return (
     <main className="bg-white pb-[60px] md:pb-[60px]">
@@ -104,38 +90,7 @@ const HomeView = () => {
         </div>
       </section>
 
-      <section className="bg-green-disabled py-16">
-        <div className="container mx-auto px-[6px]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:items-center">
-            <div>
-              <h3 className="text-3xl md:text-4xl font-semibold text-text-primary mb-3 text-center md:text-left">
-                Sign up for our newsletter
-              </h3>
-
-              <p className="text-text-tertiary text-lg md:text-xl font-normal text-center md:text-left">
-                Be the first to know about releases and industry news and
-                insights.
-              </p>
-            </div>
-
-            <form className="md:flex md:justify-end md:gap-4 md:items-center">
-              <div className="mb-4 md:mb-0">
-                <InputField
-                  type="email"
-                  name="email"
-                  value="Amanullha Zoha"
-                  placeholder="Enter your email"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <Button className="text-base">Subscribe</Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
+      <NewsLetterSection />
 
       <section className="bg-white py-16">
         <div className="container mx-auto px-[6px]">
@@ -181,8 +136,8 @@ const HomeView = () => {
 
       {openAddName && (
         <AddNameModal
-          handleClose={() => setOpenAddName(false)}
           handleSubmitForm={addSuggestedName}
+          handleClose={() => setOpenAddName(false)}
         />
       )}
     </main>

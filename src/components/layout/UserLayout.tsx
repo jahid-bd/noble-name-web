@@ -22,7 +22,6 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const { data: user, isError } = useQuery({
     queryKey: ['logged-in-user'],
     queryFn: getUserProfile,
-    // enabled: isUserRoute || isAdminRoute,
   });
 
   useEffect(() => {
@@ -31,6 +30,8 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, [handleClickOutside]);
+
+  console.log(user);
 
   return (
     <>
@@ -45,13 +46,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             </Link>
           </div>
 
-          {!user && (
-            <Link href="/auth/sign-in" className="text-primary">
-              Sign In
-            </Link>
-          )}
-
-          {!isError && user && (
+          {!isError && user ? (
             <div className="relative">
               <div className="flex gap-4 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
                 <svg
@@ -83,6 +78,10 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
                 </div>
               )}
             </div>
+          ) : (
+            <Link href="/auth/sign-in" className="text-primary">
+              Sign In
+            </Link>
           )}
         </div>
       </header>

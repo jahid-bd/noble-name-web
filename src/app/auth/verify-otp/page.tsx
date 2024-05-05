@@ -10,18 +10,16 @@ import { useState } from 'react';
 import OtpInput from 'react-otp-input';
 
 const EmailVerification = () => {
+  const router = useRouter();
   const [otp, setOtp] = useState('');
   const searchParams = useSearchParams();
+  const [serverError, setserverError] = useState<string>();
 
   const otp_id = searchParams.get('token');
-
-  const [serverError, setserverError] = useState<string>();
-  const router = useRouter();
 
   const { mutate: verify, isPending } = useMutation({
     mutationFn: (data: OtpParams) => verifyOtp(data),
     onError: (error: any) => {
-      console.log('error', error.message);
       setserverError(error.response.data.message);
     },
     onSuccess: (data) => {
@@ -39,8 +37,7 @@ const EmailVerification = () => {
 
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
-      <div className="w-full max-w-[500px] h-[622px] mx-auto">
-        {/* logo */}
+      <div className="w-full max-w-[500px] mx-auto">
         <div className="mb-8">
           <Link
             href="/"

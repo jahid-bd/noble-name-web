@@ -30,7 +30,6 @@ const SignupView = () => {
   const [formState, setFormState] = useState({ ...initialValues });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(formState);
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -41,10 +40,9 @@ const SignupView = () => {
   const { mutate: signup, isPending } = useMutation({
     mutationFn: (data: RegisterData) => userRegister(data),
     onError: (error: any) => {
-      console.log('error', error);
       setserverError(error.response.data.message);
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       setFormState(initialValues);
       router.push('/auth/email-verification');
     },
@@ -97,60 +95,53 @@ const SignupView = () => {
     signup(data);
   };
 
-  const handleAuth = () => {
-    router.push(`${BASE_URL}/auth/social`);
-  };
-
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
       <div className="w-full max-w-[360px] h-[622px] mx-auto">
-        {/* logo */}
         <div className="mb-8">
           <Link
             href="/"
             className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-row items-center justify-start"
           >
             <Image
-              className="h-16 w-44 relative object-cover mx-auto"
-              alt="Noble Names Logo"
-              src="/images/logo.png"
               width={176}
               height={64}
+              alt="Noble Names Logo"
+              src="/images/logo.png"
+              className="h-16 w-44 relative object-cover mx-auto"
             />
           </Link>
         </div>
 
-        {/* Title */}
         <div>
           <h1 className="heading-text text-center">Sign up</h1>
         </div>
 
-        {/* Signup Form */}
         <div className="my-8 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <InputField
                 type="text"
-                label="Name*"
                 name="name"
-                placeholder="Enter your name"
-                onChange={handleChange}
-                value={formState.name}
+                label="Name*"
                 register={register}
+                value={formState.name}
+                onChange={handleChange}
                 error={errors.name?.message}
+                placeholder="Enter your name"
                 className={serverError ? 'border-red-500' : ''}
               />
             </div>
             <div className="mb-5">
               <InputField
                 type="email"
-                label="Email*"
                 name="email"
-                placeholder="Enter your email"
+                label="Email*"
+                register={register}
                 onChange={handleChange}
                 value={formState.email}
-                register={register}
                 error={errors.email?.message}
+                placeholder="Enter your email"
                 className={serverError ? 'border-red-500' : ''}
               />
             </div>
@@ -158,14 +149,14 @@ const SignupView = () => {
             <div className="mb-5">
               <InputField
                 type="password"
-                label="Password*"
                 name="password"
-                placeholder="Create a password"
-                message="Must be at least 8 characters."
+                label="Password*"
+                register={register}
                 onChange={handleChange}
                 value={formState.password}
+                placeholder="Create a password"
                 error={errors.password?.message}
-                register={register}
+                message="Must be at least 8 characters."
                 className={serverError ? 'border-red-500' : ''}
               />
             </div>
@@ -183,16 +174,12 @@ const SignupView = () => {
 
             <div className="mt-4">
               <Link href={`${BASE_URL}/auth/social`}>
-                <GoogleSignupBtn
-                  text="Sign up with Google"
-                  // onClick={handleAuth}
-                />
+                <GoogleSignupBtn text="Sign up with Google" />
               </Link>
             </div>
           </form>
         </div>
 
-        {/* signin link */}
         <div className="flex items-center justify-center gap-1 mb-5">
           <p className="text-text-tertiary">Already have an account?</p>
           <Link href="/auth/sign-in">

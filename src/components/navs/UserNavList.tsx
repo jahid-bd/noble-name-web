@@ -14,8 +14,8 @@ const UserNavList = () => {
       toast.error(error.message);
     },
     onSuccess: (data: any) => {
-      toast.success('user logout successfully.');
       queryClient.invalidateQueries();
+      toast.success('user logout successfully.');
     },
   });
 
