@@ -8,12 +8,37 @@ import { toast } from 'react-toastify';
 import CreateBlogModal from '../modal/CreateBlogModal';
 import AdminBlogCardSection from '../section/AdminBlogCardSection';
 
+interface blogEditProps {
+  title: string;
+  slug: string;
+  thumbnail: string;
+  metaTittle: string;
+  description: string;
+  content: string;
+}
+
 const AdminBlogView = () => {
   const queryClient = useQueryClient();
+  const [editID, setEditID] = useState('');
   const [openForm, setOpenForm] = useState(false);
+  const [editBlogData, setEditBlogData] = useState<blogEditProps | null>();
 
   const searchParams = useSearchParams();
   const activePage = searchParams.get('page');
+
+  const handleEdit = (value: any) => {
+    if (value) {
+      setEditID(value?._id);
+      setEditBlogData({
+        slug: value?.slug,
+        title: value?.title,
+        content: value?.content,
+        thumbnail: value?.thumbnail,
+        metaTittle: value?.metaTittle,
+        description: value?.description,
+      });
+    }
+  };
 
   const {
     data: blogs,
@@ -63,10 +88,20 @@ const AdminBlogView = () => {
         blogs={blogs}
         isError={isError}
         isLoading={isLoading}
+        handleEdit={handleEdit}
         handleDelete={deleteBlog}
       />
 
       {openForm && <CreateBlogModal handleClose={() => setOpenForm(false)} />}
+      {editBlogData && editID && (
+        <CreateBlogModal
+          id={editID}
+          initialValues={editBlogData}
+          handleClose={() => {
+            setEditBlogData(null);
+          }}
+        />
+      )}
     </div>
   );
 };

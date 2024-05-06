@@ -108,6 +108,16 @@ export const getAllBlog = (page?: number, limit?: number) =>
     withCredentials: true,
   });
 
+export const createBlogApi = (data: object) =>
+  axios.post(`${BASE_URL}/blogs`, data, {
+    withCredentials: true,
+  });
+
+export const updateBlogApi = (data: object, id: string) =>
+  axios.put(`${BASE_URL}/blogs/${id}`, data, {
+    withCredentials: true,
+  });
+
 export const deleteBlogApi = (id: string) =>
   axios.delete(`${BASE_URL}/blogs/${id}`, {
     withCredentials: true,

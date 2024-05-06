@@ -157,8 +157,11 @@ const SignInView = () => {
                 </label>
               </div>
 
-              <Link href={'/auth/forgot-password'}>
-                <PlanButton>Forgot password</PlanButton>
+              <Link
+                href={'/auth/forgot-password'}
+                className="text-primary font-semibold hover:text-green-hover"
+              >
+                Forgot password
               </Link>
             </div>
 

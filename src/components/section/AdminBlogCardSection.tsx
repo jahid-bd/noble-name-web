@@ -7,12 +7,14 @@ const AdminBlogCardSection = ({
   blogs,
   isError,
   isLoading,
+  handleEdit,
   handleDelete,
 }: {
   blogs: any;
   isError: any;
   isLoading: any;
-  handleDelete: any;
+  handleEdit: (data: object) => void;
+  handleDelete: (id: string) => void;
 }) => {
   return (
     <>
@@ -23,8 +25,9 @@ const AdminBlogCardSection = ({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
         {blogs?.data?.data?.map((item: any) => (
           <EditableBlogCard
-            key={item?._id}
             blog={item}
+            key={item?._id}
+            handleEdit={handleEdit}
             handleDelete={handleDelete}
           />
         ))}

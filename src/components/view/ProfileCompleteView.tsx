@@ -350,12 +350,7 @@ const ProfileComplete = () => {
       }));
     }
 
-    // Add similar checks for other fields
-
-    // Check if any errors exist
     const hasErrors = Object.values(errors).some((field) => field.error);
-
-    console.log('has', hasErrors);
 
     if (hasErrors) return;
 

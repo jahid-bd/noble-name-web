@@ -5,8 +5,8 @@ interface InputProps {
   label?: string;
   name: string;
   placeholder?: string;
-  value: string | Date | null;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string | Date | null;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   message?: string;
   className?: string;
   register?: any;

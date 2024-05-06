@@ -3,10 +3,12 @@ import Link from 'next/link';
 
 const EditableBlogCard = ({
   blog,
+  handleEdit,
   handleDelete,
 }: {
   blog: any;
-  handleDelete: any;
+  handleEdit: (data: object) => void;
+  handleDelete: (id: string) => void;
 }) => {
   return (
     <div className="relative group">
@@ -38,7 +40,7 @@ const EditableBlogCard = ({
           </button>
           <button
             type="button"
-            // onClick={handleEdit}
+            onClick={() => handleEdit(blog)}
             className="w-full bg-primary rounded-md text-base font-semibold text-white px-2.5 py-2 flex items-center justify-center button-hover"
           >
             Edit
