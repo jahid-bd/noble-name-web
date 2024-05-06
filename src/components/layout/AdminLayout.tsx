@@ -7,7 +7,15 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import AdminNavList from '../navs/AdminNavList';
 
-const AdminLink = ({ href, title }: { href: string; title: string }) => {
+const AdminLink = ({
+  href,
+  title,
+  children,
+}: {
+  href: string;
+  title: string;
+  children: any;
+}) => {
   const activePath = usePathname();
 
   return (
@@ -17,7 +25,7 @@ const AdminLink = ({ href, title }: { href: string; title: string }) => {
         activePath === href && 'bg-border-secondary'
       }`}
     >
-      <DashboardIcon />
+      {children}
 
       <span>{title}</span>
     </Link>
@@ -104,17 +112,23 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
 
             <div className="flex flex-col gap-5">
-              <AdminLink href="/admin/dashboard" title="Dashboard" />
-              <AdminLink href="/admin/name" title="Name" />
-              <AdminLink href="/admin/name-requested" title="Name Request" />
-              <AdminLink href="/admin/blog" title="Blog" />
+              <AdminLink href="/admin/dashboard" title="Dashboard">
+                <DashboardIcon />
+              </AdminLink>
+
+              <AdminLink href="/admin/name" title="Name">
+                <DashboardIcon />
+              </AdminLink>
+
+              <AdminLink href="/admin/name-requested" title="Name Requested">
+                <DashboardIcon />
+              </AdminLink>
+
+              <AdminLink href="/admin/blog" title="Blog">
+                <DashboardIcon />
+              </AdminLink>
             </div>
           </div>
-
-          {/* <div className="flex flex-col gap-5">
-            <AdminLink href="/" title="Support Request" />
-            <AdminLink href="/" title="Setting" />
-          </div> */}
         </aside>
 
         <div className="w-[1200px] py-14 px-8 bg-gray-bg h-screen overflow-y-auto">

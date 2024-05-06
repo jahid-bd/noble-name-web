@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 interface FormType {
@@ -38,6 +39,7 @@ const ForgotPass = () => {
     },
     onSuccess: (data) => {
       setFormState(initialValues);
+      toast.success('Sent OTP on your mail successfully.');
 
       router.push(`${'/auth/verify-otp'}?token=${data?.data?.data?.id}`);
     },

@@ -16,12 +16,10 @@ const UserNavList = () => {
       toast.error(error.message);
     },
     onSuccess: (data: any) => {
-      queryClient.invalidateQueries();
       toast.success('user logout successfully.');
+      queryClient.invalidateQueries();
     },
   });
-
-  console.log(pathname);
 
   return (
     <div className="absolute right-0 top-[52px] md:top-[72px]">

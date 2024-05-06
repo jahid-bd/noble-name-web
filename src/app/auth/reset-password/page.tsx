@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 interface FormType {
@@ -43,6 +44,7 @@ const ResetPass = () => {
     },
     onSuccess: (data) => {
       setFormState(initialValues);
+      toast.success('You have successfully updated password');
       router.push('/auth/sign-in');
     },
   });

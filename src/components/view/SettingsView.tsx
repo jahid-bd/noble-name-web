@@ -454,16 +454,27 @@ const SettingsView = () => {
   };
 
   useEffect(() => {
+    console.log(user);
     if (user) {
       setOptionsState({
-        age: ageOptions.find((item) => item.value === user?.age),
-        gender: genderOptions.find((item) => item.value === user.gender),
-        sect: sectOptions.find((item) => item.value === user.sect),
-        children: childrenOptions.find((item) => item.value === user.childrens),
-        country: countryOptions.find((item) => item.value === user.country),
-        childAge: childeAgeOptions.find(
-          (item) => item.value === user.childAgeGroup,
-        ),
+        age: user?.age
+          ? ageOptions.find((item) => item.value === user?.age)
+          : ageOptions[0],
+        gender: user?.gender
+          ? genderOptions.find((item) => item.value === user.gender)
+          : genderOptions[0],
+        sect: user?.sect
+          ? sectOptions.find((item) => item.value === user.sect)
+          : sectOptions[0],
+        children: user?.childrens
+          ? childrenOptions.find((item) => item.value === user.childrens)
+          : childrenOptions[0],
+        country: user.country
+          ? countryOptions.find((item) => item.value === user.country)
+          : countryOptions[0],
+        childAge: user.childAgeGroup
+          ? childeAgeOptions.find((item) => item.value === user.childAgeGroup)
+          : childeAgeOptions[0],
       });
 
       const fName = user?.name?.split(' ')[0];
