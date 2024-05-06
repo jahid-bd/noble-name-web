@@ -1,5 +1,6 @@
 import AuthProvider from '@/components/layout/AuthProvider';
 import QueryProvider from '@/components/providers/QueryProvider';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Inter } from 'next/font/google';
 
 import axios from 'axios';
@@ -40,6 +41,9 @@ export default function RootLayout({
           <AuthProvider>{children}</AuthProvider>
         </QueryProvider>
         <ToastContainer />
+        <GoogleAnalytics
+          gaId={process.env.NEXT_PUBLIC_TAG_MANAGER_ID as string}
+        />
       </body>
     </html>
   );

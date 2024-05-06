@@ -8,6 +8,7 @@ import {
   addUserFavorite,
   removeUserBookmark,
   removeUserFavorite,
+  shareNameApi,
 } from '@/services/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -59,6 +60,16 @@ const NameCard = ({ name }: { name: any }) => {
     },
     onSuccess: (data: any) => {
       toast.success('Name bookmark remove successfully.');
+      queryClient.invalidateQueries();
+    },
+  });
+
+  const { mutate: shareName } = useMutation({
+    mutationFn: (nameID: string) => shareNameApi(nameID),
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
       queryClient.invalidateQueries();
     },
   });
@@ -163,7 +174,7 @@ const NameCard = ({ name }: { name: any }) => {
           className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-white bg-opacity-35"
           ref={socialRef}
         >
-          <SocialMedia />
+          <SocialMedia handleShare={() => shareName(name?.name?._id)} />
         </div>
       )}
     </div>

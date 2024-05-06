@@ -71,6 +71,15 @@ export const addUserBookmark = (name: string) =>
     },
   );
 
+export const shareNameApi = (name: string) =>
+  axios.post(
+    `${BASE_URL}/user/shares`,
+    { name },
+    {
+      withCredentials: true,
+    },
+  );
+
 export const removeUserBookmark = (id: string) =>
   axios.delete(`${BASE_URL}/user/bookmarks/${id}`, {
     withCredentials: true,
@@ -201,3 +210,8 @@ export const getNames = async (params: string) => {
     throw error;
   }
 };
+
+export const getAnalytics = () =>
+  axios.get(`${BASE_URL}/analytics`, {
+    withCredentials: true,
+  });

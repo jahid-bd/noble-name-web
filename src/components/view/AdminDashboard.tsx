@@ -1,8 +1,25 @@
+'use client';
+
+import { getAnalytics } from '@/services/api';
+import { useQuery } from '@tanstack/react-query';
 import AnalyticsFilterGroupBtn from '../buttons/AnalysticsFilterBtnGroup';
 import AccountCard from '../cards/AccountCard';
 import AnalyticsCard from '../cards/AnalyticsCard';
+import EditableNameCard from '../cards/EditableNameCard';
+import UserCard from '../cards/UserCard';
 
 const AdminDashboardView = () => {
+  const {
+    data: analytics,
+    isLoading,
+    error: isError,
+  } = useQuery({
+    queryKey: ['analytics'],
+    queryFn: () => getAnalytics(),
+  });
+
+  console.log(analytics);
+
   return (
     <div className="mx-1.5">
       <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
@@ -34,9 +51,9 @@ const AdminDashboardView = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         <AnalyticsCard
-          value="20.8k"
           progressValue={12}
           title="Total Searches"
+          value={analytics?.data?.data?.total_search}
         />
 
         <AnalyticsCard
@@ -46,9 +63,9 @@ const AdminDashboardView = () => {
         />
 
         <AnalyticsCard
-          value="300k"
           progressValue={2}
           title="Total Registered Users"
+          value={analytics?.data?.data?.total_register_user}
         />
 
         <AnalyticsCard
@@ -59,17 +76,83 @@ const AdminDashboardView = () => {
       </div>
 
       <div className="mb-6">
-        <AccountCard />
+        <AccountCard accountData={analytics?.data?.data?.account} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-5">
-        <AnalyticsCard value="90000" progressValue={12} title="Bounce Rate %" />
+        <AnalyticsCard
+          progressValue={12}
+          title="Bounce Rate %"
+          value={analytics?.data?.data?.total_bounce}
+        />
 
-        <AnalyticsCard value="3899" title="Loved" progressValue={2} />
+        <AnalyticsCard
+          title="Loved"
+          progressValue={2}
+          value={analytics?.data?.data?.total_favorite}
+        />
 
-        <AnalyticsCard value="4300" title="Favorites" progressValue={2} />
+        <AnalyticsCard
+          title="Bookmark"
+          progressValue={2}
+          value={analytics?.data?.data?.total_bookmark}
+        />
 
-        <AnalyticsCard value="2378" progressValue={12} title="Shared" />
+        <AnalyticsCard
+          title="Shared"
+          progressValue={12}
+          value={analytics?.data?.data?.total_share}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
+        {analytics?.data?.data?.top_ten_data?.top_ten_user?.length > 0 && (
+          <div>
+            <h3 className="text-lg font-semibold text-text-primary pb-5">
+              Top 10 User
+            </h3>
+
+            <div className="grid grid-cols-1 gap-4">
+              {analytics?.data?.data?.top_ten_data?.top_ten_user?.map(
+                (item: any) => (
+                  <UserCard user={item} />
+                ),
+              )}
+            </div>
+          </div>
+        )}
+
+        {analytics?.data?.data?.top_ten_data?.top_ten_favorite?.length > 0 && (
+          <div>
+            <h3 className="text-lg font-semibold text-text-primary pb-5">
+              Top 10 Favorite Name
+            </h3>
+
+            <div className="grid grid-cols-1 gap-4">
+              {analytics?.data?.data?.top_ten_data?.top_ten_favorite?.map(
+                (item: any) => (
+                  <EditableNameCard name={item} />
+                ),
+              )}
+            </div>
+          </div>
+        )}
+
+        {analytics?.data?.data?.top_ten_data?.top_ten_bookmark?.length > 0 && (
+          <div>
+            <h3 className="text-lg font-semibold text-text-primary pb-5">
+              Top 10 Bookmark Name
+            </h3>
+
+            <div className="grid grid-cols-1 gap-4">
+              {analytics?.data?.data?.top_ten_data?.top_ten_bookmark?.map(
+                (item: any) => (
+                  <EditableNameCard name={item} />
+                ),
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

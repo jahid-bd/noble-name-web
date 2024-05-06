@@ -15,7 +15,7 @@ import {
   WhatsappShareButton,
 } from 'react-share';
 
-const SocialMedia = () => {
+const SocialMedia = ({ handleShare }: { handleShare: any }) => {
   const shareUrl = 'www.bplabels.com';
 
   return (
@@ -23,27 +23,27 @@ const SocialMedia = () => {
       <h3 className="mb-3 text-lg">Share social media</h3>
 
       <div className="flex gap-2">
-        <EmailShareButton url={shareUrl}>
+        <EmailShareButton url={shareUrl} onClick={handleShare}>
           <EmailIcon round={true} size={32} />
         </EmailShareButton>
 
-        <FacebookShareButton url={shareUrl}>
+        <FacebookShareButton url={shareUrl} onClick={handleShare}>
           <FacebookIcon round={true} size={32} />
         </FacebookShareButton>
 
-        <LinkedinShareButton url={shareUrl}>
+        <LinkedinShareButton url={shareUrl} onClick={handleShare}>
           <LinkedinIcon round={true} size={32} />
         </LinkedinShareButton>
 
-        <TelegramShareButton url={shareUrl}>
+        <TelegramShareButton url={shareUrl} onClick={handleShare}>
           <TelegramIcon round={true} size={32} />
         </TelegramShareButton>
 
-        <TwitterShareButton url={shareUrl}>
+        <TwitterShareButton url={shareUrl} onClick={handleShare}>
           <TwitterIcon round={true} size={32} />
         </TwitterShareButton>
 
-        <WhatsappShareButton url={shareUrl}>
+        <WhatsappShareButton url={shareUrl} onClick={handleShare}>
           <WhatsappIcon round={true} size={32} />
         </WhatsappShareButton>
       </div>

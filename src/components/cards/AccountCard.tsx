@@ -1,4 +1,4 @@
-const AccountCard = () => {
+const AccountCard = ({ accountData }: { accountData: any }) => {
   return (
     <div className="shadow-sm p-6 rounded-xl bg-white">
       <h3 className="text-lg font-semibold text-text-primary pb-5 border-b border-border-primary">
@@ -16,7 +16,9 @@ const AccountCard = () => {
               Free Accounts
             </p>
 
-            <p className="text-4xl font-semibold text-text-primary">56.4k</p>
+            <p className="text-4xl font-semibold text-text-primary">
+              {accountData?.free_plan}
+            </p>
           </div>
 
           <div className="border-y md:border-y-0 md:border-x border-border-secondary flex justify-between md:justify-start items-center md:items-start md:flex-col md:gap-6 py-6 md:p-6">
@@ -24,7 +26,9 @@ const AccountCard = () => {
               Couple Plan
             </p>
 
-            <p className="text-4xl font-semibold text-text-primary">14k</p>
+            <p className="text-4xl font-semibold text-text-primary">
+              {accountData?.couple_plan}
+            </p>
           </div>
 
           <div className="flex justify-between md:justify-start items-center md:items-start md:flex-col md:gap-6 md:p-6">
@@ -32,7 +36,9 @@ const AccountCard = () => {
               Family Plan
             </p>
 
-            <p className="text-4xl font-semibold text-text-primary">89.7k</p>
+            <p className="text-4xl font-semibold text-text-primary">
+              {accountData?.family_plan}
+            </p>
           </div>
         </div>
       </div>
