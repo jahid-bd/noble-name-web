@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['dbbdp2x4vijb2.cloudfront.net'],
+    domains: ['dbbdp2x4vijb2.cloudfront.net', 'upload.wikimedia.org'],
   },
 };
 

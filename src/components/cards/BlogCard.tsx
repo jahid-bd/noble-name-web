@@ -10,9 +10,9 @@ const BlogCard = ({ blog }: { blog: any }) => {
 
       <div className="mt-3">
         <h3 className="mb-2 text-text-primary font-semibold">{blog?.title}</h3>
-        <p className="text-text-tertiary text-base font-normal">
+        {/* <p className="text-text-tertiary text-base font-normal">
           {blog?.description}
-        </p>
+        </p> */}
       </div>
     </Link>
   );

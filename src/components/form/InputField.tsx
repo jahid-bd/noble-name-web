@@ -7,7 +7,7 @@ interface InputProps {
   placeholder?: string;
   type: any;
   value?: any;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   message?: string;
   className?: string;
   register?: any;
@@ -49,7 +49,7 @@ const InputField = ({
           id={name}
           // value={}
           placeholder={placeholder}
-          // onChange={onChange}
+          onChange={onChange}
           name={name}
           disabled={disabled}
           className={clsx(

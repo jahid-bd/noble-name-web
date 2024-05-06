@@ -2,7 +2,7 @@
 
 import { createBlogApi, updateBlogApi } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -29,6 +29,9 @@ const CreateBlogModal = ({
   handleClose: () => void;
   initialValues?: FormValueProps;
 }) => {
+  const thumbnail =
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/TEIDE.JPG/1024px-TEIDE.JPG';
+  const queryClient = useQueryClient();
   const [content, setContent] = useState<string>('');
   const [customError, setCustomError] = useState({
     content: {
@@ -49,6 +52,7 @@ const CreateBlogModal = ({
       setContent('');
 
       toast.success('Blog create successfully');
+      queryClient.invalidateQueries();
     },
   });
 
@@ -63,6 +67,7 @@ const CreateBlogModal = ({
       setContent('');
 
       toast.success('Blog update successfully');
+      queryClient.invalidateQueries();
     },
   });
 
@@ -122,11 +127,11 @@ const CreateBlogModal = ({
     }
 
     if (data && content && !initialValues && !id) {
-      return createBlog({ ...data, content });
+      return createBlog({ ...data, content, thumbnail });
     }
 
     if (data && content && initialValues && id) {
-      return updateBlog({ data: { ...data, content }, id });
+      return updateBlog({ data: { ...data, content, thumbnail }, id });
     }
   };
 

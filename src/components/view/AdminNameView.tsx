@@ -5,7 +5,7 @@ import {
   createNameUsingForm,
   getAllName,
 } from '@/services/api';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -14,6 +14,7 @@ import ChooseInputType from '../modal/ChooseInputType';
 import AdminNameCardSection from '../section/AdminNameCardSection';
 
 const AdminNameView = () => {
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const activePage = searchParams.get('page');
   const [openAddName, setOpenAddName] = useState(false);
@@ -42,6 +43,7 @@ const AdminNameView = () => {
     onSuccess: (data: any) => {
       setOpenAddName(false);
       toast.success('Name create successfully');
+      queryClient.invalidateQueries({ queryKey: ['names'] });
     },
   });
 
@@ -55,6 +57,7 @@ const AdminNameView = () => {
       console.log('hello');
       setChooseOne(false);
       toast.success('Name create successfully');
+      queryClient.invalidateQueries({ queryKey: ['names'] });
     },
   });
 

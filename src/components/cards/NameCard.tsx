@@ -98,7 +98,7 @@ const NameCard = ({ name }: { name: any }) => {
   return (
     <div
       className={`p-5 rounded-xl flex flex-col gap-4 relative ${
-        name?.name?.gender === 'female' ? 'bg-pink' : 'bg-blue'
+        name?.name?.gender === 'girl' ? 'bg-pink' : 'bg-blue'
       }`}
     >
       <div className="flex justify-between items-center">
@@ -130,9 +130,7 @@ const NameCard = ({ name }: { name: any }) => {
             <p
               key={tag}
               className={`px-2 py-0.5 rounded-full text-white text-xs font-medium ${
-                name?.name?.gender === 'female'
-                  ? 'bg-dark-pink'
-                  : 'bg-dark-blue '
+                name?.name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
               }`}
             >
               {tag}

@@ -21,7 +21,7 @@ const EditableNameCard = ({
   return (
     <div
       className={`p-5 rounded-xl flex flex-col gap-4 relative ${
-        name?.gender === 'female' ? 'bg-pink' : 'bg-blue'
+        name?.gender === 'girl' ? 'bg-pink' : 'bg-blue'
       }`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
@@ -50,7 +50,7 @@ const EditableNameCard = ({
           {name?.tags?.map((tag: string) => (
             <p
               className={`px-2 py-0.5 rounded-full text-white text-xs font-medium ${
-                name?.gender === 'female' ? 'bg-dark-pink' : 'bg-dark-blue '
+                name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
               }`}
             >
               {tag}
