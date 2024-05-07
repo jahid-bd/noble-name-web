@@ -6,7 +6,7 @@ const BlogHomeCardSection = ({ blogs }: { blogs: any }) => {
       {blogs?.data?.pagination?.totalItems > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
           {blogs?.data?.data?.map((item: any) => (
-            <BlogCard blog={item} />
+            <BlogCard blog={item} key={item._id} />
           ))}
         </div>
       )}

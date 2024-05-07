@@ -21,7 +21,7 @@ const BookmarkCardSection = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
         {bookmarks?.data?.data?.map((item: any) => (
-          <NameCard name={item} />
+          <NameCard name={item} key={item._id} />
         ))}
       </div>
 

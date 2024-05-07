@@ -58,7 +58,7 @@ const config: Config = {
       'max-lg': { max: '1023px' },
       'max-xl': { max: '1199px' },
       'max-2xl': { max: '1439px' },
-      'max-3xl': { max: '1919px' },
+      // 'max-3xl': { max: '1919px' },
     },
   },
   plugins: [],

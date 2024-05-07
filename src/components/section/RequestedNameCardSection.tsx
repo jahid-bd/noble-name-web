@@ -26,6 +26,7 @@ const RequestedNameCardSection = ({
         {names?.data?.data?.map((item: any) => (
           <RequestedNameCard
             name={item}
+            key={item._id}
             handleReject={() => handleReject(item?._id)}
             handleApprove={() => handleApprove(item?._id)}
           />

@@ -115,7 +115,7 @@ const AdminDashboardView = () => {
             <div className="grid grid-cols-1 gap-4">
               {analytics?.data?.data?.top_ten_data?.top_ten_user?.map(
                 (item: any) => (
-                  <UserCard user={item} />
+                  <UserCard user={item} key={item._id} />
                 ),
               )}
             </div>
@@ -131,7 +131,7 @@ const AdminDashboardView = () => {
             <div className="grid grid-cols-1 gap-4">
               {analytics?.data?.data?.top_ten_data?.top_ten_favorite?.map(
                 (item: any) => (
-                  <EditableNameCard name={item} />
+                  <EditableNameCard name={item} key={item._id} />
                 ),
               )}
             </div>
@@ -147,7 +147,7 @@ const AdminDashboardView = () => {
             <div className="grid grid-cols-1 gap-4">
               {analytics?.data?.data?.top_ten_data?.top_ten_bookmark?.map(
                 (item: any) => (
-                  <EditableNameCard name={item} />
+                  <EditableNameCard name={item} key={item._id} />
                 ),
               )}
             </div>

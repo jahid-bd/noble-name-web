@@ -31,8 +31,9 @@ const SuggestedNameCard = ({ name }: { name: any }) => {
 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          {name?.tags?.map((tag: string) => (
+          {name?.tags?.map((tag: string, index: any) => (
             <p
+              key={index}
               className={`px-2 py-0.5 rounded-full text-white text-xs font-medium ${
                 name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
               }`}
