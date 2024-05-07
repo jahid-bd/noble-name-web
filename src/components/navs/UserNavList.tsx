@@ -1,25 +1,10 @@
 'use client';
 
-import { userLogout } from '@/services/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { toast } from 'react-toastify';
 
-const UserNavList = () => {
+const UserNavList = ({ handleLogout }: { handleLogout: () => void }) => {
   const pathname = usePathname();
-  const queryClient = useQueryClient();
-
-  const { mutate: handleLogout } = useMutation({
-    mutationFn: userLogout,
-    onError: (error: any) => {
-      toast.error(error.message);
-    },
-    onSuccess: (data: any) => {
-      toast.success('user logout successfully.');
-      queryClient.invalidateQueries();
-    },
-  });
 
   return (
     <div className="absolute right-0 top-[52px] md:top-[72px]">

@@ -4,7 +4,6 @@ import { getUserProfile } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import { redirect, usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
-import PreLoader from '../loader/Loader';
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const userRoutes = [
@@ -57,12 +56,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (isAdminRoute && !isAdmin) return redirect('/');
   }
 
-  if (isFetching)
-    return (
-      <div className="w-full h-screen justify-center items-center">
-        <PreLoader />
-      </div>
-    );
+  // if (isFetching)
+  //   return (
+  //     <div className="w-full h-screen justify-center items-center">
+  //       <PreLoader />
+  //     </div>
+  //   );
 
   return <>{children}</>;
 };
