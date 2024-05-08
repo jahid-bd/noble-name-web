@@ -42,9 +42,9 @@ export const getUserProfile = async () => {
   }
 };
 
-export const getUserFavorites = (page: number) =>
+export const getUserFavorites = (page: number, gender: string | null) =>
   axios.get(`${BASE_URL}/user/favorites`, {
-    params: { limit: 9, page },
+    params: { gender, limit: 9, page },
     withCredentials: true,
   });
 
@@ -54,7 +54,7 @@ export const addUserFavorite = (name: string) =>
     { name },
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const removeUserFavorite = (id: string) =>
@@ -68,7 +68,7 @@ export const addUserBookmark = (name: string) =>
     { name },
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const shareNameApi = (name: string) =>
@@ -77,7 +77,7 @@ export const shareNameApi = (name: string) =>
     { name },
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const removeUserBookmark = (id: string) =>
@@ -85,15 +85,15 @@ export const removeUserBookmark = (id: string) =>
     withCredentials: true,
   });
 
-export const getUserBookmarks = (page: number) =>
+export const getUserBookmarks = (page: number, gender: string | null) =>
   axios.get(`${BASE_URL}/user/bookmarks`, {
-    params: { limit: 9, page },
+    params: { gender, limit: 9, page },
     withCredentials: true,
   });
 
-export const getUserSuggestedName = (page: number) =>
+export const getUserSuggestedName = (page: number, gender: string | null) =>
   axios.get(`${BASE_URL}/user/suggestion-names`, {
-    params: { limit: 9, page },
+    params: { gender, limit: 9, page },
     withCredentials: true,
   });
 
@@ -158,7 +158,7 @@ export const approveRequestedName = (id: string) =>
     {},
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const rejectRequestedName = (id: string) =>
@@ -167,7 +167,7 @@ export const rejectRequestedName = (id: string) =>
     {},
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const getAllPlans = async () => {
@@ -204,7 +204,7 @@ export const cancelSubscription = async (id: string) =>
     {},
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const sendMessage = (data: ContactParams) =>
