@@ -34,6 +34,9 @@ export default function RootLayout({
     return config;
   });
 
+  console.log(process.env.NEXT_PUBLIC_API_URL);
+  console.log(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS);
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -42,7 +45,7 @@ export default function RootLayout({
         </QueryProvider>
         <ToastContainer />
         <GoogleAnalytics
-          gaId={process.env.NEXT_PUBLIC_TAG_MANAGER_ID as string}
+          gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string}
         />
       </body>
     </html>

@@ -1,6 +1,5 @@
 'use client';
 
-import { BASE_URL } from '@/constants';
 import { userRegister } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
@@ -12,7 +11,6 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '../buttons/Button';
 import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
-import PlanButton from '../buttons/PlanButton';
 import InputField from '../form/InputField';
 interface RegisterData {
   name: string;
@@ -173,9 +171,7 @@ const SignupView = () => {
             </div>
 
             <div className="mt-4">
-              <Link href={`${BASE_URL}/auth/social`}>
-                <GoogleSignupBtn text="Sign up with Google" />
-              </Link>
+              <GoogleSignupBtn text="Sign up with Google" />
             </div>
           </form>
         </div>
@@ -183,7 +179,9 @@ const SignupView = () => {
         <div className="flex items-center justify-center gap-1 mb-5">
           <p className="text-text-tertiary">Already have an account?</p>
           <Link href="/auth/sign-in">
-            <PlanButton>Sign In</PlanButton>
+            <span className="text-primary font-semibold hover:text-green-hover">
+              Sign In
+            </span>
           </Link>
         </div>
       </div>

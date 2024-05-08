@@ -1,7 +1,7 @@
-import AdminBlogView from "@/components/view/AdminBlogView";
+import AdminBlogView from '@/components/view/AdminBlogView';
 
 const BlogPage = () => {
-    return <AdminBlogView />;
+  return <AdminBlogView />;
 };
 
 export default BlogPage;

@@ -17,11 +17,11 @@ const genderOptions = [
     label: 'Select gender',
   },
   {
-    value: 'male',
+    value: 'boy',
     label: 'Boy',
   },
   {
-    value: 'female',
+    value: 'girl',
     label: 'Girl',
   },
 ];

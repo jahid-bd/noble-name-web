@@ -11,7 +11,6 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '../buttons/Button';
 import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
-import PlanButton from '../buttons/PlanButton';
 import InputField from '../form/InputField';
 
 interface SignInData {
@@ -186,7 +185,9 @@ const SignInView = () => {
         <div className="flex items-center justify-center gap-1 mb-5">
           <p className="text-text-tertiary">Don’t have an account?</p>
           <Link href="/auth/sign-up">
-            <PlanButton>Sign Up</PlanButton>
+            <span className="text-primary font-semibold hover:text-green-hover">
+              Sign Up
+            </span>
           </Link>
         </div>
       </div>

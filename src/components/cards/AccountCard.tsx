@@ -1,3 +1,5 @@
+import AccountDoughnutChat from '../chart/AccountPaiChart';
+
 const AccountCard = ({ accountData }: { accountData: any }) => {
   return (
     <div className="shadow-sm p-6 rounded-xl bg-white">
@@ -5,9 +7,10 @@ const AccountCard = ({ accountData }: { accountData: any }) => {
         Accounts
       </h3>
 
-      <div className="mt-10 flex flex-col md:flex-row items-center gap-20">
+      <div className="mt-10 flex flex-col md:flex-row items-center gap-10">
         <div className="w-full md:w-1/4">
-          <h2>Pai chart</h2>
+          {/* <h2>Pai chart</h2> */}
+          <AccountDoughnutChat />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full md:w-3/4">

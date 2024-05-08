@@ -10,12 +10,9 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const MembershipPlanView = () => {
-  // api need
-  // 1. get active plan
-  // 2. get all plans
-  // 3. get
   const router = useRouter();
 
   const { data: activePlan } = useQuery({
@@ -32,8 +29,6 @@ const MembershipPlanView = () => {
     queryKey: ['plans'],
     queryFn: getAllPlans,
   });
-  console.log('Plans', allPlans);
-  console.log('active', activePlan);
 
   const [loadingId, setLoadingId] = useState('');
 
@@ -52,12 +47,13 @@ const MembershipPlanView = () => {
     },
   });
 
-  // checkout-session
   const handleSubscription = (id: string) => {
     setLoadingId(id);
+    if (!user) return toast.error('Please login before');
+
     subscribeNow({
       planId: id,
-      userId: user?.data?.data?._id,
+      userId: user?._id,
     });
   };
 
@@ -74,18 +70,18 @@ const MembershipPlanView = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 md:mt-16">
           {allPlans?.map((plan: any) => (
             <PlanCard
-              key={plan._id}
-              price={plan.price}
-              title={plan.title}
-              features={plan.features}
-              description={plan.description}
+              key={plan?._id}
+              price={plan?.price}
+              title={plan?.title}
+              features={plan?.features}
+              description={plan?.description}
               button_title={
-                plan._id === activePlan?._id ? 'Current Plan' : 'Upgrade'
+                plan?._id === activePlan?._id ? 'Current Plan' : 'Upgrade'
               }
-              active_plan={plan._id === activePlan?._id}
-              default_plan={plan._id === activePlan?._id}
-              onClick={() => handleSubscription(plan._id)}
-              is_loading={plan._id === loadingId && isPending}
+              active_plan={plan?._id === activePlan?._id}
+              default_plan={plan?._id === activePlan?._id}
+              onClick={() => handleSubscription(plan?._id)}
+              is_loading={plan?._id === loadingId && isPending}
             />
           ))}
         </div>
