@@ -2,6 +2,8 @@ import AuthProvider from '@/components/layout/AuthProvider';
 import QueryProvider from '@/components/providers/QueryProvider';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Inter } from 'next/font/google';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
 import axios from 'axios';
 import type { Metadata } from 'next';

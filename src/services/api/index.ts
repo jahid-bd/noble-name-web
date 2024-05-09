@@ -226,7 +226,8 @@ export const getNames = async (params: string) => {
   }
 };
 
-export const getAnalytics = () =>
-  axios.get(`${BASE_URL}/analytics`, {
+export const getAnalytics = (params: string) =>
+  axios.get(`${BASE_URL}/analytics?${params}`, {
+    params: {},
     withCredentials: true,
   });

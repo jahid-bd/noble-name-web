@@ -2,31 +2,40 @@
 
 import { getAnalytics } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import AnalyticsFilterGroupBtn from '../buttons/AnalysticsFilterBtnGroup';
 import AccountCard from '../cards/AccountCard';
 import AnalyticsCard from '../cards/AnalyticsCard';
 import EditableNameCard from '../cards/EditableNameCard';
 import UserCard from '../cards/UserCard';
+import DateRangePicker from '../dateRange/DateRange';
 
 const AdminDashboardView = () => {
+  const [openCalender, setOpenCalender] = useState(false);
+
+  const searchParams = useSearchParams();
+  const params = searchParams.toString();
+
   const {
     data: analytics,
     isLoading,
     error: isError,
   } = useQuery({
-    queryKey: ['analytics'],
-    queryFn: () => getAnalytics(),
+    queryKey: ['analytics', params],
+    queryFn: () => getAnalytics(params),
   });
 
   console.log(analytics);
 
   return (
     <div className="mx-1.5">
-      <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-2 relative">
         <AnalyticsFilterGroupBtn />
 
         <button
           type="button"
+          onClick={() => setOpenCalender((prev: boolean) => !prev)}
           className=" text-text-placeholder bg-white text-sm px-3.5 py-2.5 rounded-md flex items-center gap-1 border border-border-secondary"
         >
           <svg
@@ -47,31 +56,41 @@ const AdminDashboardView = () => {
 
           <span>Select dates</span>
         </button>
+
+        {openCalender && (
+          <div className="absolute right-0 top-12 border border-border-primary">
+            <DateRangePicker />
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         <AnalyticsCard
-          progressValue={12}
           title="Total Searches"
           value={analytics?.data?.data?.total_search}
+          comparer={analytics?.data?.data?.progress_duration}
+          progressValue={analytics?.data?.data?.search_progress}
         />
 
         <AnalyticsCard
           value="26.4k"
           progressValue={2}
           title="Total Search Page Visit"
+          comparer={analytics?.data?.data?.progress_duration}
         />
 
         <AnalyticsCard
-          progressValue={2}
           title="Total Registered Users"
           value={analytics?.data?.data?.total_register_user}
+          comparer={analytics?.data?.data?.progress_duration}
+          progressValue={analytics?.data?.data?.register_user_progress}
         />
 
         <AnalyticsCard
           value="14k"
           progressValue={12}
           title="Total Unregistered Users"
+          comparer={analytics?.data?.data?.progress_duration}
         />
       </div>
 
@@ -81,27 +100,31 @@ const AdminDashboardView = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-5">
         <AnalyticsCard
-          progressValue={12}
+          progressValue={-12}
           title="Bounce Rate %"
           value={analytics?.data?.data?.total_bounce}
+          comparer={analytics?.data?.data?.progress_duration}
         />
 
         <AnalyticsCard
           title="Loved"
-          progressValue={2}
           value={analytics?.data?.data?.total_favorite}
+          comparer={analytics?.data?.data?.progress_duration}
+          progressValue={analytics?.data?.data?.favorite_progress}
         />
 
         <AnalyticsCard
           title="Bookmark"
-          progressValue={2}
           value={analytics?.data?.data?.total_bookmark}
+          comparer={analytics?.data?.data?.progress_duration}
+          progressValue={analytics?.data?.data?.bookmark_progress}
         />
 
         <AnalyticsCard
           title="Shared"
-          progressValue={12}
           value={analytics?.data?.data?.total_share}
+          comparer={analytics?.data?.data?.progress_duration}
+          progressValue={analytics?.data?.data?.share_progress}
         />
       </div>
 
