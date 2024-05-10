@@ -16,7 +16,6 @@ const AccountDoughnutChat = ({
     datasets: [
       {
         label: 'My First Dataset',
-        // data: [300, 50, 100],
         data: dataList,
         backgroundColor: ['#00A991', '#33BAA7', '#8AD7CC'],
         hoverOffset: 4,

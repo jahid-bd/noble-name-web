@@ -10,6 +10,8 @@ import AnalyticsCard from '../cards/AnalyticsCard';
 import EditableNameCard from '../cards/EditableNameCard';
 import UserCard from '../cards/UserCard';
 import DateRangePicker from '../dateRange/DateRange';
+import PreLoader from '../loader/Loader';
+import NotFound from '../loader/NotFound';
 
 const AdminDashboardView = () => {
   const [openCalender, setOpenCalender] = useState(false);
@@ -25,8 +27,6 @@ const AdminDashboardView = () => {
     queryKey: ['analytics', params],
     queryFn: () => getAnalytics(params),
   });
-
-  console.log(analytics);
 
   return (
     <div className="mx-1.5">
@@ -64,119 +64,129 @@ const AdminDashboardView = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <AnalyticsCard
-          title="Total Searches"
-          value={analytics?.data?.data?.total_search}
-          comparer={analytics?.data?.data?.progress_duration}
-          progressValue={analytics?.data?.data?.search_progress}
-        />
+      {!isLoading && isError && <NotFound />}
 
-        <AnalyticsCard
-          value="26.4k"
-          progressValue={2}
-          title="Total Search Page Visit"
-          comparer={analytics?.data?.data?.progress_duration}
-        />
+      {isLoading && !isError && <PreLoader />}
 
-        <AnalyticsCard
-          title="Total Registered Users"
-          value={analytics?.data?.data?.total_register_user}
-          comparer={analytics?.data?.data?.progress_duration}
-          progressValue={analytics?.data?.data?.register_user_progress}
-        />
+      {!isLoading && !isError && analytics && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <AnalyticsCard
+              title="Total Searches"
+              value={analytics?.data?.data?.total_search}
+              comparer={analytics?.data?.data?.progress_duration}
+              progressValue={analytics?.data?.data?.search_progress}
+            />
 
-        <AnalyticsCard
-          value="14k"
-          progressValue={12}
-          title="Total Unregistered Users"
-          comparer={analytics?.data?.data?.progress_duration}
-        />
-      </div>
+            <AnalyticsCard
+              title="Total Search Page Visit"
+              comparer={analytics?.data?.data?.progress_duration}
+              value={analytics?.data?.data?.total_search_page_visit}
+              progressValue={analytics?.data?.data?.search_page_visit_progress}
+            />
 
-      <div className="mb-6">
-        <AccountCard accountData={analytics?.data?.data?.account} />
-      </div>
+            <AnalyticsCard
+              title="Total Registered Users"
+              value={analytics?.data?.data?.total_register_user}
+              comparer={analytics?.data?.data?.progress_duration}
+              progressValue={analytics?.data?.data?.register_user_progress}
+            />
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-5">
-        <AnalyticsCard
-          progressValue={-12}
-          title="Bounce Rate %"
-          value={analytics?.data?.data?.total_bounce}
-          comparer={analytics?.data?.data?.progress_duration}
-        />
-
-        <AnalyticsCard
-          title="Loved"
-          value={analytics?.data?.data?.total_favorite}
-          comparer={analytics?.data?.data?.progress_duration}
-          progressValue={analytics?.data?.data?.favorite_progress}
-        />
-
-        <AnalyticsCard
-          title="Bookmark"
-          value={analytics?.data?.data?.total_bookmark}
-          comparer={analytics?.data?.data?.progress_duration}
-          progressValue={analytics?.data?.data?.bookmark_progress}
-        />
-
-        <AnalyticsCard
-          title="Shared"
-          value={analytics?.data?.data?.total_share}
-          comparer={analytics?.data?.data?.progress_duration}
-          progressValue={analytics?.data?.data?.share_progress}
-        />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
-        {analytics?.data?.data?.top_ten_data?.top_ten_user?.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold text-text-primary pb-5">
-              Top 10 User
-            </h3>
-
-            <div className="grid grid-cols-1 gap-4">
-              {analytics?.data?.data?.top_ten_data?.top_ten_user?.map(
-                (item: any) => (
-                  <UserCard user={item} key={item._id} />
-                ),
-              )}
-            </div>
+            <AnalyticsCard
+              title="Total Active Users"
+              value={analytics?.data?.data?.total_active_user}
+              comparer={analytics?.data?.data?.progress_duration}
+              progressValue={analytics?.data?.data?.active_user_progress}
+            />
           </div>
-        )}
 
-        {analytics?.data?.data?.top_ten_data?.top_ten_favorite?.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold text-text-primary pb-5">
-              Top 10 Favorite Name
-            </h3>
-
-            <div className="grid grid-cols-1 gap-4">
-              {analytics?.data?.data?.top_ten_data?.top_ten_favorite?.map(
-                (item: any) => (
-                  <EditableNameCard name={item} key={item._id} />
-                ),
-              )}
-            </div>
+          <div className="mb-6">
+            <AccountCard accountData={analytics?.data?.data?.account} />
           </div>
-        )}
 
-        {analytics?.data?.data?.top_ten_data?.top_ten_bookmark?.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold text-text-primary pb-5">
-              Top 10 Bookmark Name
-            </h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-5">
+            <AnalyticsCard
+              title="Bounce Rate %"
+              value={analytics?.data?.data?.total_bounce}
+              comparer={analytics?.data?.data?.progress_duration}
+              progressValue={analytics?.data?.data?.bounce_progress}
+            />
 
-            <div className="grid grid-cols-1 gap-4">
-              {analytics?.data?.data?.top_ten_data?.top_ten_bookmark?.map(
-                (item: any) => (
-                  <EditableNameCard name={item} key={item._id} />
-                ),
-              )}
-            </div>
+            <AnalyticsCard
+              title="Loved"
+              value={analytics?.data?.data?.total_favorite}
+              comparer={analytics?.data?.data?.progress_duration}
+              progressValue={analytics?.data?.data?.favorite_progress}
+            />
+
+            <AnalyticsCard
+              title="Bookmark"
+              value={analytics?.data?.data?.total_bookmark}
+              comparer={analytics?.data?.data?.progress_duration}
+              progressValue={analytics?.data?.data?.bookmark_progress}
+            />
+
+            <AnalyticsCard
+              title="Shared"
+              value={analytics?.data?.data?.total_share}
+              comparer={analytics?.data?.data?.progress_duration}
+              progressValue={analytics?.data?.data?.share_progress}
+            />
           </div>
-        )}
-      </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
+            {analytics?.data?.data?.top_ten_data?.top_ten_user?.length > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold text-text-primary pb-5">
+                  Top 10 User
+                </h3>
+
+                <div className="grid grid-cols-1 gap-4">
+                  {analytics?.data?.data?.top_ten_data?.top_ten_user?.map(
+                    (item: any) => (
+                      <UserCard user={item} key={item._id} />
+                    ),
+                  )}
+                </div>
+              </div>
+            )}
+
+            {analytics?.data?.data?.top_ten_data?.top_ten_favorite?.length >
+              0 && (
+              <div>
+                <h3 className="text-lg font-semibold text-text-primary pb-5">
+                  Top 10 Favorite Name
+                </h3>
+
+                <div className="grid grid-cols-1 gap-4">
+                  {analytics?.data?.data?.top_ten_data?.top_ten_favorite?.map(
+                    (item: any) => (
+                      <EditableNameCard name={item} key={item._id} />
+                    ),
+                  )}
+                </div>
+              </div>
+            )}
+
+            {analytics?.data?.data?.top_ten_data?.top_ten_bookmark?.length >
+              0 && (
+              <div>
+                <h3 className="text-lg font-semibold text-text-primary pb-5">
+                  Top 10 Bookmark Name
+                </h3>
+
+                <div className="grid grid-cols-1 gap-4">
+                  {analytics?.data?.data?.top_ten_data?.top_ten_bookmark?.map(
+                    (item: any) => (
+                      <EditableNameCard name={item} key={item._id} />
+                    ),
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

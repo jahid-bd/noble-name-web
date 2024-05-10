@@ -27,17 +27,14 @@ export default function RootLayout({
 }>) {
   axios.interceptors.request.use(function (config: any) {
     const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
-    const baseUrl = 'http://localhost:8000';
+    const baseUrl: string | undefined = process.env.NEXT_PUBLIC_API_URL;
 
     if (!isAbsoluteURLRegex.test(config.url)) {
-      config.url = urlJoin(baseUrl, config.url);
+      config.url = urlJoin(baseUrl as string, config.url);
     }
     config.withCredentials = true;
     return config;
   });
-
-  console.log(process.env.NEXT_PUBLIC_API_URL);
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS);
 
   return (
     <html lang="en">

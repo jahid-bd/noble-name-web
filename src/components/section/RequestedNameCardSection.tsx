@@ -18,20 +18,23 @@ const RequestedNameCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && <PreLoader />}
+      {isLoading && !isError && <PreLoader />}
 
-      {isError || (names?.data?.pagination?.totalItems <= 0 && <NotFound />)}
+      {(isError && !isLoading) ||
+        (names?.data?.pagination?.totalItems <= 0 && <NotFound />)}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-        {names?.data?.data?.map((item: any) => (
-          <RequestedNameCard
-            name={item}
-            key={item._id}
-            handleReject={() => handleReject(item?._id)}
-            handleApprove={() => handleApprove(item?._id)}
-          />
-        ))}
-      </div>
+      {!isError && !isLoading && names && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          {names?.data?.data?.map((item: any) => (
+            <RequestedNameCard
+              name={item}
+              key={item._id}
+              handleReject={() => handleReject(item?._id)}
+              handleApprove={() => handleApprove(item?._id)}
+            />
+          ))}
+        </div>
+      )}
 
       {Number(names?.data?.pagination?.totalItems) >
         Number(names?.data?.pagination?.limit) && (

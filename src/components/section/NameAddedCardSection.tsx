@@ -14,16 +14,18 @@ const NameAddedCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && <PreLoader />}
+      {isLoading && !isError && <PreLoader />}
 
-      {isError ||
+      {(isError && !isLoading) ||
         (suggestedName?.data?.pagination?.totalItems <= 0 && <NotFound />)}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-        {suggestedName?.data?.data?.map((item: any) => (
-          <SuggestedNameCard name={item} key={item._id} />
-        ))}
-      </div>
+      {!isError && !isLoading && suggestedName && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          {suggestedName?.data?.data?.map((item: any) => (
+            <SuggestedNameCard name={item} key={item._id} />
+          ))}
+        </div>
+      )}
 
       {suggestedName?.data.pagination?.totalItems >
         suggestedName?.data?.pagination?.limit && (

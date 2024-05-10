@@ -18,20 +18,22 @@ const AdminBlogCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && <PreLoader />}
+      {isLoading && !isError && <PreLoader />}
 
       {isError || (blogs?.data?.pagination?.totalItems <= 0 && <NotFound />)}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-        {blogs?.data?.data?.map((item: any) => (
-          <EditableBlogCard
-            blog={item}
-            key={item?._id}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
-          />
-        ))}
-      </div>
+      {!isLoading && !isError && blogs && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          {blogs?.data?.data?.map((item: any) => (
+            <EditableBlogCard
+              blog={item}
+              key={item?._id}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+            />
+          ))}
+        </div>
+      )}
 
       {blogs?.data?.pagination?.totalItems > blogs?.data?.pagination?.limit && (
         <GlobalPagination

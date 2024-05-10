@@ -23,7 +23,7 @@ const NameCard = ({ name }: { name: any }) => {
   const { mutate: addFavorite } = useMutation({
     mutationFn: (nameID: string) => addUserFavorite(nameID),
     onError: (error: any) => {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data: any) => {
       toast.success('Name favorite successfully.');
@@ -34,7 +34,7 @@ const NameCard = ({ name }: { name: any }) => {
   const { mutate: removeFavorite } = useMutation({
     mutationFn: (id: string) => removeUserFavorite(id),
     onError: (error: any) => {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data: any) => {
       toast.success('Name favorite remove successfully.');
@@ -45,7 +45,7 @@ const NameCard = ({ name }: { name: any }) => {
   const { mutate: addBookmark } = useMutation({
     mutationFn: (nameID: string) => addUserBookmark(nameID),
     onError: (error: any) => {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data: any) => {
       toast.success('Name bookmark successfully.');
@@ -56,7 +56,7 @@ const NameCard = ({ name }: { name: any }) => {
   const { mutate: removeBookmark } = useMutation({
     mutationFn: (id: string) => removeUserBookmark(id),
     onError: (error: any) => {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data: any) => {
       toast.success('Name bookmark remove successfully.');
@@ -67,7 +67,7 @@ const NameCard = ({ name }: { name: any }) => {
   const { mutate: shareName } = useMutation({
     mutationFn: (nameID: string) => shareNameApi(nameID),
     onError: (error: any) => {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data: any) => {
       queryClient.invalidateQueries();

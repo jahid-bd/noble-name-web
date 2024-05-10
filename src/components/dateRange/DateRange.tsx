@@ -20,8 +20,6 @@ const DateRangePicker = () => {
   const handleSelect = (item: any) => {
     setState([item.selection]);
 
-    console.log(formatISO(item?.selection?.startDate));
-
     router.push(
       pathName +
         `?to=${formatISO(item?.selection?.startDate, {

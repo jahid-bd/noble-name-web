@@ -16,15 +16,18 @@ const AdminNameCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && <PreLoader />}
+      {isError && isLoading && <PreLoader />}
 
-      {isError || (names?.data?.pagination?.totalItems <= 0 && <NotFound />)}
+      {(!isLoading && isError) ||
+        (names?.data?.pagination?.totalItems <= 0 && <NotFound />)}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-        {names?.data?.data?.map((item: any) => (
-          <EditableNameCard key={item} name={item} handleEdit={handleEdit} />
-        ))}
-      </div>
+      {!isLoading && !isError && names && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          {names?.data?.data?.map((item: any) => (
+            <EditableNameCard key={item} name={item} handleEdit={handleEdit} />
+          ))}
+        </div>
+      )}
 
       {names?.data?.pagination?.totalItems > names?.data?.pagination?.limit && (
         <GlobalPagination

@@ -14,15 +14,18 @@ const BlogCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && <PreLoader />}
+      {isLoading && !isError && <PreLoader />}
 
-      {isError || (blogs?.data?.pagination?.totalItems <= 0 && <NotFound />)}
+      {(isError && !isLoading) ||
+        (blogs?.data?.pagination?.totalItems <= 0 && <NotFound />)}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-        {blogs?.data?.data?.map((item: any) => (
-          <BlogCard blog={item} key={item._id} />
-        ))}
-      </div>
+      {!isError && !isLoading && blogs && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          {blogs?.data?.data?.map((item: any) => (
+            <BlogCard blog={item} key={item._id} />
+          ))}
+        </div>
+      )}
 
       {blogs?.data?.pagination?.totalItems > blogs?.data?.pagination?.limit && (
         <GlobalPagination
