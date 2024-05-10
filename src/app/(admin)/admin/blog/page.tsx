@@ -1,6 +1,14 @@
-import AdminBlogView from '@/components/view/AdminBlogView';
+import type { NextPage } from 'next';
 
-const BlogPage = () => {
+import PreLoader from '@/components/loader/Loader';
+import dynamic from 'next/dynamic';
+
+const AdminBlogView = dynamic(() => import('@/components/view/AdminBlogView'), {
+  loading: () => <PreLoader />,
+  ssr: false,
+});
+
+const BlogPage: NextPage = () => {
   return <AdminBlogView />;
 };
 

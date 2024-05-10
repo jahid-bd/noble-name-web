@@ -22,18 +22,18 @@ const DateRangePicker = () => {
 
     router.push(
       pathName +
-        `?to=${formatISO(item?.selection?.startDate, {
-          extended: true,
-        })}&form=${formatISO(item.selection.endDate, { extended: true })}`,
+        `?to=${formatISO(item?.selection?.startDate, {})}&form=${formatISO(
+          item.selection.endDate,
+        )}`,
     );
   };
 
   return (
     <DateRange
       ranges={state}
-      disabled={true}
       maxDate={new Date()}
       editableDateInputs={true}
+      // disabled={true as boolean}
       rangeColors={['#00A991']}
       moveRangeOnFirstSelection={false}
       // onChange={(item: any) => setState([item.selection])}

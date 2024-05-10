@@ -6,6 +6,7 @@ import {
 } from '@/services/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { toast } from 'react-toastify';
 import RequestedNameCardSection from '../section/RequestedNameCardSection';
 
@@ -46,21 +47,23 @@ const AdminNameRequestView = () => {
   });
 
   return (
-    <div className="px-1.5">
-      <div className="flex justify-between items-center mb-6">
-        <p className="text-2xl font-semibold text-text-primary">
-          Name Request List
-        </p>
-      </div>
+    <Suspense>
+      <div className="px-1.5">
+        <div className="flex justify-between items-center mb-6">
+          <p className="text-2xl font-semibold text-text-primary">
+            Name Request List
+          </p>
+        </div>
 
-      <RequestedNameCardSection
-        isError={isError}
-        isLoading={isLoading}
-        names={requestedNames}
-        handleReject={(id) => nameReject(id)}
-        handleApprove={(id) => nameApproved(id)}
-      />
-    </div>
+        <RequestedNameCardSection
+          isError={isError}
+          isLoading={isLoading}
+          names={requestedNames}
+          handleReject={(id) => nameReject(id)}
+          handleApprove={(id) => nameApproved(id)}
+        />
+      </div>
+    </Suspense>
   );
 };
 
