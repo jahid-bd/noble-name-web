@@ -3,7 +3,10 @@
 import { createBlogApi, updateBlogApi } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import clsx from 'clsx';
+import Image from 'next/image';
+import { useCallback, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
@@ -24,13 +27,13 @@ const CreateBlogModal = ({
   id,
   handleClose,
   initialValues,
+  isEdit,
 }: {
   id?: string;
   handleClose: () => void;
   initialValues?: FormValueProps;
+  isEdit?: boolean;
 }) => {
-  const thumbnail =
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/TEIDE.JPG/1024px-TEIDE.JPG';
   const queryClient = useQueryClient();
   const [content, setContent] = useState<string>('');
   const [customError, setCustomError] = useState({
@@ -38,7 +41,13 @@ const CreateBlogModal = ({
       message: 'This field must not be empty.',
       error: false,
     },
+    thumbnail: {
+      message: 'This field must not be empty.',
+      error: false,
+    },
   });
+
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const { mutate: createBlog, isPending } = useMutation({
     mutationFn: (data: any) => createBlogApi(data),
@@ -108,9 +117,28 @@ const CreateBlogModal = ({
     mode: 'onChange',
   });
 
+  const [thumbnail, setThumbnail] = useState();
+
+  const onDrop = useCallback((acceptedFile: any) => {
+    setThumbnail(acceptedFile[0]);
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    maxSize: 3145728,
+    onDrop,
+    multiple: false,
+    maxFiles: 1,
+  });
+
+  console.log(thumbnail);
+
   const onSubmit = (data: any) => {
     setCustomError({
       content: {
+        message: 'This field must not be empty.',
+        error: false,
+      },
+      thumbnail: {
         message: 'This field must not be empty.',
         error: false,
       },
@@ -126,12 +154,34 @@ const CreateBlogModal = ({
       }));
     }
 
-    if (data && content && !initialValues && !id) {
-      return createBlog({ ...data, content, thumbnail });
+    if (!thumbnail) {
+      setCustomError((prev) => ({
+        ...prev,
+        thumbnail: {
+          ...prev.thumbnail,
+          error: true,
+        },
+      }));
     }
 
-    if (data && content && initialValues && id) {
-      return updateBlog({ data: { ...data, content, thumbnail }, id });
+    if (!isEdit) {
+      if (data && content && !initialValues && !id && !thumbnail) {
+        return createBlog({ ...data, content, thumbnail });
+      }
+    } else {
+      if (id) {
+        return updateBlog({
+          data: {
+            ...data,
+            content,
+            thumbnail: thumbnail ? thumbnail : initialValues?.thumbnail,
+          },
+          id,
+        });
+      }
+      // if (data && content && initialValues && id && !thumbnail) {
+      //   return updateBlog({ data: { ...data, content, thumbnail }, id });
+      // }
     }
   };
 
@@ -141,6 +191,8 @@ const CreateBlogModal = ({
       setContent(initialValues.content);
     }
   }, [initialValues]);
+
+  console.log(customError);
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
@@ -185,6 +237,62 @@ const CreateBlogModal = ({
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb4">
+              <h4>Thumbnail</h4>
+
+              <div
+                {...getRootProps()}
+                className={clsx(
+                  'my-4 border border-border-primary flex items-center justify-center w-full h-[350px] text-center relative rounded-md',
+                  customError.thumbnail.error && '!border-red-500'
+                )}
+              >
+                <div
+                // className={
+                //   blogImage &&
+                //   'relative flex items-center justify-center w-full h-full z-20 bg-black/50 text-white'
+                // }
+                >
+                  <p>Drag or click to upload thumbnail</p>
+                  <input {...getInputProps()} className="w-full h-full" />
+                </div>
+
+                <div className="absolute w-full h-full  z-10">
+                  {!thumbnail && isEdit ? (
+                    <>
+                      <Image
+                        src={
+                          `${initialValues?.thumbnail}` || '/images/Image.jpg'
+                        }
+                        alt=""
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      {thumbnail && (
+                        <Image
+                          src={
+                            `${URL?.createObjectURL(thumbnail)}` ||
+                            '/images/Image.jpg'
+                          }
+                          alt=""
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+              {customError.thumbnail.error ? (
+                <p className="text-sm text-red-500 pt-[6px]">
+                  {customError.thumbnail.message}
+                </p>
+              ) : null}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
               <InputField
                 type="text"
@@ -239,7 +347,7 @@ const CreateBlogModal = ({
 
             <div className="flex justify-center md:justify-start">
               <button className="py-2.5 px-20 rounded-lg bg-primary text-white text-base font-medium">
-                Submit
+                {isEdit ? 'Update' : 'Submit'}
               </button>
             </div>
           </form>

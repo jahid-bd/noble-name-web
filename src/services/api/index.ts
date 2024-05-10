@@ -116,11 +116,13 @@ export const getBlogByID = (id?: string) =>
 export const createBlogApi = (data: object) =>
   axios.post(`${BASE_URL}/blogs`, data, {
     withCredentials: true,
+    headers: { 'Content-Type': 'multipart/form-data' },
   });
 
 export const updateBlogApi = (data: object, id: string) =>
   axios.put(`${BASE_URL}/blogs/${id}`, data, {
     withCredentials: true,
+    headers: { 'Content-Type': 'multipart/form-data' },
   });
 
 export const deleteBlogApi = (id: string) =>

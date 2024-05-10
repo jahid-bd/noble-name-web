@@ -97,6 +97,7 @@ const AdminBlogView = () => {
         <CreateBlogModal
           id={editID}
           initialValues={editBlogData}
+          isEdit={Boolean(editBlogData && editID)}
           handleClose={() => {
             setEditBlogData(null);
           }}
