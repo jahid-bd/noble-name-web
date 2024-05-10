@@ -2,9 +2,9 @@ const next = require('next');
 const { parse } = require('url');
 const { createServer } = require('http');
 
-const dev = process.env.NODE_ENV !== 'production';
+const dev = process.env.NODE_ENV !== 'development';
 const hostname =
-  process.env.NODE_ENV !== 'production'
+  process.env.NODE_ENV !== 'development'
     ? 'localhost'
     : 'https://name.brainsstation.com/';
 const port = process.env.PORT || 3000;
