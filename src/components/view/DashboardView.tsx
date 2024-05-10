@@ -21,14 +21,17 @@ const DashboardView = () => {
 
   const tab = searchParams.get('tab');
   const activePage = searchParams.get('page');
+  const gender = searchParams.get('type');
+
+  console.log({ gender });
 
   const {
     data: favorites,
     isLoading: favoriteLoading,
     error: favoriteError,
   } = useQuery({
-    queryKey: ['favorites', activePage],
-    queryFn: () => getUserFavorites(Number(activePage)),
+    queryKey: ['favorites', activePage, gender],
+    queryFn: () => getUserFavorites(Number(activePage), gender),
   });
 
   const {
@@ -36,8 +39,8 @@ const DashboardView = () => {
     isLoading: bookmarkLoading,
     error: bookmarkError,
   } = useQuery({
-    queryKey: ['bookmarks', activePage],
-    queryFn: () => getUserBookmarks(Number(activePage)),
+    queryKey: ['bookmarks', activePage, gender],
+    queryFn: () => getUserBookmarks(Number(activePage), gender),
   });
 
   const {
@@ -45,8 +48,8 @@ const DashboardView = () => {
     isLoading: suggestedNameLoading,
     error: suggestedNameError,
   } = useQuery({
-    queryKey: ['suggestedName', activePage],
-    queryFn: () => getUserSuggestedName(Number(activePage)),
+    queryKey: ['suggestedName', activePage, gender],
+    queryFn: () => getUserSuggestedName(Number(activePage), gender),
   });
 
   useEffect(() => {
