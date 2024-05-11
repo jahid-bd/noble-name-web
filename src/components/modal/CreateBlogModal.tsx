@@ -164,8 +164,11 @@ const CreateBlogModal = ({
       }));
     }
 
+    console.log('isEdit', isEdit);
+
     if (!isEdit) {
-      if (data && content && !initialValues && !id && !thumbnail) {
+      if (data && content && thumbnail) {
+        console.log('called inside eidt');
         return createBlog({ ...data, content, thumbnail });
       }
     } else {

@@ -92,12 +92,17 @@ const AdminBlogView = () => {
         handleDelete={deleteBlog}
       />
 
-      {openForm && <CreateBlogModal handleClose={() => setOpenForm(false)} />}
+      {openForm && (
+        <CreateBlogModal
+          isEdit={false}
+          handleClose={() => setOpenForm(false)}
+        />
+      )}
       {editBlogData && editID && (
         <CreateBlogModal
           id={editID}
           initialValues={editBlogData}
-          isEdit={Boolean(editBlogData && editID)}
+          isEdit={true}
           handleClose={() => {
             setEditBlogData(null);
           }}
