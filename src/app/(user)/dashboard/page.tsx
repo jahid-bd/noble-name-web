@@ -1,11 +1,6 @@
-import PreLoader from '@/components/loader/Loader';
-import dynamic from 'next/dynamic';
-
 import type { NextPage } from 'next';
-
-const ContactView = dynamic(() => import('@/components/view/DashboardView'), {
-  loading: () => <PreLoader />,
-});
+import dynamic from 'next/dynamic';
+const ContactView = dynamic(() => import('@/components/view/DashboardView'));
 
 const Dashboard: NextPage = () => {
   return <ContactView />;

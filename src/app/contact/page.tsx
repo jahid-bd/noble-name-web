@@ -1,9 +1,6 @@
-import PreLoader from '@/components/loader/Loader';
 import dynamic from 'next/dynamic';
 
-const ContactView = dynamic(() => import('@/components/view/ContactView'), {
-  loading: () => <PreLoader />,
-});
+const ContactView = dynamic(() => import('@/components/view/ContactView'));
 
 const ContactPage = () => {
   return <ContactView />;

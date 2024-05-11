@@ -1,9 +1,5 @@
-import PreLoader from '@/components/loader/Loader';
 import dynamic from 'next/dynamic';
-
-const SignupView = dynamic(() => import('@/components/view/SignupView'), {
-  loading: () => <PreLoader />,
-});
+const SignupView = dynamic(() => import('@/components/view/SignupView'));
 
 import type { NextPage } from 'next';
 

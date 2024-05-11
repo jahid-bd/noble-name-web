@@ -2,8 +2,9 @@
 
 import { getAnalytics } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { formatISO, subDays } from 'date-fns';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 import AnalyticsFilterGroupBtn from '../buttons/AnalysticsFilterBtnGroup';
 import AccountCard from '../cards/AccountCard';
 import AnalyticsCard from '../cards/AnalyticsCard';
@@ -14,6 +15,8 @@ import PreLoader from '../loader/Loader';
 import NotFound from '../loader/NotFound';
 
 const AdminDashboardView = () => {
+  const router = useRouter();
+  const pathName = usePathname();
   const [openCalender, setOpenCalender] = useState(false);
 
   const searchParams = useSearchParams();
@@ -27,6 +30,15 @@ const AdminDashboardView = () => {
     queryKey: ['analytics', params],
     queryFn: () => getAnalytics(params),
   });
+
+  useEffect(() => {
+    router.push(
+      pathName +
+        `?to=${formatISO(subDays(new Date(), 365))}&form=${formatISO(
+          new Date(),
+        )}`,
+    );
+  }, []);
 
   return (
     <Suspense>
