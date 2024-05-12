@@ -16,7 +16,11 @@ const AdminNameCardSection = ({
 }) => {
   return (
     <>
-      {isError && isLoading && <PreLoader />}
+      {isError && isLoading && (
+        <div className="h-72">
+          <PreLoader />
+        </div>
+      )}
 
       {(!isLoading && isError) ||
         (names?.data?.pagination?.totalItems <= 0 && <NotFound />)}

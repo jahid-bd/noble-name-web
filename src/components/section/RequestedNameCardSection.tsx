@@ -18,7 +18,11 @@ const RequestedNameCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && !isError && <PreLoader />}
+      {isLoading && !isError && (
+        <div className="h-72">
+          <PreLoader />
+        </div>
+      )}
 
       {(isError && !isLoading) ||
         (names?.data?.pagination?.totalItems <= 0 && <NotFound />)}

@@ -18,7 +18,11 @@ const AdminBlogCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && !isError && <PreLoader />}
+      {isLoading && !isError && (
+        <div className="h-72">
+          <PreLoader />
+        </div>
+      )}
 
       {isError || (blogs?.data?.pagination?.totalItems <= 0 && <NotFound />)}
 

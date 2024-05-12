@@ -11,11 +11,16 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import PreLoader from '../loader/Loader';
 
 const MembershipPlanView = () => {
   const router = useRouter();
 
-  const { data: activePlan } = useQuery({
+  const {
+    data: activePlan,
+    isLoading,
+    error: isError,
+  } = useQuery({
     queryKey: ['active-plan'],
     queryFn: getActivePlan,
   });
@@ -66,6 +71,12 @@ const MembershipPlanView = () => {
         <p className="text-center text-lg md:text-xl font-normal text-text-tertiary">
           Simply choose your plan
         </p>
+
+        {isLoading && !isError && (
+          <div className="h-72">
+            <PreLoader />
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 md:mt-16">
           {allPlans?.map((plan: any) => (

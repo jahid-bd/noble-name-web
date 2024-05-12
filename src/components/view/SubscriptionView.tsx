@@ -5,9 +5,14 @@ import UserDashboardNav from '@/components/navs/UserDashboardNav';
 import { cancelSubscription, getActivePlan } from '@/services/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import PreLoader from '../loader/Loader';
 
 const SubscriptionView = () => {
-  const { data: activePlan } = useQuery({
+  const {
+    data: activePlan,
+    isLoading,
+    error: isError,
+  } = useQuery({
     queryKey: ['active-plan'],
     queryFn: getActivePlan,
   });
@@ -37,24 +42,32 @@ const SubscriptionView = () => {
       <div className="container mx-auto px-[6px]">
         <UserDashboardNav />
 
-        <div className="w-full md:w-[700px] mx-auto">
-          <p className=" text-text-secondary mb-2 text-sm font-medium">
-            Current Plan
-          </p>
+        {isLoading && !isError && (
+          <div className="h-72">
+            <PreLoader />
+          </div>
+        )}
 
-          <PlanCard
-            price={activePlan?.price}
-            title={activePlan?.title}
-            active_plan={true}
-            features={activePlan?.features}
-            active_membership={true}
-            button_title="Cancel Subscription"
-            free_plan={activePlan?.price === 0}
-            description={activePlan?.description}
-            is_loading={isCancelling}
-            handleCancel={handleCanncel}
-          />
-        </div>
+        {!isLoading && !isError && activePlan && (
+          <div className="w-full md:w-[700px] mx-auto">
+            <p className=" text-text-secondary mb-2 text-sm font-medium">
+              Current Plan
+            </p>
+
+            <PlanCard
+              price={activePlan?.price}
+              title={activePlan?.title}
+              active_plan={true}
+              features={activePlan?.features}
+              active_membership={true}
+              button_title="Cancel Subscription"
+              free_plan={activePlan?.price === 0}
+              description={activePlan?.description}
+              is_loading={isCancelling}
+              handleCancel={handleCanncel}
+            />
+          </div>
+        )}
       </div>
     </main>
   );

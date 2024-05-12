@@ -14,7 +14,11 @@ const FavoriteCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && !isError && <PreLoader />}
+      {isLoading && !isError && (
+        <div className="h-72">
+          <PreLoader />
+        </div>
+      )}
 
       {(isError && !isLoading) ||
         (favorites?.data?.pagination?.totalItems <= 0 && <NotFound />)}

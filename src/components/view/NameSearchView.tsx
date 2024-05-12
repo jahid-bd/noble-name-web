@@ -9,6 +9,7 @@ import { getNames } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import PreLoader from '../loader/Loader';
 import NotFound from '../loader/NotFound';
 import NameFilterModal from '../modal/NameFilterModal';
@@ -38,10 +39,14 @@ const NameSearchView = () => {
     data: names,
     isLoading,
     error: isError,
-  } = useQuery({
+  }: { error: any; data: any; isLoading: any } = useQuery({
     queryKey: ['names', params],
     queryFn: () => getNames(params),
   });
+
+  if (isError) {
+    toast.error(isError?.response?.data?.message);
+  }
 
   return (
     <main className="bg-white pb-[60px] md:pb-[60px]">
@@ -80,16 +85,16 @@ const NameSearchView = () => {
           </div>
         </div>
 
-        {isLoading && (
-          <div className="flex w-[400px] items-center justify-center mx-auto">
+        {isLoading && !isError && (
+          <div className="flex w-[400px] items-center justify-center mx-auto h-72">
             <PreLoader />
           </div>
         )}
 
         {(isError || names?.data?.pagination?.totalItems <= 0) && (
-          <div className="flex w-[400px] items-center justify-center mx-auto">
+          <>
             <NotFound />
-          </div>
+          </>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5 mb-8 items-center justify-center">

@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     domains: [
-      'localhost:8000',
+      'localhost',
       'https://api.brainsstation.com',
       'api.brainsstation.com',
     ],

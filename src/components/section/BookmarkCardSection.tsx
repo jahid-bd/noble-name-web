@@ -14,7 +14,11 @@ const BookmarkCardSection = ({
 }) => {
   return (
     <>
-      {isLoading && !isError && <PreLoader />}
+      {isLoading && !isError && (
+        <div className="h-72">
+          <PreLoader />
+        </div>
+      )}
 
       {(isError && !isLoading) ||
         (bookmarks?.data?.pagination?.totalItems <= 0 && <NotFound />)}
