@@ -2,10 +2,9 @@
 const nextConfig = {
   images: {
     domains: [
-      'dbbdp2x4vijb2.cloudfront.net',
-      'upload.wikimedia.org',
-      'localhost',
+      'localhost:8000',
       'https://api.brainsstation.com',
+      'api.brainsstation.com',
     ],
   },
 };
