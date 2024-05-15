@@ -3,8 +3,8 @@ const nextConfig = {
   images: {
     domains: [
       'localhost',
-      'https://api.brainsstation.com',
-      'api.brainsstation.com',
+      'https://api.noblenames.co.uk',
+      'api.noblenames.co.uk',
     ],
   },
 };
