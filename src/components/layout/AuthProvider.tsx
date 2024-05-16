@@ -53,12 +53,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (isAdminRoute && !isAdmin) return redirect('/');
 
     if (isAuthneticate && isPublicRoute && !isAdmin) {
-      redirect('/');
+      return redirect('/');
     }
 
-    if (isAuthneticate && isPublicRoute && isAdmin) {
-      redirect('/admin/dashboard');
-    }
+    // if (isAuthneticate && isPublicRoute && path !== '/' && isAdmin) {
+    //   return redirect('/admin/dashboard');
+    // }
   }
 
   return (
