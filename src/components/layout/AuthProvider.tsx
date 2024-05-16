@@ -11,7 +11,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     '/settings',
     '/name-search',
     '/subscription',
-    'dashboard?tab=favorites',
+    '/dashboard',
   ];
   const adminRoutes = [
     '/admin/name',
@@ -25,7 +25,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     '/auth/verify-otp',
     '/auth/forgot-password',
     '/auth/reset-password',
-    '/auth/reset-password',
   ];
 
   const path = usePathname();
@@ -34,7 +33,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAdminRoute = adminRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
 
-  const { data: user, isFetching } = useQuery({
+  const {
+    data: user,
+    isFetching,
+    isLoading,
+  } = useQuery({
     queryKey: ['user'],
     queryFn: getUserProfile,
     // enabled: isUserRoute || isAdminRoute,
@@ -43,21 +46,24 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAuthneticate = Boolean(user?._id);
   const isAdmin = user?.role === 'admin';
 
-  if (isAuthneticate && isPublicRoute && !isAdmin) {
-    redirect('/');
+  if (!isFetching || !isLoading) {
+    if ((isUserRoute || isAdminRoute) && !isAuthneticate)
+      return redirect('/auth/sign-in');
+
+    if (isAdminRoute && !isAdmin) return redirect('/');
+
+    if (isAuthneticate && isPublicRoute && !isAdmin) {
+      redirect('/');
+    }
+
+    if (isAuthneticate && isPublicRoute && isAdmin) {
+      redirect('/admin/dashboard');
+    }
   }
-
-  if (isAuthneticate && isPublicRoute && isAdmin) {
-    redirect('/admin/dashboard');
-  }
-
-  if (isUserRoute && !isAuthneticate) return redirect('auth/sign-in');
-
-  if (isAdminRoute && !isAdmin) return redirect('/');
 
   return (
     <>
-      {isFetching ? (
+      {isFetching || isLoading ? (
         <div className="w-full h-screen justify-center items-center">
           <PreLoader />
         </div>
