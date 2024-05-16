@@ -4,6 +4,7 @@ import { getUserProfile, userLogout } from '@/services/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import UserNavList from '../navs/UserNavList';
@@ -12,6 +13,12 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const navRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState(false);
   const queryClient = useQueryClient();
+
+  const router = useRouter();
+
+  const closeNav = () => {
+    setOpenNav(!openNav);
+  };
 
   const handleClickOutside = useCallback((event: any) => {
     if (navRef.current && navRef?.current?.contains(event.target)) {
@@ -34,6 +41,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     onSuccess: (data: any) => {
       toast.success('user logout successfully.');
       queryClient.invalidateQueries({ queryKey: ['logged-in-user'] });
+      router.push('auth/sign-in');
     },
   });
 
@@ -85,7 +93,10 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
               {openNav && !isError && user && (
                 <div ref={navRef}>
-                  <UserNavList handleLogout={handleLogout} />
+                  <UserNavList
+                    handleLogout={handleLogout}
+                    closeNav={closeNav}
+                  />
                 </div>
               )}
             </div>
