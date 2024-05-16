@@ -4,6 +4,7 @@ import { getUserProfile } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import { redirect, usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
+import PreLoader from '../loader/Loader';
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const userRoutes = [
@@ -50,20 +51,21 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     redirect('/admin/dashboard');
   }
 
-  if (!isFetching) {
-    if (isUserRoute && !isAuthneticate) return redirect('auth/sign-in');
+  if (isUserRoute && !isAuthneticate) return redirect('auth/sign-in');
 
-    if (isAdminRoute && !isAdmin) return redirect('/');
-  }
+  if (isAdminRoute && !isAdmin) return redirect('/');
 
-  // if (isFetching)
-  //   return (
-  //     <div className="w-full h-screen justify-center items-center">
-  //       <PreLoader />
-  //     </div>
-  //   );
-
-  return <>{children}</>;
+  return (
+    <>
+      {isFetching ? (
+        <div className="w-full h-screen justify-center items-center">
+          <PreLoader />
+        </div>
+      ) : (
+        <>{children}</>
+      )}
+    </>
+  );
 };
 
 export default AuthProvider;

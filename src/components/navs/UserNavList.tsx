@@ -3,7 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const UserNavList = ({ handleLogout }: { handleLogout: () => void }) => {
+const UserNavList = ({
+  handleLogout,
+  closeNav,
+}: {
+  handleLogout: () => void;
+  closeNav?: () => void;
+}) => {
   const pathname = usePathname();
 
   return (
@@ -14,6 +20,7 @@ const UserNavList = ({ handleLogout }: { handleLogout: () => void }) => {
           className={`py-1 px-3 hover:bg-border-primary ${
             pathname === '/dashboard' ? 'bg-border-primary' : ''
           }`}
+          onClick={closeNav}
         >
           Dashboard
         </Link>
@@ -22,6 +29,7 @@ const UserNavList = ({ handleLogout }: { handleLogout: () => void }) => {
           className={`py-1 px-3 hover:bg-border-primary ${
             pathname === '/settings' ? 'bg-border-primary' : ''
           }`}
+          onClick={closeNav}
         >
           Setting
         </Link>
@@ -30,6 +38,7 @@ const UserNavList = ({ handleLogout }: { handleLogout: () => void }) => {
           className={`py-1 px-3 hover:bg-border-primary ${
             pathname === '/subscription' ? 'bg-border-primary' : ''
           }`}
+          onClick={closeNav}
         >
           Subscription
         </Link>
