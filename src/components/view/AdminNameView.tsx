@@ -37,8 +37,7 @@ const AdminNameView = () => {
   const { mutate: createNameByForm, isPending } = useMutation({
     mutationFn: (data: any) => createNameUsingForm(data),
     onError: (error: any) => {
-      console.log('error', error.message);
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data: any) => {
       setOpenAddName(false);
@@ -50,11 +49,9 @@ const AdminNameView = () => {
   const { mutate: createNameByCSV } = useMutation({
     mutationFn: (data: any) => createNameUsingCSV(data),
     onError: (error: any) => {
-      console.log('error', error.message);
       toast.error(error.message);
     },
     onSuccess: (data: any) => {
-      console.log('hello');
       setChooseOne(false);
       toast.success('Name create successfully');
       queryClient.invalidateQueries({ queryKey: ['names'] });
