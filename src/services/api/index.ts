@@ -1,5 +1,6 @@
 import { BASE_URL } from '@/constants';
 import {
+  ChangePassReq,
   ContactParams,
   OtpParams,
   RegisterData,
@@ -29,6 +30,11 @@ export const verifyOtp = (data: OtpParams) =>
 
 export const resetPassword = (data: ResetPassParams) =>
   axios.post(`${BASE_URL}/auth/reset-password`, data);
+
+export const changePassword = (data: ChangePassReq) =>
+  axios.put(`${BASE_URL}/auth/change-password`, data, {
+    withCredentials: true,
+  });
 
 export const getUserProfile = async () => {
   try {
