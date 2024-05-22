@@ -11,13 +11,14 @@ const AboutUsView = () => {
         </h1>
 
         <p className="text-black text-base font-normal mb-5">
-          Noble names is a one-stop platform for all your rental needs. It's an
-          eCommerce-based company that provides all kinds of available space,
-          properties, smart transportation systems and other innovative services
-          in an easy way from anywhere. With a wide range of products and
-          services, Nagalay will help you with all your rental needs. From cars
-          to heavy machinery and everything in between, we have it all. We are
-          here to make your life easier and help you with all your rental needs.
+          Noble names is a one-stop platform for all your rental needs.
+          It&apos;s an eCommerce-based company that provides all kinds of
+          available space, properties, smart transportation systems and other
+          innovative services in an easy way from anywhere. With a wide range of
+          products and services, Nagalay will help you with all your rental
+          needs. From cars to heavy machinery and everything in between, we have
+          it all. We are here to make your life easier and help you with all
+          your rental needs.
         </p>
 
         <p className="text-black text-base font-normal mb-5">
@@ -31,19 +32,19 @@ const AboutUsView = () => {
         </p>
 
         <p className="text-black text-base font-normal mb-5">
-          The company's goal is to make life easier and more efficient for those
-          in need of space or property by providing them with all the required
-          information about these things and a quick, easy way to rent whatever
-          they may need. They also want to empower every person and organization
-          under a roof to achieve more opportunities for growth and impact every
-          corner of the world.
+          The company&apos;s goal is to make life easier and more efficient for
+          those in need of space or property by providing them with all the
+          required information about these things and a quick, easy way to rent
+          whatever they may need. They also want to empower every person and
+          organization under a roof to achieve more opportunities for growth and
+          impact every corner of the world.
         </p>
 
         <p className="text-black text-base font-normal mb-5">
-          Do you feel like you're spending your whole life looking for a place
-          to rent, an office to rent, parking or a knowledge-sharing service?
-          It's not just you - the world is changing rapidly and more and more
-          people love renting rather than purchasing them.
+          Do you feel like you&apos;re spending your whole life looking for a
+          place to rent, an office to rent, parking or a knowledge-sharing
+          service? It&apos;s not just you - the world is changing rapidly and
+          more and more people love renting rather than purchasing them.
         </p>
 
         <p className="text-black text-base font-normal mb-5">
