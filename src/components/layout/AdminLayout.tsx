@@ -129,6 +129,10 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               </AdminLink>
             </div>
           </div>
+
+          <AdminLink href="/admin/dashboard" title="Dashboard">
+            <DashboardIcon />
+          </AdminLink>
         </aside>
 
         <div className="w-[1200px] py-14 px-8 bg-gray-bg h-screen overflow-y-auto">

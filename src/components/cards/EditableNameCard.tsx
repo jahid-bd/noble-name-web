@@ -42,7 +42,7 @@ const EditableNameCard = ({
       </div>
 
       <p className="mb-10 text-white text-xs font-normal">
-        {name?.meanings.toString()}
+        {name?.meanings?.toString()}
       </p>
 
       <div className="flex justify-between items-center">

@@ -49,7 +49,7 @@ const AdminNameView = () => {
   const { mutate: createNameByCSV } = useMutation({
     mutationFn: (data: any) => createNameUsingCSV(data),
     onError: (error: any) => {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data: any) => {
       setChooseOne(false);
