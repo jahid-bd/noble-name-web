@@ -130,7 +130,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
 
-          <AdminLink href="/admin/dashboard" title="Dashboard">
+          <AdminLink href="/settings" title="Settings">
             <DashboardIcon />
           </AdminLink>
         </aside>
