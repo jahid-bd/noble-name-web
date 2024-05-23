@@ -43,7 +43,7 @@ const HomeView = () => {
 
   return (
     <main className="bg-white pb-[60px] md:pb-[60px]">
-      <section className="bg-black py-16">
+      <section className="bg-black py-8 md:py-16">
         <div className="container mx-auto px-[6px]">
           <h1 className="text-[28px] md:text-[32px] font-semibold text-white text-center mb-16">
             Search Muslim Names With Endless Possibilities
@@ -108,7 +108,7 @@ const HomeView = () => {
         </div>
       </section>
 
-      <section className="bg-white">
+      <section className="bg-white max-md:px-1.5">
         <div className="container mx-auto bg-border-secondary rounded-2xl px-4 md:px-8 py-8">
           <div className="flex flex-col md:flex-row gap-5 md:items-center">
             <div>
