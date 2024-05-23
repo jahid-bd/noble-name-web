@@ -46,7 +46,7 @@ const HomeView = () => {
       <section className="bg-black py-16">
         <div className="container mx-auto px-[6px]">
           <h1 className="text-[28px] md:text-[32px] font-semibold text-white text-center mb-16">
-            Search muslim names with endless possibilities
+            Search Muslim Names With Endless Possibilities
           </h1>
 
           <NameSearchSection />
