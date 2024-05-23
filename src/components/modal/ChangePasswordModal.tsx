@@ -66,7 +66,7 @@ const ChangePasswordModal = ({ handleClose }: { handleClose: () => void }) => {
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
-      <div className="w-[70%] mx-auto px-1.5 md:px-20">
+      <div className="md:w-[800px] w-[80%] mx-auto px-1.5 md:px-20">
         <div className="px-4 py-8 md:px-8 bg-white rounded-[10px] shadow-modal">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-text-tertiary ">

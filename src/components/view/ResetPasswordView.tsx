@@ -86,7 +86,7 @@ const ResetPass = () => {
   return (
     <Suspense fallback={<PreLoader />}>
       <div className="flex items-center justify-center h-screen overflow-auto">
-        <div className="w-full max-w-[450px] mx-auto">
+        <div className="w-full max-md:px-4 max-w-[450px] mx-auto">
           {/* logo */}
           <div className="mb-6">
             <Link
@@ -105,7 +105,9 @@ const ResetPass = () => {
 
           {/* Title */}
           <div>
-            <h1 className="heading-text text-center">Reset your password</h1>
+            <h1 className="heading-text max-md:text-[30px] text-center">
+              Reset your password
+            </h1>
             <p className="pt-3 text-center text-text-tertiary">
               Set new password to restore access to your account.
             </p>
