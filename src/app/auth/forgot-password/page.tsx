@@ -73,7 +73,7 @@ const ForgotPass = () => {
 
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
-      <div className="w-full max-w-[450px]  mx-auto">
+      <div className="w-full max-w-[450px] max-md:px-4 mx-auto">
         <div className="mb-6">
           <Link
             href="/"
@@ -90,7 +90,9 @@ const ForgotPass = () => {
         </div>
 
         <div>
-          <h1 className="heading-text text-center">Forgot your password?</h1>
+          <h1 className="heading-text max-md:text-[30px] text-center">
+            Forgot your password?
+          </h1>
           <p className="pt-3 text-center text-text-tertiary">
             We&rsquo;ve sent you an OTP (One-Time Password) to verify your
             identity and reset your password. Please check your registered email

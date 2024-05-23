@@ -4,6 +4,7 @@ import { getUserProfile, userProfileUpdate } from '@/services/api';
 import { UserUpdateData } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import moment from 'moment';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Button from '../buttons/Button';
@@ -520,11 +521,11 @@ const SettingsView = () => {
           </div>
         )}
 
-        <div className="mb-10">
+        <div className="mb-8">
           <Button
             onClick={handleToggleMod}
             isLoading={isPending}
-            className="text-sm max-w-[200px]"
+            className="md:text-sm text-xs md:max-w-[200px] max-w-[170px]"
           >
             Change Password
           </Button>
@@ -533,7 +534,7 @@ const SettingsView = () => {
         {user && !isLoading && !isError && (
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-8 border border-border-primary rounded-xl shadow-xs p-6">
-              <div className="w-full flex items-center justify-between gap-6 ">
+              <div className="w-full max-md:flex-col flex items-center justify-between gap-6 ">
                 <div className="w-full">
                   <InputField
                     type="text"
@@ -564,7 +565,7 @@ const SettingsView = () => {
                 </div>
               </div>
 
-              <div className="w-full flex items-center justify-between gap-6 ">
+              <div className="w-full max-md:flex-col flex items-center justify-between gap-6 ">
                 <div className="w-full">
                   <SelectInput
                     label="Gender"
@@ -585,7 +586,7 @@ const SettingsView = () => {
                 </div>
               </div>
 
-              <div className="w-full flex items-center justify-between gap-6">
+              <div className="w-full max-md:flex-col flex items-center justify-between gap-6">
                 <div className="w-full">
                   <InputField
                     type="email"
@@ -609,7 +610,7 @@ const SettingsView = () => {
                 </div>
               </div>
 
-              <div className="w-full flex items-center justify-between gap-6">
+              <div className="w-full max-md:flex-col flex items-center justify-between gap-6">
                 <div className="w-full">
                   <SelectInput
                     label="Sect"
@@ -620,88 +621,108 @@ const SettingsView = () => {
                   />
                 </div>
 
-                <div className="w-full flex items-center gap-5">
-                  <div className="w-full">
-                    <RadioButton
-                      active={isParent}
-                      label="Are you already a parent"
-                      text="Yes"
-                      onClick={() => {
-                        setIsParent(true);
-                      }}
-                      error={errors.isParent.error}
-                    />
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="font-medium text-sm text-text-secondary pb-3 block text-left"
+                  >
+                    Are you already a parent
+                  </label>
+                  <div className="w-full flex items-center gap-5">
+                    <div className="w-full">
+                      <RadioButton
+                        active={isParent}
+                        text="Yes"
+                        onClick={() => {
+                          setIsParent(true);
+                        }}
+                        error={errors.isParent.error}
+                      />
+                    </div>
+                    <div className="w-full ">
+                      <RadioButton
+                        active={isParent === false}
+                        text="No"
+                        onClick={() => {
+                          setIsParent(false);
+                        }}
+                        error={errors.isParent.error}
+                      />
+                    </div>
+                    {errors.expectingBaby.error ? (
+                      <p className="text-sm text-red-500 pt-[6px]">
+                        {errors.expectingBaby.error}
+                      </p>
+                    ) : null}
                   </div>
-                  <div className="w-full pt-5">
-                    <RadioButton
-                      active={isParent === false}
-                      label=""
-                      text="No"
-                      onClick={() => {
-                        setIsParent(false);
-                      }}
-                      error={errors.isParent.error}
-                    />
-                  </div>
-                  {errors.expectingBaby.error ? (
-                    <p className="text-sm text-red-500 pt-[6px]">
-                      {errors.expectingBaby.error}
-                    </p>
-                  ) : null}
                 </div>
               </div>
 
               {isParent && (
-                <div className="w-full flex items-center gap-5">
-                  <div className="w-full">
-                    <SelectInput
-                      label="How many children you have?"
-                      options={childrenOptions}
-                      handleSelect={(opt) => handleSelect('children', opt)}
-                      selectedOption={optionsState.children}
-                      error={
-                        errors.children.error ? errors.children.message : false
-                      }
-                    />
-                  </div>
+                <div>
+                  <div className="w-full flex items-center max-md:flex-col gap-5">
+                    <div className="w-full">
+                      <SelectInput
+                        label="How many children you have?"
+                        options={childrenOptions}
+                        handleSelect={(opt) => handleSelect('children', opt)}
+                        selectedOption={optionsState.children}
+                        error={
+                          errors.children.error
+                            ? errors.children.message
+                            : false
+                        }
+                      />
+                    </div>
 
-                  <div className="w-full">
-                    <SelectInput
-                      label="Age group of children"
-                      options={childeAgeOptions}
-                      handleSelect={(opt) => handleSelect('childAge', opt)}
-                      selectedOption={optionsState.childAge}
-                      error={
-                        errors.childAge.error ? errors.childAge.message : false
-                      }
-                    />
+                    <div className="w-full">
+                      <SelectInput
+                        label="Age group of children"
+                        options={childeAgeOptions}
+                        handleSelect={(opt) => handleSelect('childAge', opt)}
+                        selectedOption={optionsState.childAge}
+                        error={
+                          errors.childAge.error
+                            ? errors.childAge.message
+                            : false
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
               )}
 
-              <div className="w-full flex items-center gap-5">
-                <div className="w-full flex items-center gap-5">
-                  <div className="w-full">
-                    <RadioButton
-                      active={isExpectingBaby}
-                      label="Are you expecting a baby"
-                      text="Yes"
-                      onClick={() => {
-                        setIsexpectionBaby(true);
-                      }}
-                      error={errors.expectingBaby.error}
-                    />
-                  </div>
-                  <div className="w-full pt-5">
-                    <RadioButton
-                      active={isExpectingBaby === false}
-                      label=""
-                      text="No"
-                      onClick={() => {
-                        setIsexpectionBaby(false);
-                      }}
-                      error={errors.expectingBaby.error}
-                    />
+              <div className="w-full flex max-md:flex-col  items-center gap-5">
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="font-medium text-sm text-text-secondary block text-left mb-2"
+                  >
+                    Are you expecting a baby
+                  </label>
+                  <div className="w-full flex items-center gap-5">
+                    <div className="w-full">
+                      <RadioButton
+                        active={isExpectingBaby}
+                        // label="Are you expecting a baby"
+                        text="Yes"
+                        onClick={() => {
+                          setIsexpectionBaby(true);
+                        }}
+                        error={errors.expectingBaby.error}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <RadioButton
+                        active={isExpectingBaby === false}
+                        // label=""
+                        text="No"
+                        onClick={() => {
+                          setIsexpectionBaby(false);
+                        }}
+                        error={errors.expectingBaby.error}
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -739,11 +760,13 @@ const SettingsView = () => {
                 </div>
               ) : null}
 
-              <div className="flex item-center justify-end">
+              <div className="flex  item-center justify-end">
                 <div className="w-full mt-[60px] flex items-center justify-end gap-3">
-                  <Button className="max-w-[90px] bg-white border border-border-primary !text-sm !text-text-secondary hover:!text-white text-center">
-                    Cancel
-                  </Button>
+                  <Link href="/">
+                    <Button className="max-w-[90px] bg-white border border-border-primary !text-sm !text-text-secondary hover:!text-white text-center">
+                      Cancel
+                    </Button>
+                  </Link>
                   <Button
                     isLoading={isPending}
                     type="submit"
