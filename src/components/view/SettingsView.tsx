@@ -11,6 +11,7 @@ import InputField from '../form/InputField';
 import RadioButton from '../form/RadioButton';
 import SelectInput from '../form/SelectInput';
 import PreLoader from '../loader/Loader';
+import ChangePasswordModal from '../modal/ChangePasswordModal';
 import UserDashboardNav from '../navs/UserDashboardNav';
 
 function formatDate(dateString: string) {
@@ -442,7 +443,7 @@ const SettingsView = () => {
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string },
+    option: { value: string; label: string }
   ) => {
     setOptionsState({
       ...optionsState,
@@ -451,7 +452,7 @@ const SettingsView = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -502,6 +503,12 @@ const SettingsView = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
+  const [changePassModal, setChangePasswordModal] = useState(false);
+
+  const handleToggleMod = () => {
+    setChangePasswordModal(!changePassModal);
+  };
+
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px] ">
       <div className="container mx-auto px-[6px]">
@@ -512,6 +519,16 @@ const SettingsView = () => {
             <PreLoader />
           </div>
         )}
+
+        <div className="mb-10">
+          <Button
+            onClick={handleToggleMod}
+            isLoading={isPending}
+            className="text-sm max-w-[200px]"
+          >
+            Change Password
+          </Button>
+        </div>
 
         {user && !isLoading && !isError && (
           <form onSubmit={handleSubmit}>
@@ -739,6 +756,10 @@ const SettingsView = () => {
             </div>
           </form>
         )}
+
+        {changePassModal ? (
+          <ChangePasswordModal handleClose={handleToggleMod} />
+        ) : null}
       </div>
     </main>
   );

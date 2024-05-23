@@ -31,6 +31,11 @@ export interface ResetPassParams {
   password: string;
 }
 
+export interface ChangePassReq {
+  current_password: string;
+  new_password: string;
+}
+
 export interface ContactParams {
   email: string;
   phone: string;

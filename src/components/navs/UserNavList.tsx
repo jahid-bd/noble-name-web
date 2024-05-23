@@ -31,7 +31,7 @@ const UserNavList = ({
           }`}
           onClick={closeNav}
         >
-          Setting
+          Settings
         </Link>
         <Link
           href="/subscription"
