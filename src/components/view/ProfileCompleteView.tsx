@@ -150,12 +150,12 @@ const ProfileComplete = () => {
   const [isParent, setIsParent] = useState<boolean | null>(null);
 
   const [expectingDate, setExpectingDate] = useState<Date | null | string>(
-    null,
+    null
   );
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string },
+    option: { value: string; label: string }
   ) => {
     setOptionsState({
       ...optionsState,
@@ -377,7 +377,7 @@ const ProfileComplete = () => {
 
   return (
     <div className="flex items-center justify-center py-24">
-      <div className="w-full max-w-[560px] min-h-[622px] mx-auto">
+      <div className="w-full max-md:px-4 max-w-[560px] min-h-[622px] mx-auto">
         <div className="mb-[43px]">
           <h1 className="heading-text text-center">
             Basic Personal Information
@@ -422,11 +422,17 @@ const ProfileComplete = () => {
             />
 
             <div>
+              <label
+                htmlFor=""
+                className="font-medium text-sm text-text-secondary pb-3 block text-left"
+              >
+                Are you already a parent
+              </label>
               <div className="w-full flex items-center gap-5">
                 <div className="w-full">
                   <RadioButton
                     active={isExpectingBaby}
-                    label="Are you expecting a baby"
+                    // label="Are you expecting a baby"
                     text="Yes"
                     onClick={() => {
                       setIsexpectionBaby(true);
@@ -434,10 +440,10 @@ const ProfileComplete = () => {
                     error={errors.expectingBaby.error}
                   />
                 </div>
-                <div className="w-full pt-5">
+                <div className="w-full">
                   <RadioButton
                     active={isExpectingBaby === false}
-                    label=""
+                    // label=""
                     text="No"
                     onClick={() => {
                       setIsexpectionBaby(false);
@@ -468,34 +474,43 @@ const ProfileComplete = () => {
                 }
               />
             )}
-            <div className="w-full flex items-center gap-5">
-              <div className="w-full">
-                <RadioButton
-                  active={isParent}
-                  label="Are you already a parent"
-                  text="Yes"
-                  onClick={() => {
-                    setIsParent(true);
-                  }}
-                  error={errors.isParent.error}
-                />
+
+            <div>
+              <label
+                htmlFor=""
+                className="font-medium text-sm text-text-secondary pb-3 block text-left"
+              >
+                Are you already a parent
+              </label>
+              <div className="w-full flex items-center gap-5">
+                <div className="w-full">
+                  <RadioButton
+                    active={isParent}
+                    // label="Are you already a parent"
+                    text="Yes"
+                    onClick={() => {
+                      setIsParent(true);
+                    }}
+                    error={errors.isParent.error}
+                  />
+                </div>
+                <div className="w-full">
+                  <RadioButton
+                    active={isParent === false}
+                    // label=""
+                    text="No"
+                    onClick={() => {
+                      setIsParent(false);
+                    }}
+                    error={errors.isParent.error}
+                  />
+                </div>
+                {errors.expectingBaby.error ? (
+                  <p className="text-sm text-red-500 pt-[6px]">
+                    {errors.expectingBaby.error}
+                  </p>
+                ) : null}
               </div>
-              <div className="w-full pt-5">
-                <RadioButton
-                  active={isParent === false}
-                  label=""
-                  text="No"
-                  onClick={() => {
-                    setIsParent(false);
-                  }}
-                  error={errors.isParent.error}
-                />
-              </div>
-              {errors.expectingBaby.error ? (
-                <p className="text-sm text-red-500 pt-[6px]">
-                  {errors.expectingBaby.error}
-                </p>
-              ) : null}
             </div>
 
             {isParent && (

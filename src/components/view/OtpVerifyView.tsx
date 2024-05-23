@@ -39,7 +39,7 @@ const OtpVerifyView = () => {
   return (
     <Suspense fallback={<PreLoader />}>
       <div className="flex items-center justify-center h-screen overflow-auto">
-        <div className="w-full max-w-[500px] mx-auto">
+        <div className="w-full max-w-[500px] max-md:px-4 mx-auto">
           <div className="mb-8">
             <Link
               href="/"
@@ -56,7 +56,9 @@ const OtpVerifyView = () => {
           </div>
 
           <div className="text-center">
-            <h1 className="heading-text text-center">Reset Your Password</h1>
+            <h1 className="heading-text text-center max-md:text-[30px]">
+              Reset Your Password
+            </h1>
             <p className=" text-text-tertiary pt-[6px]">
               We&rsquo;ve sent you an OTP (One-Time Password) to verify your
               identity and reset your password. Please check your registered

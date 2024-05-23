@@ -2,26 +2,39 @@ import clsx from 'clsx';
 
 interface PropTypes {
   label?: string;
+  labelClass?: string;
   text: string;
   active: boolean | null;
   onClick: () => void;
   error?: boolean;
 }
 
-const RadioButton = ({ label, text, active, onClick, error }: PropTypes) => {
+const RadioButton = ({
+  label,
+  text,
+  active,
+  onClick,
+  error,
+  labelClass,
+}: PropTypes) => {
   return (
     <div onClick={onClick} className="w-full">
-      <label
-        htmlFor={label}
-        className="font-medium text-sm text-text-secondary pb-3 block text-left"
-      >
-        {label}
-      </label>
+      {label ? (
+        <label
+          htmlFor={label}
+          className={clsx(
+            'font-medium text-sm text-text-secondary pb-3 block text-left',
+            labelClass
+          )}
+        >
+          {label}
+        </label>
+      ) : null}
 
       <div
         className={clsx(
           'w-full  border border-border-primary px-4 py-[10px] flex items-center gap-2 cursor-pointer rounded-md',
-          error && 'border-red-500',
+          error && 'border-red-500'
         )}
       >
         <div className="w-4 h-4 rounded-full border border-border-primary p-[2px]">

@@ -83,7 +83,7 @@ const SignInView = () => {
 
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
-      <div className="w-full max-w-[370px] h-[622px] mx-auto">
+      <div className="w-full max-w-[370px] max-md:px-4 h-[622px] mx-auto">
         {/* logo */}
         <div className="mb-8">
           <Link
@@ -102,7 +102,9 @@ const SignInView = () => {
 
         {/* Title */}
         <div>
-          <h1 className="heading-text text-center">Log in to your account</h1>
+          <h1 className="heading-text max-md:text-[30px] text-center">
+            Log in to your account
+          </h1>
           <p className="pt-4 text-center text-text-tertiary">
             Welcome back! Please enter your details.
           </p>
@@ -139,7 +141,7 @@ const SignInView = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex md:items-center max-md:flex-col max-md:gap-2 justify-between mb-6">
               <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
@@ -158,7 +160,7 @@ const SignInView = () => {
 
               <Link
                 href={'/auth/forgot-password'}
-                className="text-primary font-semibold hover:text-green-hover"
+                className="text-primary font-semibold hover:text-green-hover max-md:text-right"
               >
                 Forgot password
               </Link>

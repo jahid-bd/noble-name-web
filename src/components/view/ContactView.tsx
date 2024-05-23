@@ -24,7 +24,7 @@ const ContactView = () => {
   const [formState, setFormState] = useState({ ...initialValues });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -120,8 +120,8 @@ const ContactView = () => {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex items-center justify-between gap-8 mb-6 mt-[48px]">
-                <div>
+              <div className="flex max-md:flex-col  items-center justify-between gap-8 mb-6 mt-[48px]">
+                <div className="w-full">
                   <InputField
                     type="text"
                     label="First Name"
@@ -134,7 +134,7 @@ const ContactView = () => {
                     className={serverError ? 'border-red-500' : ''}
                   />
                 </div>
-                <div>
+                <div className="w-full">
                   <InputField
                     type="text"
                     label="Last Name"
@@ -189,7 +189,7 @@ const ContactView = () => {
                   {...register('message', { value: formState.message })}
                   className={clsx(
                     'w-full h-[134px] outline-none border border-border-primary px-[14px] py-[10px] rounded-md shadow-sm placeholder:text-text-placeholder resize-none',
-                    errors.message?.message && 'border-red-500',
+                    errors.message?.message && 'border-red-500'
                   )}
                 />
                 {errors.message?.message ? (
@@ -207,7 +207,7 @@ const ContactView = () => {
                 />
                 <label htmlFor="agree" className="text text-text-tertiary">
                   You agree to our friendly{' '}
-                  <Link href={'/privacy'}>privacy policy.</Link>
+                  <Link href={'/fair-use-policy'}>privacy policy.</Link>
                 </label>
               </div>
 
