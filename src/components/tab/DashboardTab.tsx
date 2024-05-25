@@ -1,3 +1,5 @@
+import BookmarkIcon from '@/assets/icons/BookmarkIcon';
+import LoveIcon from '@/assets/icons/LoveIcon';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
@@ -25,7 +27,8 @@ const DashboardTab = ({
             : 'border-transparent'
         }`}
       >
-        Favorites
+        <LoveIcon isFavorite={true} />
+        Love
         <span className="border-border-secondary border bg-gray-bg rounded-full py-0.5 px-2.5 text-xs md:text-sm font-medium">
           {totalFavorites}
         </span>
@@ -39,7 +42,8 @@ const DashboardTab = ({
             : 'border-transparent'
         }`}
       >
-        Bookmarks
+        <BookmarkIcon isBookmarked={true} />
+        Favourite
         <span className="border-border-secondary border bg-gray-bg rounded-full py-0.5 px-2.5 text-xs md:text-sm font-medium">
           {totalBookmarked}
         </span>

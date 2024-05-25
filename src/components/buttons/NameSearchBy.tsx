@@ -1,7 +1,6 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
 
 interface LinkType {
   path: string;
@@ -65,7 +64,8 @@ const TabButton = ({ title, name, value, onClick, isActive }: TabTypes) => {
 
 interface SearchByTypes {
   searchBy: string;
-  setSearchBy: Dispatch<SetStateAction<string>>;
+  // setSearchBy: Dispatch<SetStateAction<'name' | 'meanings' | 'fullname'>>;
+  setSearchBy: (value: any) => void;
 }
 
 const NameSearchBy = ({ searchBy, setSearchBy }: SearchByTypes) => {

@@ -1,5 +1,6 @@
 'use client';
 
+import countries from '@/assets/data/countries';
 import { getUserProfile, userProfileUpdate } from '@/services/api';
 import { UserUpdateData } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -69,8 +70,12 @@ const SettingsView = () => {
       label: '35-45',
     },
     {
-      value: '45+',
-      label: '45+',
+      value: '46-54',
+      label: '46-54',
+    },
+    {
+      value: '55+',
+      label: '55+',
     },
   ];
 
@@ -131,29 +136,31 @@ const SettingsView = () => {
     },
   ];
 
-  const countryOptions = [
-    {
-      value: '',
-      label: 'Select country',
-    },
+  const countryOptions = [...countries];
 
-    {
-      value: 'united-states',
-      label: 'United States',
-    },
-    {
-      value: 'united-kingdoms',
-      label: 'United Kingdoms',
-    },
-    {
-      value: 'pakistan',
-      label: 'Pakistan',
-    },
-    {
-      value: 'united-arab-emirates',
-      label: 'United Arab Emirates',
-    },
-  ];
+  // const countryOptions = [
+  //   {
+  //     value: '',
+  //     label: 'Select country',
+  //   },
+
+  //   {
+  //     value: 'united-states',
+  //     label: 'United States',
+  //   },
+  //   {
+  //     value: 'united-kingdoms',
+  //     label: 'United Kingdoms',
+  //   },
+  //   {
+  //     value: 'pakistan',
+  //     label: 'Pakistan',
+  //   },
+  //   {
+  //     value: 'united-arab-emirates',
+  //     label: 'United Arab Emirates',
+  //   },
+  // ];
 
   const {
     data: user,
@@ -444,7 +451,7 @@ const SettingsView = () => {
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string }
+    option: { value: string; label: string },
   ) => {
     setOptionsState({
       ...optionsState,
@@ -453,7 +460,7 @@ const SettingsView = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -626,7 +633,7 @@ const SettingsView = () => {
                     htmlFor=""
                     className="font-medium text-sm text-text-secondary pb-3 block text-left"
                   >
-                    Are you already a parent
+                    Are you already a parent?
                   </label>
                   <div className="w-full flex items-center gap-5">
                     <div className="w-full">
@@ -698,7 +705,7 @@ const SettingsView = () => {
                     htmlFor=""
                     className="font-medium text-sm text-text-secondary block text-left mb-2"
                   >
-                    Are you expecting a baby
+                    Are you expecting a baby?
                   </label>
                   <div className="w-full flex items-center gap-5">
                     <div className="w-full">

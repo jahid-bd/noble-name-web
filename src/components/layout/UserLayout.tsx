@@ -112,15 +112,16 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
       <footer className="py-8 bg-primary">
         <div className="container py-4 px-[6px] mx-auto">
-          <p className="text-center text-white text-base font-semibold mb-5">
-            &copy; 2023 Noble Names
-          </p>
-
-          <div className="flex flex-col md:flex-row gap-5 items-center justify-center font-normal text-white text-base">
+          <div className="flex flex-col md:flex-row gap-5 items-center justify-center font-normal text-white text-base mb-5">
+            <Link href="/blog">Blog</Link>
             <Link href="/fair-use-policy">Terms & Conditions</Link>
             <Link href="/fair-use-policy">Privacy Policy</Link>
             <Link href="/fair-use-policy">Fair Use Policy</Link>
           </div>
+
+          <p className="text-center text-white text-base font-semibold">
+            &copy; 2023 Noble Names
+          </p>
         </div>
       </footer>
     </>

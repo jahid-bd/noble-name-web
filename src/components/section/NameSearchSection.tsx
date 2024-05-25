@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 const genderOptions = [
   {
     value: '',
-    label: 'Select gender',
+    label: 'Select a Gender',
   },
   {
     value: 'boy',
@@ -28,25 +28,54 @@ const genderOptions = [
 
 const languageOptions = [
   {
+    value: '',
+    label: 'Select a Language',
+  },
+  {
     value: 'english',
     label: 'English',
   },
   {
     value: 'arabic',
-    label: 'Arabic',
+    label: 'عربي',
   },
 ];
 
+type SearchBy = 'name' | 'meanings' | 'fullname';
+
 const NameSearchSection = () => {
   const router = useRouter();
+  const [searchError, setSearchError] = useState({
+    name: false,
+    language: false,
+    gender: false,
+  });
   const searchParams = useSearchParams();
-  const [searchBy, setSearchBy] = useState('name');
+  const [searchBy, setSearchBy] = useState<SearchBy>('name');
   const [searchValue, setSearchValue] = useState('');
   const { setQueryParams, deleteParams } = useSearchQueryParam();
   const [optionsState, setOptionsState] = useState({
     gender: genderOptions[0],
     language: languageOptions[0],
   });
+
+  const labelPlaceholder: Record<
+    SearchBy,
+    { label: string; placeholder: string }
+  > = {
+    name: {
+      label: 'Name',
+      placeholder: 'Enter a Baby Name',
+    },
+    meanings: {
+      label: 'Meaning',
+      placeholder: 'Enter a Baby Name Meaning',
+    },
+    fullname: {
+      label: 'Full Name',
+      placeholder: 'Enter a full Baby Name - First Middle Name Surname',
+    },
+  };
 
   const { data } = useQuery({
     queryKey: ['profile'],
@@ -63,11 +92,46 @@ const NameSearchSection = () => {
     });
   };
 
+  const handleSetSearchBy = (value: SearchBy) => {
+    setSearchValue('');
+    setOptionsState({
+      gender: genderOptions[0],
+      language: languageOptions[0],
+    });
+    setSearchError({
+      name: false,
+      language: false,
+      gender: false,
+    });
+
+    setSearchBy(value);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
   const onSearch = () => {
+    setSearchError({ name: false, language: false, gender: false });
+
+    if (!searchValue || searchValue?.length < 2) {
+      setSearchError((prev) => ({ ...prev, name: true }));
+    }
+    if (!optionsState?.gender?.value) {
+      setSearchError((prev) => ({ ...prev, gender: true }));
+    }
+    if (!optionsState.language?.value && searchBy !== 'meanings') {
+      setSearchError((prev) => ({ ...prev, language: true }));
+    }
+
+    if (
+      (!searchValue && searchValue?.length < 2) ||
+      !optionsState?.gender?.value ||
+      (!optionsState.language?.value && searchBy !== 'meanings')
+    ) {
+      return 0;
+    }
+
     let url: any = searchParams.toString();
 
     url = searchValue
@@ -97,7 +161,7 @@ const NameSearchSection = () => {
     const search_by = searchParams.get('search_by');
 
     search && setSearchValue(search);
-    search_by && setSearchBy(search_by);
+    search_by && setSearchBy(search_by as SearchBy);
 
     if (gender) {
       const find = genderOptions.find((item) => item.value === gender);
@@ -114,34 +178,43 @@ const NameSearchSection = () => {
 
   return (
     <div className="bg-white p-3 md:p-5 rounded-xl border border-border-secondary">
-      <NameSearchBy searchBy={searchBy} setSearchBy={setSearchBy} />
+      <NameSearchBy searchBy={searchBy} setSearchBy={handleSetSearchBy} />
 
       <div className="flex flex-col md:flex-row gap-2.5">
-        <div className="w-full md:w-1/2">
+        <div
+          className={`w-full ${
+            searchBy === 'meanings' ? 'md:w-3/4' : 'md:w-1/2'
+          }`}
+        >
           <InputField
             type="text"
-            label="Name"
+            error={searchError?.name}
+            label={labelPlaceholder[searchBy]?.label}
             name="name"
-            placeholder="Enter your name"
+            placeholder={labelPlaceholder[searchBy]?.placeholder}
             onChange={handleChange}
             value={searchValue}
             isCustom={true}
           />
         </div>
 
-        <div className="w-full md:w-1/4">
-          <SelectInput
-            label="Language"
-            options={languageOptions}
-            handleSelect={(opt) => handleSelect('language', opt)}
-            selectedOption={optionsState.language}
-          />
-        </div>
+        {searchBy !== 'meanings' && (
+          <div className="w-full md:w-1/4">
+            <SelectInput
+              label="Language"
+              options={languageOptions}
+              error={searchError?.language}
+              handleSelect={(opt) => handleSelect('language', opt)}
+              selectedOption={optionsState.language}
+            />
+          </div>
+        )}
 
         <div className="w-full md:w-1/4">
           <SelectInput
             label="Gender"
             options={genderOptions}
+            error={searchError?.gender}
             handleSelect={(opt) => handleSelect('gender', opt)}
             selectedOption={optionsState.gender}
           />
@@ -150,8 +223,8 @@ const NameSearchSection = () => {
         <div className="flex justify-end md:items-end">
           <button
             type="button"
-            className="bg-primary px-4 py-2.5 rounded-full"
             onClick={onSearch}
+            className="bg-primary px-4 py-2.5 rounded-full max-md:w-full max-md:flex max-md:justify-center mb-1"
           >
             <SearchBtn />
           </button>

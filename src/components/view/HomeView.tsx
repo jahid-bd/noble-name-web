@@ -5,19 +5,23 @@ import Button from '@/components/buttons/Button';
 import NameSearchSection from '@/components/section/NameSearchSection';
 import { createSuggestedName, getAllBlog } from '@/services/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Caveat } from 'next/font/google';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AddNameModal from '../modal/AddNameModal';
 import BlogHomeCardSection from '../section/BlogHomeCardSection';
 import NewsLetterSection from '../section/NewsLetterSection';
 
+const caveat = Caveat({ subsets: ['latin'] });
+
 const HomeView = () => {
   const [openAddName, setOpenAddName] = useState(false);
 
   const { data: blogs } = useQuery({
     queryKey: ['blogs'],
-    queryFn: () => getAllBlog(1, 3),
+    queryFn: () => getAllBlog(1, 9),
   });
 
   const { mutate: addSuggestedName } = useMutation({
@@ -63,29 +67,48 @@ const HomeView = () => {
 
               <p className="text-base md:text-lg font-normal text-text-tertiary mb-4">
                 Welcome to Noble Names, your premier destination for unlocking
-                the spiritual significance of Muslim names. In Islam, naming
-                transcends mere labels; it&apos;s a sacred journey shaping
-                identity and destiny.
+                the spiritual significance of Muslim names and understanding
+                them. In Islam, naming transcends mere labels; it's a sacred
+                journey shaping our identity and destiny.
               </p>
 
               <p className="text-base md:text-lg font-normal text-text-tertiary mb-4">
                 Our carefully curated collection not only embraces the
-                linguistic beauty of Arabic but also offers names with positive,
-                impactful meanings deeply rooted in the teachings of the Quran.
-                Each name in our selection is a reflection of timeless wisdom,
-                guiding your child toward a blessed and purposeful life.{' '}
+                linguistic beauty of Arabic, Persian, Turkish, Somali, Sudanese,
+                Indonesian, Malaysian, Kurdish and Urdu but also offers names
+                with positive, impactful meanings deeply rooted in the teachings
+                of the Quran. Each name in our selection is a reflection of
+                timeless beauty and wisdom, guiding your child toward a blessed
+                and purposeful life.
               </p>
 
               <p className="text-base md:text-lg font-normal text-text-tertiary">
-                Start this profound naming journey with Noble Names, where every
-                name carries the essence of Islamic grace and virtue, ensuring a
-                connection to profound spiritual roots for your cherished one.
+                Start this profound naming journey with Noble Names creating a
+                Noble Identity, where every name carries the essence of Islamic
+                grace and virtue, ensuring a connection to profound spiritual
+                roots for your cherished one.
               </p>
             </div>
 
             <div>
               <Image src={ChildHand} alt="child hand" />
             </div>
+          </div>
+
+          <div className="flex justify-between items-center mt-8">
+            <div>
+              <p className={caveat.className}>
+                <span className="font-bold text-lg">N Vileyat</span>
+              </p>
+              <p className="text-base font-semibold">Founder</p>
+            </div>
+
+            <Link
+              href="/auth/sign-up"
+              className="bg-primary rounded-md text-base font-semibold text-white py-2.5 px-4 flex items-center justify-center button-hover"
+            >
+              Register
+            </Link>
           </div>
         </div>
       </section>
@@ -100,7 +123,7 @@ const HomeView = () => {
             </h3>
 
             <p className="text-text-tertiary text-lg md:text-xl font-normal text-center">
-              Learn more about Muslim Names and Parenting
+              Learn about Muslim Naming, Parenting and more…
             </p>
           </div>
 

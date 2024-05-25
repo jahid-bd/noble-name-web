@@ -70,7 +70,7 @@ const NameSearchView = () => {
             >
               <ResetIcon />
 
-              <span>Reset</span>
+              <span>Clear</span>
             </button>
 
             <button
@@ -80,7 +80,7 @@ const NameSearchView = () => {
             >
               <FilterIcon />
 
-              <span>Filter Results</span>
+              <span>Filter</span>
             </button>
           </div>
         </div>

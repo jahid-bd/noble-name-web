@@ -1,5 +1,6 @@
 'use client';
 
+import countries from '@/assets/data/countries';
 import { userProfileUpdate } from '@/services/api';
 import { UserUpdateData } from '@/types';
 import { useMutation } from '@tanstack/react-query';
@@ -50,8 +51,12 @@ const ProfileComplete = () => {
       label: '35-45',
     },
     {
-      value: '45+',
-      label: '45+',
+      value: '46-54',
+      label: '46-54',
+    },
+    {
+      value: '55+',
+      label: '55+',
     },
   ];
 
@@ -112,29 +117,31 @@ const ProfileComplete = () => {
     },
   ];
 
-  const countryOptions = [
-    {
-      value: '',
-      label: 'Select country',
-    },
+  const countryOptions = [...countries];
 
-    {
-      value: 'united-states',
-      label: 'United States',
-    },
-    {
-      value: 'united-kingdoms',
-      label: 'United Kingdoms',
-    },
-    {
-      value: 'pakistan',
-      label: 'Pakistan',
-    },
-    {
-      value: 'united-arab-emirates',
-      label: 'United Arab Emirates',
-    },
-  ];
+  // const countryOptions = [
+  //   {
+  //     value: '',
+  //     label: 'Select country',
+  //   },
+
+  //   {
+  //     value: 'united-states',
+  //     label: 'United States',
+  //   },
+  //   {
+  //     value: 'united-kingdoms',
+  //     label: 'United Kingdoms',
+  //   },
+  //   {
+  //     value: 'pakistan',
+  //     label: 'Pakistan',
+  //   },
+  //   {
+  //     value: 'united-arab-emirates',
+  //     label: 'United Arab Emirates',
+  //   },
+  // ];
 
   const [optionsState, setOptionsState] = useState({
     age: ageOptions[0],
@@ -150,12 +157,12 @@ const ProfileComplete = () => {
   const [isParent, setIsParent] = useState<boolean | null>(null);
 
   const [expectingDate, setExpectingDate] = useState<Date | null | string>(
-    null
+    null,
   );
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string }
+    option: { value: string; label: string },
   ) => {
     setOptionsState({
       ...optionsState,
@@ -426,7 +433,7 @@ const ProfileComplete = () => {
                 htmlFor=""
                 className="font-medium text-sm text-text-secondary pb-3 block text-left"
               >
-                Are you already a parent
+                Are you expecting a baby?
               </label>
               <div className="w-full flex items-center gap-5">
                 <div className="w-full">
@@ -480,7 +487,7 @@ const ProfileComplete = () => {
                 htmlFor=""
                 className="font-medium text-sm text-text-secondary pb-3 block text-left"
               >
-                Are you already a parent
+                Are you already a parent?
               </label>
               <div className="w-full flex items-center gap-5">
                 <div className="w-full">
