@@ -20,7 +20,7 @@ const EditableNameCard = ({
 
   return (
     <div
-      className={`p-5 rounded-xl flex flex-col gap-4 relative ${
+      className={`p-5 rounded-xl flex flex-col gap-4 relative h-full justify-between ${
         name?.gender === 'girl' ? 'bg-pink' : 'bg-blue'
       }`}
       onMouseEnter={() => setIsHover(true)}

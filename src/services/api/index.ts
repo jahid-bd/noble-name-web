@@ -60,7 +60,7 @@ export const addUserFavorite = (name: string) =>
     { name },
     {
       withCredentials: true,
-    }
+    },
   );
 
 export const removeUserFavorite = (id: string) =>
@@ -74,7 +74,7 @@ export const addUserBookmark = (name: string) =>
     { name },
     {
       withCredentials: true,
-    }
+    },
   );
 
 export const shareNameApi = (name: string) =>
@@ -83,7 +83,7 @@ export const shareNameApi = (name: string) =>
     { name },
     {
       withCredentials: true,
-    }
+    },
   );
 
 export const removeUserBookmark = (id: string) =>
@@ -138,7 +138,7 @@ export const deleteBlogApi = (id: string) =>
 
 export const getAllName = (page: number) =>
   axios.get(`${BASE_URL}/names`, {
-    params: { limit: 9, page: page ? page : 1 },
+    params: { limit: 36, page: page ? page : 1 },
     withCredentials: true,
   });
 
@@ -166,7 +166,7 @@ export const approveRequestedName = (id: string) =>
     {},
     {
       withCredentials: true,
-    }
+    },
   );
 
 export const rejectRequestedName = (id: string) =>
@@ -175,7 +175,7 @@ export const rejectRequestedName = (id: string) =>
     {},
     {
       withCredentials: true,
-    }
+    },
   );
 
 export const getAllPlans = async () => {
@@ -212,7 +212,7 @@ export const cancelSubscription = async (id: string) =>
     {},
     {
       withCredentials: true,
-    }
+    },
   );
 
 export const sendMessage = (data: ContactParams) =>
@@ -223,7 +223,7 @@ export const newsLetterApi = (data: ContactParams) =>
 
 export const getNames = async (params: string) => {
   try {
-    const res = await axios.get(`${BASE_URL}/names?${params}`, {
+    const res = await axios.get(`${BASE_URL}/names?${params}&limit=36`, {
       params: {},
       withCredentials: true,
     });

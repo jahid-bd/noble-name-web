@@ -41,7 +41,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     onSuccess: (data: any) => {
       toast.success('user logout successfully.');
       queryClient.invalidateQueries({ queryKey: ['logged-in-user'] });
-      router.push('auth/sign-in');
+      router.push('/auth/sign-in');
     },
   });
 

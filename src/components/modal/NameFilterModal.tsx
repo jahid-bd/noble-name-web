@@ -16,8 +16,20 @@ const originOptions = [
     label: 'Arabic',
   },
   {
-    value: 'english:',
-    label: 'English',
+    value: 'persian:',
+    label: 'Persian',
+  },
+  {
+    value: 'turkish:',
+    label: 'Turkish',
+  },
+  {
+    value: 'kurdish:',
+    label: 'Kurdish',
+  },
+  {
+    value: 'urdu:',
+    label: 'Urdu',
   },
 ];
 
@@ -58,9 +70,9 @@ const NameFilterModal = ({
       ? setQueryParams(url, 'ending_letter', endLetter)
       : deleteParams(url, 'ending_letter');
 
-    if (tab === '0to4') {
+    if (tab === '0to3') {
       url = setQueryParams(url, 'letter_range_from', '0');
-      url = setQueryParams(url, 'letter_range_to', '4');
+      url = setQueryParams(url, 'letter_range_to', '3');
     } else if (tab === '4to6') {
       url = setQueryParams(url, 'letter_range_from', '4');
       url = setQueryParams(url, 'letter_range_to', '6');
@@ -93,7 +105,7 @@ const NameFilterModal = ({
     starting_letter && setStartLetter(starting_letter);
 
     if (letter_range_from && letter_range_to) {
-      letter_range_from === '0' && letter_range_to === '4' && setTab('0to4');
+      letter_range_from === '0' && letter_range_to === '4' && setTab('0to3');
       letter_range_from === '4' && letter_range_to === '6' && setTab('4to6');
       letter_range_from === '7' && letter_range_to === 'null' && setTab('7+');
     }
@@ -143,9 +155,9 @@ const NameFilterModal = ({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px] mb-4">
             <RadioButton
-              active={tab === '0to4'}
-              onClick={() => setTab('0to4')}
-              text="Short names (upto 4 letters)"
+              active={tab === '0to3'}
+              onClick={() => setTab('0to3')}
+              text="Short names (up to 3 letters)"
             />
 
             <RadioButton
@@ -164,13 +176,13 @@ const NameFilterModal = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
             <LetterInput
               onClick={handleStartLetter}
-              label="Letter Starts With"
+              label="Name Starts With"
               selected={startLetter}
             />
             <LetterInput
               selected={endLetter}
               onClick={handleEndLetter}
-              label="Letter Ends With"
+              label="Name Ends With"
             />
           </div>
 

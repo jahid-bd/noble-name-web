@@ -97,7 +97,7 @@ const NameCard = ({ name }: { name: any }) => {
 
   return (
     <div
-      className={`p-5 rounded-xl flex flex-col gap-4 relative ${
+      className={`p-5 rounded-xl flex flex-col gap-4 relative h-full justify-between ${
         name?.name?.gender === 'girl' ? 'bg-pink' : 'bg-blue'
       }`}
     >

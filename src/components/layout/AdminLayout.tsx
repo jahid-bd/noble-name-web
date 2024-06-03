@@ -1,10 +1,18 @@
 'use client';
 
-import DashboardIcon from '@/assets/icons/DashboardIcon';
+import BlogIcon from '@/assets/icons/BlogIcon';
+import DatabaseIcon from '@/assets/icons/DatabaseIcon';
+import LogoutIcon from '@/assets/icons/LogoutIcon';
+import NameIcon from '@/assets/icons/NameIcon';
+import SearchIcon from '@/assets/icons/SearchIcon';
+import SettingIcon from '@/assets/icons/SettingIcon';
+import { userLogout } from '@/services/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import AdminNavList from '../navs/AdminNavList';
 
 const AdminLink = ({
@@ -35,6 +43,21 @@ const AdminLink = ({
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const navRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState(false);
+  const queryClient = useQueryClient();
+
+  const router = useRouter();
+
+  const { mutate: handleLogout } = useMutation({
+    mutationFn: userLogout,
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      toast.success('user logout successfully.');
+      queryClient.invalidateQueries({ queryKey: ['logged-in-user'] });
+      router.push('/auth/sign-in');
+    },
+  });
 
   const handleClickOutside = useCallback((event: any) => {
     if (navRef.current && navRef?.current?.contains(event.target)) {
@@ -91,7 +114,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
           {openNav && (
             <div ref={navRef}>
-              <AdminNavList />
+              <AdminNavList handleLogout={handleLogout} />
             </div>
           )}
         </header>
@@ -113,26 +136,38 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
             <div className="flex flex-col gap-5">
               <AdminLink href="/admin/dashboard" title="Dashboard">
-                <DashboardIcon />
+                <SearchIcon />
               </AdminLink>
 
               <AdminLink href="/admin/name" title="Name">
-                <DashboardIcon />
+                <DatabaseIcon />
               </AdminLink>
 
-              <AdminLink href="/admin/name-requested" title="Name Requested">
-                <DashboardIcon />
+              <AdminLink href="/admin/name-requested" title="New Name Request">
+                <NameIcon />
               </AdminLink>
 
               <AdminLink href="/admin/blog" title="Blog">
-                <DashboardIcon />
+                <BlogIcon />
               </AdminLink>
             </div>
           </div>
 
-          <AdminLink href="/settings" title="Settings">
-            <DashboardIcon />
-          </AdminLink>
+          <div className="flex flex-col gap-5">
+            <AdminLink href="/settings" title="Settings">
+              <SettingIcon />
+            </AdminLink>
+
+            <button
+              type="button"
+              className="text-text-secondary-hover font-semibold flex gap-3 items-center hover:bg-border-secondary p-1 rounded-md"
+              onClick={() => handleLogout()}
+            >
+              <LogoutIcon />
+
+              <span>Logout</span>
+            </button>
+          </div>
         </aside>
 
         <div className="w-[1200px] py-14 px-8 bg-gray-bg h-screen overflow-y-auto">
