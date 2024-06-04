@@ -20,8 +20,11 @@ const AdminNavList = ({ handleLogout }: { handleLogout: any }) => {
           New Name Request
         </Link>
 
-        <Link href="/admin/blog" className="py-1 px-3 hover:bg-border-primary">
-          Blog
+        <Link
+          href="/admin/article"
+          className="py-1 px-3 hover:bg-border-primary"
+        >
+          Article
         </Link>
 
         <Link href="/settings" className="py-1 px-3 hover:bg-border-primary">

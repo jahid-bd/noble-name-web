@@ -241,8 +241,6 @@ const CreateBlogModal = ({
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb4">
-              <h4>Thumbnail</h4>
-
               <div
                 {...getRootProps()}
                 className={clsx(

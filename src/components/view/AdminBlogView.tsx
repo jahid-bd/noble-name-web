@@ -72,25 +72,13 @@ const AdminBlogView = () => {
 
   return (
     <div className="px-1.5">
-      <div className="mb-11 md:mb-16">
-        <h3 className="text-3xl md:text-4xl font-semibold text-text-primary mb-3 text-center">
-          Latest Articles
-        </h3>
-
-        <p className="text-text-tertiary text-lg md:text-xl font-normal text-center">
-          Learn about Muslim Naming, Parenting and more…
-        </p>
-      </div>
-
-      <div className="flex justify-between items-center mb-6">
-        <p className="text-2xl font-semibold text-text-primary">Blog List</p>
-
+      <div className="flex justify-end items-center mb-6">
         <button
           type="button"
           onClick={() => setOpenForm(true)}
           className="bg-primary text-white text-sm px-5 py-1.5 rounded-md"
         >
-          Create a New Article
+          Create an Article
         </button>
       </div>
 

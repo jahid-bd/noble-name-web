@@ -88,27 +88,27 @@ const HomeView = () => {
                 grace and virtue, ensuring a connection to profound spiritual
                 roots for your cherished one.
               </p>
+
+              <div className="flex justify-between items-center mt-8">
+                <div>
+                  <p className={caveat.className}>
+                    <span className="font-bold text-lg">N Vileyat</span>
+                  </p>
+                  <p className="text-base font-normal">Founder</p>
+                </div>
+
+                <Link
+                  href="/auth/sign-up"
+                  className="bg-primary rounded-md text-base font-semibold text-white py-2.5 px-4 flex items-center justify-center button-hover"
+                >
+                  Register
+                </Link>
+              </div>
             </div>
 
             <div>
               <Image src={ChildHand} alt="child hand" />
             </div>
-          </div>
-
-          <div className="flex justify-between items-center mt-8">
-            <div>
-              <p className={caveat.className}>
-                <span className="font-bold text-lg">N Vileyat</span>
-              </p>
-              <p className="text-base font-semibold">Founder</p>
-            </div>
-
-            <Link
-              href="/auth/sign-up"
-              className="bg-primary rounded-md text-base font-semibold text-white py-2.5 px-4 flex items-center justify-center button-hover"
-            >
-              Register
-            </Link>
           </div>
         </div>
       </section>
@@ -133,7 +133,7 @@ const HomeView = () => {
 
       <section className="bg-white max-md:px-1.5">
         <div className="container mx-auto bg-border-secondary rounded-2xl px-4 md:px-8 py-8">
-          <div className="flex flex-col md:flex-row gap-5 md:items-center">
+          <div className="flex flex-col md:flex-row gap-5 md:items-center justify-between">
             <div>
               <h3 className="text-3xl md:text-4xl font-semibold text-text-primary mb-3 text-center md:text-left">
                 Suggest a New Name

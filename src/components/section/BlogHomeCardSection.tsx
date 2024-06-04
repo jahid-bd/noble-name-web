@@ -17,7 +17,7 @@ const BlogHomeCardSection = ({ blogs }: { blogs: any }) => {
           href="/blog"
           className="py-2.5 px-4 bg-primary rounded-md text-base font-semibold text-white flex items-center justify-center button-hover"
         >
-          More articles
+          More Articles
         </Link>
       </div>
     </>

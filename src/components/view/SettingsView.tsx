@@ -670,7 +670,7 @@ const SettingsView = () => {
                   <div className="w-full flex items-center max-md:flex-col gap-5">
                     <div className="w-full">
                       <SelectInput
-                        label="How many children you have?"
+                        label="How many children do you have?"
                         options={childrenOptions}
                         handleSelect={(opt) => handleSelect('children', opt)}
                         selectedOption={optionsState.children}
@@ -740,7 +740,6 @@ const SettingsView = () => {
                       name="date"
                       value={expectingDate}
                       onChange={(e) => {
-                        console.log('VDADfadflkajds', e.target.value);
                         setExpectingDate(e.target.value);
                       }}
                       type="date"

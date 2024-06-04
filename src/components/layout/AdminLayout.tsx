@@ -147,7 +147,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                 <NameIcon />
               </AdminLink>
 
-              <AdminLink href="/admin/blog" title="Blog">
+              <AdminLink href="/admin/article" title="Article">
                 <BlogIcon />
               </AdminLink>
             </div>
