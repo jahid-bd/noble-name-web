@@ -717,6 +717,7 @@ const SettingsView = () => {
                         {[...Array(Number(optionsState?.children?.value))].map(
                           (x, i) => (
                             <SelectInput
+                              key={i}
                               options={childeAgeOptions}
                               handleSelect={(opt) =>
                                 handleSelectChildAge('childAge', [
