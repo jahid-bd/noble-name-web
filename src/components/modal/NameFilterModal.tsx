@@ -115,11 +115,7 @@ const NameFilterModal = ({
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
       <div className="container mx-auto px-1.5 md:px-20">
         <div className="px-4 py-8 md:px-8 bg-white rounded-[10px] shadow-modal">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold text-text-tertiary ">
-              Filter Names By
-            </h3>
-
+          <div className="flex items-center justify-end mb-4">
             <button type="button" onClick={handleCloseFilter}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +153,7 @@ const NameFilterModal = ({
             <RadioButton
               active={tab === '0to3'}
               onClick={() => setTab('0to3')}
-              text="Short names (up to 3 letters)"
+              text="Short Name (up to 3 letters)"
             />
 
             <RadioButton
@@ -168,7 +164,7 @@ const NameFilterModal = ({
 
             <RadioButton
               active={tab === '7+'}
-              text="Long Names (7+ letters)"
+              text="Long Name (7+ letters)"
               onClick={() => setTab('7+')}
             />
           </div>

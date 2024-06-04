@@ -1,5 +1,5 @@
 'use client';
-
+import { usePathname } from 'next/navigation';
 import {
   EmailIcon,
   EmailShareButton,
@@ -16,7 +16,10 @@ import {
 } from 'react-share';
 
 const SocialMedia = ({ handleShare }: { handleShare: any }) => {
-  const shareUrl = 'www.bplabels.com';
+  const pathName = usePathname();
+  const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}${pathName}`;
+
+  console.log(shareUrl);
 
   return (
     <div className="bg-white px-4 py-4 rounded-md shadow-md w-fit">

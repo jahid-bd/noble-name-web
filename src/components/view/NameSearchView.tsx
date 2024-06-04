@@ -110,6 +110,8 @@ const NameSearchView = () => {
                     meanings: item.meanings,
                     tags: item.tags,
                     gender: item.gender,
+                    origin: item.origin,
+                    historic_significance: item.historic_significance,
                   },
                   isFavorite: item.isFavorite,
                   isBookmarked: item.isBookmarked,

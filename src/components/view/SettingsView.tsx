@@ -37,17 +37,28 @@ const SettingsView = () => {
       label: 'Select',
     },
     {
-      value: '1-6',
-      label: '1-6 Years',
+      value: '0-3 months',
+      label: 'Newborns (0-3 months)',
     },
     {
-      value: '7-12 Years',
-      label: '7-12',
+      value: '4-12 months',
+      label: 'Infants (4-12 months)',
     },
-
     {
-      value: '13+',
-      label: '13+',
+      value: '1-3 years',
+      label: 'Toddlers (1-3 years)',
+    },
+    {
+      value: '3-5 years',
+      label: 'Preschoolers (3-5 years)',
+    },
+    {
+      value: '6-12 years',
+      label: 'School-Age Children (6-12 years)',
+    },
+    {
+      value: '13-18 years',
+      label: 'Teenagers (13-18 years)',
     },
   ];
 
@@ -532,8 +543,6 @@ const SettingsView = () => {
   const handleToggleMod = () => {
     setChangePasswordModal(!changePassModal);
   };
-
-  console.log(optionsState);
 
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px] ">

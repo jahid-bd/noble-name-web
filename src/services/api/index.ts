@@ -228,7 +228,7 @@ export const newsLetterApi = (data: ContactParams) =>
 
 export const getNames = async (params: string) => {
   try {
-    const res = await axios.get(`${BASE_URL}/names?${params}&limit=36`, {
+    const res = await axios.get(`${BASE_URL}/names?${params}&limit=18`, {
       params: {},
       withCredentials: true,
     });
