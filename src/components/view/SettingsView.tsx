@@ -177,7 +177,7 @@ const SettingsView = () => {
     sect: sectOptions[0],
     children: childrenOptions[0],
     country: countryOptions[0],
-    childAge: childeAgeOptions[0],
+    childAge: [],
   });
 
   const [isExpectingBaby, setIsexpectionBaby] = useState<boolean | null>(null);
@@ -408,15 +408,15 @@ const SettingsView = () => {
       }));
     }
 
-    if (isParent === true && !optionsState.childAge.value) {
-      setErrors((prev) => ({
-        ...prev,
-        childAge: {
-          ...prev.childAge,
-          error: true,
-        },
-      }));
-    }
+    // if (isParent === true && optionsState?.childAge?.length > 0) {
+    //   setErrors((prev) => ({
+    //     ...prev,
+    //     childAge: {
+    //       ...prev.childAge,
+    //       error: true,
+    //     },
+    //   }));
+    // }
 
     // Add similar checks for other fields
 
@@ -443,7 +443,7 @@ const SettingsView = () => {
         country: optionsState.country.value,
         isExpectingBaby: isExpectingBaby || false,
         expectedDate: expectingDate || '',
-        childAgeGroup: optionsState.childAge.value,
+        childAgeGroup: optionsState.childAge,
         isAlreadyParent: isParent || false,
       });
     }
@@ -459,6 +459,21 @@ const SettingsView = () => {
     });
   };
 
+  const handleSelectChildren = (key: string, value: any) => {
+    setOptionsState({
+      ...optionsState,
+      [key]: value,
+      childAge: [],
+    });
+  };
+
+  const handleSelectChildAge = (key: string, value: any) => {
+    setOptionsState({
+      ...optionsState,
+      [key]: value,
+    });
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -466,7 +481,6 @@ const SettingsView = () => {
   };
 
   useEffect(() => {
-    console.log(user);
     if (user) {
       setOptionsState({
         age: user?.age
@@ -484,15 +498,17 @@ const SettingsView = () => {
         country: user.country
           ? countryOptions.find((item) => item.value === user.country)
           : countryOptions[0],
-        childAge: user.childAgeGroup
-          ? childeAgeOptions.find((item) => item.value === user.childAgeGroup)
-          : childeAgeOptions[0],
+        // childAge: [
+        //   user.childAgeGroup
+        //     ? childeAgeOptions.find((item) => item.value === user.childAgeGroup)
+        //     : childeAgeOptions[0],
+        // ],
+        childAge: user.childAgeGroup?.length > 0 ? user?.childAgeGroup : [],
       });
 
       const fName = user?.name?.split(' ')[0];
       const lName = user?.name?.split(' ')?.slice(1)?.join(' ');
 
-      console.log('Name-->', fName);
       setFormState((prev) => ({
         ...prev,
         firstName: fName,
@@ -516,6 +532,8 @@ const SettingsView = () => {
   const handleToggleMod = () => {
     setChangePasswordModal(!changePassModal);
   };
+
+  console.log(optionsState);
 
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px] ">
@@ -667,12 +685,14 @@ const SettingsView = () => {
 
               {isParent && (
                 <div>
-                  <div className="w-full flex items-center max-md:flex-col gap-5">
+                  <div className="w-full flex max-md:flex-col gap-5">
                     <div className="w-full">
                       <SelectInput
                         label="How many children do you have?"
                         options={childrenOptions}
-                        handleSelect={(opt) => handleSelect('children', opt)}
+                        handleSelect={(opt) => {
+                          handleSelectChildren('children', opt);
+                        }}
                         selectedOption={optionsState.children}
                         error={
                           errors.children.error
@@ -682,19 +702,34 @@ const SettingsView = () => {
                       />
                     </div>
 
-                    <div className="w-full">
-                      <SelectInput
-                        label="Age group of children"
-                        options={childeAgeOptions}
-                        handleSelect={(opt) => handleSelect('childAge', opt)}
-                        selectedOption={optionsState.childAge}
-                        error={
-                          errors.childAge.error
-                            ? errors.childAge.message
-                            : false
-                        }
-                      />
-                    </div>
+                    {optionsState?.children?.value && (
+                      <div className="w-full">
+                        <label>Age group of children</label>
+                        {[...Array(Number(optionsState?.children?.value))].map(
+                          (x, i) => (
+                            <SelectInput
+                              options={childeAgeOptions}
+                              handleSelect={(opt) =>
+                                handleSelectChildAge('childAge', [
+                                  ...optionsState?.childAge,
+                                  opt,
+                                ])
+                              }
+                              selectedOption={
+                                optionsState.childAge[i]
+                                  ? optionsState.childAge[i]
+                                  : childeAgeOptions[0]
+                              }
+                              error={
+                                errors.childAge.error
+                                  ? errors.childAge.message
+                                  : false
+                              }
+                            />
+                          ),
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

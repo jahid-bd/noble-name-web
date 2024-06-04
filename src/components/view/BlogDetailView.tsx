@@ -1,6 +1,6 @@
 'use client';
 
-import { getBlogByID } from '@/services/api';
+import { getBlogBySlug } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -16,7 +16,7 @@ const BlogDetailView = () => {
     error: isError,
   } = useQuery({
     queryKey: ['blog'],
-    queryFn: () => getBlogByID(params.blog_id as string),
+    queryFn: () => getBlogBySlug(params.blog_id as string),
   });
 
   return (
@@ -27,28 +27,44 @@ const BlogDetailView = () => {
         {isError && !blog?.data && <NotFound />}
 
         {!isLoading && !isError && blog?.data && (
-          <>
-            <div className="w-full lg:w-3/4 h-[250px] md:h-[350px] relative">
-              <Image
-                fill
-                alt="blog page"
-                src={blog?.data?.thumbnail}
-                className="w-full  object-cover"
-              />
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-9">
+              <div className="h-[250px] md:h-[350px] relative">
+                <Image
+                  fill
+                  alt="blog page"
+                  src={blog?.data?.content?.thumbnail}
+                  className="w-full  object-cover"
+                />
+              </div>
+
+              <div className="mt-6">
+                <h1 className="text-2xl text-text-primary font-semibold mb-4">
+                  {blog?.data?.content?.title}
+                </h1>
+
+                <p className="mb-4 text-base font-medium">
+                  {blog?.data?.content?.description}
+                </p>
+
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: blog?.data?.content?.content,
+                  }}
+                />
+              </div>
             </div>
 
-            <div className="w-full lg:w-3/4 mt-6">
-              <h1 className="text-2xl text-text-primary font-semibold mb-4">
-                {blog?.data?.title}
-              </h1>
+            <div className="col-span-3">
+              <h3>Recent Articles</h3>
 
-              <p className="mb-4 text-base font-medium">
-                {blog?.data?.description}
-              </p>
-
-              <div dangerouslySetInnerHTML={{ __html: blog?.data?.content }} />
+              <div>
+                <div>
+                  <h1>Hello world</h1>
+                </div>
+              </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </main>

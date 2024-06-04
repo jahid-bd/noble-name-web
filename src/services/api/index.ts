@@ -119,6 +119,11 @@ export const getBlogByID = (id?: string) =>
     withCredentials: true,
   });
 
+export const getBlogBySlug = (slug?: string) =>
+  axios.get(`${BASE_URL}/blogs/slug/${slug}`, {
+    withCredentials: true,
+  });
+
 export const createBlogApi = (data: object) =>
   axios.post(`${BASE_URL}/blogs`, data, {
     withCredentials: true,
