@@ -19,8 +19,6 @@ const SocialMedia = ({ handleShare }: { handleShare: any }) => {
   const pathName = usePathname();
   const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}${pathName}`;
 
-  console.log(shareUrl);
-
   return (
     <div className="bg-white px-4 py-4 rounded-md shadow-md w-fit">
       <h3 className="mb-3 text-lg">Share social media</h3>

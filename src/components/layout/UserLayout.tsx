@@ -67,7 +67,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
           {!isError && user ? (
             <div className="relative">
-              <div className="flex gap-4 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
+              <div className="flex gap-3 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
                 <svg
                   className="cursor-pointer"
                   onClick={() => setOpenNav((prev) => !prev)}
@@ -86,8 +86,23 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
                   />
                 </svg>
 
-                <div className="md:h-10 md:w-10 relative w-[30px] h-[30px] rounded-full overflow-hidden">
-                  <Image fill alt="Noble Names Logo" src="/images/Avatar.png" />
+                <div className="md:h-10 md:w-10 relative w-[30px] h-[30px] rounded-full overflow-hidden flex justify-center items-center">
+                  {/* <Image fill alt="Noble Names Logo" src="/images/Avatar.png" /> */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="40px"
+                    height="40px"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M5 20v-1a7 7 0 0 1 7-7v0a7 7 0 0 1 7 7v1m-7-8a4 4 0 1 0 0-8a4 4 0 0 0 0 8"
+                    />
+                  </svg>
                 </div>
               </div>
 
