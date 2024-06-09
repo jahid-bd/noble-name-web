@@ -149,30 +149,6 @@ const SettingsView = () => {
 
   const countryOptions = [...countries];
 
-  // const countryOptions = [
-  //   {
-  //     value: '',
-  //     label: 'Select country',
-  //   },
-
-  //   {
-  //     value: 'united-states',
-  //     label: 'United States',
-  //   },
-  //   {
-  //     value: 'united-kingdoms',
-  //     label: 'United Kingdoms',
-  //   },
-  //   {
-  //     value: 'pakistan',
-  //     label: 'Pakistan',
-  //   },
-  //   {
-  //     value: 'united-arab-emirates',
-  //     label: 'United Arab Emirates',
-  //   },
-  // ];
-
   const {
     data: user,
     isLoading,
@@ -555,167 +531,229 @@ const SettingsView = () => {
           </div>
         )}
 
-        <div className="mb-8">
-          <Button
-            onClick={handleToggleMod}
-            isLoading={isPending}
-            className="md:text-sm text-xs md:max-w-[200px] max-w-[170px]"
-          >
-            Change Password
-          </Button>
-        </div>
-
         {user && !isLoading && !isError && (
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-8 border border-border-primary rounded-xl shadow-xs p-6">
-              <div className="w-full max-md:flex-col flex items-center justify-between gap-6 ">
-                <div className="w-full">
-                  <InputField
-                    type="text"
-                    isCustom={true}
-                    label="First Name"
-                    name="firstName"
-                    placeholder="First name"
-                    onChange={handleChange}
-                    value={formState.firstName}
-                    error={
-                      errors.firstName.error ? errors.firstName.message : false
-                    }
-                  />
-                </div>
-                <div className="w-full">
-                  <InputField
-                    type="text"
-                    label="Last Name"
-                    name="lastName"
-                    isCustom={true}
-                    placeholder="Last name"
-                    onChange={handleChange}
-                    value={formState.lastName}
-                    error={
-                      errors.lastName.error ? errors.lastName.message : false
-                    }
-                  />
-                </div>
-              </div>
-
-              <div className="w-full max-md:flex-col flex items-center justify-between gap-6 ">
-                <div className="w-full">
-                  <SelectInput
-                    label="Gender"
-                    options={genderOptions}
-                    handleSelect={(opt) => handleSelect('gender', opt)}
-                    selectedOption={optionsState.gender}
-                    error={errors.gender.error && errors.gender.message}
-                  />
-                </div>
-                <div className="w-full">
-                  <SelectInput
-                    label="Age"
-                    options={ageOptions}
-                    handleSelect={(opt) => handleSelect('age', opt)}
-                    selectedOption={optionsState.age}
-                    error={errors.age.error && errors.age.message}
-                  />
-                </div>
-              </div>
-
-              <div className="w-full max-md:flex-col flex items-center justify-between gap-6">
-                <div className="w-full">
-                  <InputField
-                    type="email"
-                    label="Email"
-                    name="email"
-                    placeholder={formState.email}
-                    onChange={handleChange}
-                    value={formState.email}
-                    disabled={true}
-                    isCustom={true}
-                  />
-                </div>
-                <div className="w-full">
-                  <SelectInput
-                    label="Country"
-                    options={countryOptions}
-                    handleSelect={(opt) => handleSelect('country', opt)}
-                    selectedOption={optionsState.country}
-                    error={errors.country.error && errors.country.message}
-                  />
-                </div>
-              </div>
-
-              <div className="w-full max-md:flex-col flex items-center justify-between gap-6">
-                <div className="w-full">
-                  <SelectInput
-                    label="Sect"
-                    options={sectOptions}
-                    handleSelect={(opt) => handleSelect('sect', opt)}
-                    selectedOption={optionsState.sect}
-                    error={errors.sect.error && errors.sect.message}
-                  />
-                </div>
-
-                <div className="w-full">
-                  <label
-                    htmlFor=""
-                    className="font-medium text-sm text-text-secondary pb-3 block text-left"
-                  >
-                    Are you already a parent?
-                  </label>
-                  <div className="w-full flex items-center gap-5">
-                    <div className="w-full">
-                      <RadioButton
-                        active={isParent}
-                        text="Yes"
-                        onClick={() => {
-                          setIsParent(true);
-                        }}
-                        error={errors.isParent.error}
-                      />
-                    </div>
-                    <div className="w-full ">
-                      <RadioButton
-                        active={isParent === false}
-                        text="No"
-                        onClick={() => {
-                          setIsParent(false);
-                        }}
-                        error={errors.isParent.error}
-                      />
-                    </div>
-                    {errors.expectingBaby.error ? (
-                      <p className="text-sm text-red-500 pt-[6px]">
-                        {errors.expectingBaby.error}
-                      </p>
-                    ) : null}
+          <>
+            <div className="mb-8">
+              <Button
+                onClick={handleToggleMod}
+                isLoading={isPending}
+                className="md:text-sm text-xs md:max-w-[200px] max-w-[170px]"
+              >
+                Change Password
+              </Button>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-8 border border-border-primary rounded-xl shadow-xs p-6">
+                <div className="w-full max-md:flex-col flex items-start justify-between gap-6 ">
+                  <div className="w-full">
+                    <InputField
+                      type="text"
+                      isCustom={true}
+                      label="First Name"
+                      name="firstName"
+                      placeholder="First name"
+                      onChange={handleChange}
+                      value={formState.firstName}
+                      error={
+                        errors.firstName.error
+                          ? errors.firstName.message
+                          : false
+                      }
+                    />
+                  </div>
+                  <div className="w-full">
+                    <InputField
+                      type="text"
+                      label="Last Name"
+                      name="lastName"
+                      isCustom={true}
+                      placeholder="Last name"
+                      onChange={handleChange}
+                      value={formState.lastName}
+                      error={
+                        errors.lastName.error ? errors.lastName.message : false
+                      }
+                    />
                   </div>
                 </div>
-              </div>
 
-              {isParent && (
-                <div>
-                  <div className="w-full flex max-md:flex-col gap-5">
+                <div className="w-full max-md:flex-col flex items-center justify-between gap-6 ">
+                  <div className="w-full">
+                    <SelectInput
+                      label="Gender"
+                      options={genderOptions}
+                      handleSelect={(opt) => handleSelect('gender', opt)}
+                      selectedOption={optionsState.gender}
+                      error={errors.gender.error && errors.gender.message}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <SelectInput
+                      label="Age"
+                      options={ageOptions}
+                      handleSelect={(opt) => handleSelect('age', opt)}
+                      selectedOption={optionsState.age}
+                      error={errors.age.error && errors.age.message}
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full max-md:flex-col flex items-start justify-between gap-6">
+                  <div className="w-full">
+                    <InputField
+                      type="email"
+                      label="Email"
+                      name="email"
+                      placeholder={formState.email}
+                      onChange={handleChange}
+                      value={formState.email}
+                      disabled={true}
+                      isCustom={true}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <SelectInput
+                      label="Country"
+                      options={countryOptions}
+                      handleSelect={(opt) => handleSelect('country', opt)}
+                      selectedOption={optionsState.country}
+                      error={errors.country.error && errors.country.message}
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full max-md:flex-col flex items-start justify-between gap-6">
+                  <div className="w-full">
+                    <SelectInput
+                      label="Sect"
+                      options={sectOptions}
+                      handleSelect={(opt) => handleSelect('sect', opt)}
+                      selectedOption={optionsState.sect}
+                      error={errors.sect.error && errors.sect.message}
+                    />
+                  </div>
+
+                  <div className="w-full">
+                    <label
+                      htmlFor=""
+                      className="font-medium text-sm text-text-secondary block text-left mb-2"
+                    >
+                      Are you expecting a baby?
+                    </label>
+                    <div className="w-full flex items-center gap-5">
+                      <div className="w-full">
+                        <RadioButton
+                          active={isExpectingBaby}
+                          // label="Are you expecting a baby"
+                          text="Yes"
+                          onClick={() => {
+                            setIsexpectionBaby(true);
+                          }}
+                          error={errors.expectingBaby.error}
+                        />
+                      </div>
+                      <div className="w-full">
+                        <RadioButton
+                          active={isExpectingBaby === false}
+                          // label=""
+                          text="No"
+                          onClick={() => {
+                            setIsexpectionBaby(false);
+                          }}
+                          error={errors.expectingBaby.error}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full flex max-md:flex-col  items-center gap-5">
+                  {isExpectingBaby && (
                     <div className="w-full">
-                      <SelectInput
-                        label="How many children do you have?"
-                        options={childrenOptions}
-                        handleSelect={(opt) => {
-                          handleSelectChildren('children', opt);
+                      <InputField
+                        label="Expecting Date"
+                        name="date"
+                        value={expectingDate}
+                        onChange={(e) => {
+                          setExpectingDate(e.target.value);
                         }}
-                        selectedOption={optionsState.children}
+                        type="date"
                         error={
-                          errors.children.error
-                            ? errors.children.message
-                            : false
+                          errors.childExpectingDate.error &&
+                          errors.childExpectingDate.message
                         }
+                        isCustom={true}
                       />
                     </div>
+                  )}
 
-                    {optionsState?.children?.value && (
+                  <div className="w-full">
+                    <label
+                      htmlFor=""
+                      className="font-medium text-sm text-text-secondary pb-3 block text-left"
+                    >
+                      Are you already a parent?
+                    </label>
+                    <div className="w-full flex items-center gap-5">
                       <div className="w-full">
-                        <label>Age group of children</label>
-                        {[...Array(Number(optionsState?.children?.value))].map(
-                          (x, i) => (
+                        <RadioButton
+                          active={isParent}
+                          text="Yes"
+                          onClick={() => {
+                            setIsParent(true);
+                          }}
+                          error={errors.isParent.error}
+                        />
+                      </div>
+                      <div className="w-full ">
+                        <RadioButton
+                          active={isParent === false}
+                          text="No"
+                          onClick={() => {
+                            setIsParent(false);
+                          }}
+                          error={errors.isParent.error}
+                        />
+                      </div>
+                      {errors.expectingBaby.error ? (
+                        <p className="text-sm text-red-500 pt-[6px]">
+                          {errors.expectingBaby.error}
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+                {errors.expectingBaby.error ? (
+                  <p className="text-sm text-red-500 pt-[6px]">
+                    {errors.expectingBaby.message}
+                  </p>
+                ) : null}
+
+                {isParent && (
+                  <div>
+                    <div className="w-full flex max-md:flex-col gap-5">
+                      <div className="w-full">
+                        <SelectInput
+                          label="How many children do you have?"
+                          options={childrenOptions}
+                          handleSelect={(opt) => {
+                            handleSelectChildren('children', opt);
+                          }}
+                          selectedOption={optionsState.children}
+                          error={
+                            errors.children.error
+                              ? errors.children.message
+                              : false
+                          }
+                        />
+                      </div>
+
+                      {optionsState?.children?.value && (
+                        <div className="w-full">
+                          <label>Age group of children</label>
+                          {[
+                            ...Array(Number(optionsState?.children?.value)),
+                          ].map((x, i) => (
                             <SelectInput
                               key={i}
                               options={childeAgeOptions}
@@ -736,99 +774,40 @@ const SettingsView = () => {
                                   : false
                               }
                             />
-                          ),
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <div className="w-full flex max-md:flex-col  items-center gap-5">
-                <div className="w-full">
-                  <label
-                    htmlFor=""
-                    className="font-medium text-sm text-text-secondary block text-left mb-2"
-                  >
-                    Are you expecting a baby?
-                  </label>
-                  <div className="w-full flex items-center gap-5">
-                    <div className="w-full">
-                      <RadioButton
-                        active={isExpectingBaby}
-                        // label="Are you expecting a baby"
-                        text="Yes"
-                        onClick={() => {
-                          setIsexpectionBaby(true);
-                        }}
-                        error={errors.expectingBaby.error}
-                      />
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <div className="w-full">
-                      <RadioButton
-                        active={isExpectingBaby === false}
-                        // label=""
-                        text="No"
-                        onClick={() => {
-                          setIsexpectionBaby(false);
-                        }}
-                        error={errors.expectingBaby.error}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {isExpectingBaby && (
-                  <div className="w-full">
-                    <InputField
-                      label="Expecting Date"
-                      name="date"
-                      value={expectingDate}
-                      onChange={(e) => {
-                        setExpectingDate(e.target.value);
-                      }}
-                      type="date"
-                      error={
-                        errors.childExpectingDate.error &&
-                        errors.childExpectingDate.message
-                      }
-                      isCustom={true}
-                    />
                   </div>
                 )}
-              </div>
-              {errors.expectingBaby.error ? (
-                <p className="text-sm text-red-500 pt-[6px]">
-                  {errors.expectingBaby.message}
-                </p>
-              ) : null}
 
-              {serverError ? (
-                <div className="pb-3">
-                  <p className="text-sm text-center text-red-500">
-                    {serverError}
-                  </p>
-                </div>
-              ) : null}
+                {serverError ? (
+                  <div className="pb-3">
+                    <p className="text-sm text-center text-red-500">
+                      {serverError}
+                    </p>
+                  </div>
+                ) : null}
 
-              <div className="flex  item-center justify-end">
-                <div className="w-full mt-[60px] flex items-center justify-end gap-3">
-                  <Link href="/">
-                    <Button className="max-w-[90px] bg-white border border-border-primary !text-sm !text-text-secondary hover:!text-white text-center">
-                      Cancel
+                <div className="flex  item-center justify-end">
+                  <div className="w-full mt-[60px] flex items-center justify-end gap-3">
+                    <Link href="/">
+                      <Button className="max-w-[90px] bg-white border border-border-primary !text-sm !text-text-secondary hover:!text-white text-center">
+                        Cancel
+                      </Button>
+                    </Link>
+                    <Button
+                      isLoading={isPending}
+                      type="submit"
+                      className="text-sm max-w-[160px]"
+                    >
+                      Save changes
                     </Button>
-                  </Link>
-                  <Button
-                    isLoading={isPending}
-                    type="submit"
-                    className="text-sm max-w-[160px]"
-                  >
-                    Save changes
-                  </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </>
         )}
 
         {changePassModal ? (

@@ -59,7 +59,7 @@ const BlogDetailView = () => {
             </div>
 
             <div className="col-span-12 md:col-span-3">
-              <div className="drop-shadow-sm rounded-md bg-white px-3 py-5">
+              <div className="drop-shadow-sm rounded-md bg-slate-100 px-3 py-5">
                 <h3 className="text-xl font-semibold mb-4">Recent Articles</h3>
 
                 <div className="flex flex-col gap-4">

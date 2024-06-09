@@ -15,6 +15,8 @@ interface blogEditProps {
   metaTittle: string;
   description: string;
   content: string;
+  author?: string;
+  category?: string;
 }
 
 const AdminBlogView = () => {
@@ -32,7 +34,9 @@ const AdminBlogView = () => {
       setEditBlogData({
         slug: value?.slug,
         title: value?.title,
+        author: value?.author,
         content: value?.content,
+        category: value?.category,
         thumbnail: value?.thumbnail,
         metaTittle: value?.metaTittle,
         description: value?.description,

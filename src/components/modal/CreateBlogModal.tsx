@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import InputField from '../form/InputField';
+import SelectInput from '../form/SelectInput';
 import TextareaField from '../form/TextareaField';
 import GlobalTextEditor from '../textEditor/GlobalTextEditor';
 
@@ -21,7 +22,40 @@ interface FormValueProps {
   metaTittle: string;
   description: string;
   content: string;
+  author?: string;
+  category?: string;
 }
+
+const childeAgeOptions = [
+  {
+    value: '',
+    label: 'Select',
+  },
+  {
+    value: '0-3 months',
+    label: 'Newborns (0-3 months)',
+  },
+  {
+    value: '4-12 months',
+    label: 'Infants (4-12 months)',
+  },
+  {
+    value: '1-3 years',
+    label: 'Toddlers (1-3 years)',
+  },
+  {
+    value: '3-5 years',
+    label: 'Preschoolers (3-5 years)',
+  },
+  {
+    value: '6-12 years',
+    label: 'School-Age Children (6-12 years)',
+  },
+  {
+    value: '13-18 years',
+    label: 'Teenagers (13-18 years)',
+  },
+];
 
 const CreateBlogModal = ({
   id,
@@ -36,8 +70,15 @@ const CreateBlogModal = ({
 }) => {
   const queryClient = useQueryClient();
   const [content, setContent] = useState<string>('');
+  const [category, setCategory] = useState<{ label: string; value: string }>(
+    childeAgeOptions[0],
+  );
   const [customError, setCustomError] = useState({
     content: {
+      message: 'This field must not be empty.',
+      error: false,
+    },
+    category: {
       message: 'This field must not be empty.',
       error: false,
     },
@@ -52,9 +93,7 @@ const CreateBlogModal = ({
   const { mutate: createBlog, isPending } = useMutation({
     mutationFn: (data: any) => createBlogApi(data),
     onError: (error: any) => {
-      console.log('error', error);
-
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data) => {
       handleClose();
@@ -69,7 +108,7 @@ const CreateBlogModal = ({
     mutationFn: ({ data, id }: { data: any; id: string }) =>
       updateBlogApi(data, id),
     onError: (error: any) => {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message);
     },
     onSuccess: (data) => {
       handleClose();
@@ -102,6 +141,11 @@ const CreateBlogModal = ({
         .string()
         .min(3, 'This field must be at least 3 characters long.')
         .max(200, 'This field must be at most 200 characters long.')
+        .required('This field must not be empty.'),
+      author: yup
+        .string()
+        .min(3, 'This field must be at least 3 characters long.')
+        .max(100, 'This field must be at most 100 characters long.')
         .required('This field must not be empty.'),
     })
     .required();
@@ -138,6 +182,10 @@ const CreateBlogModal = ({
         message: 'This field must not be empty.',
         error: false,
       },
+      category: {
+        message: 'This field must not be empty.',
+        error: false,
+      },
       thumbnail: {
         message: 'This field must not be empty.',
         error: false,
@@ -154,6 +202,16 @@ const CreateBlogModal = ({
       }));
     }
 
+    if (!category || !category?.value) {
+      setCustomError((prev) => ({
+        ...prev,
+        category: {
+          ...prev.category,
+          error: true,
+        },
+      }));
+    }
+
     if (!thumbnail) {
       setCustomError((prev) => ({
         ...prev,
@@ -164,20 +222,24 @@ const CreateBlogModal = ({
       }));
     }
 
-    console.log('isEdit', isEdit);
-
     if (!isEdit) {
-      if (data && content && thumbnail) {
+      if (data && content && thumbnail && category.value) {
         console.log('called inside eidt');
-        return createBlog({ ...data, content, thumbnail });
+        return createBlog({
+          ...data,
+          content,
+          thumbnail,
+          category: category?.value,
+        });
       }
     } else {
-      if (id) {
+      if (id && content && category.value) {
         return updateBlog({
           data: {
             ...data,
             content,
             thumbnail: thumbnail ? thumbnail : initialValues?.thumbnail,
+            category: category?.value,
           },
           id,
         });
@@ -192,6 +254,14 @@ const CreateBlogModal = ({
     if (initialValues) {
       reset(initialValues);
       setContent(initialValues.content);
+
+      if (initialValues?.category) {
+        const find = childeAgeOptions.find(
+          (item) => item.value === initialValues.category,
+        );
+
+        setCategory(find ? find : childeAgeOptions[0]);
+      }
     }
   }, [initialValues]);
 
@@ -311,6 +381,34 @@ const CreateBlogModal = ({
                 register={register}
                 error={errors.metaTittle?.message}
                 placeholder="Enter blog meta title"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
+              <InputField
+                type="text"
+                name="author"
+                label="Author"
+                register={register}
+                error={errors.author?.message}
+                placeholder="Enter blog author"
+              />
+
+              <SelectInput
+                label="Category"
+                options={childeAgeOptions}
+                handleSelect={(opt) => setCategory(opt)}
+                // selectedOption={
+                //   formatDate.childAge[i]
+                //     ? optionsState.childAge[i]
+                //     : childeAgeOptions[0]
+                // }
+                selectedOption={category}
+                error={
+                  customError.category.error
+                    ? customError.category.message
+                    : false
+                }
               />
             </div>
 

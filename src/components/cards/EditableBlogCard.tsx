@@ -12,7 +12,7 @@ const EditableBlogCard = ({
 }) => {
   return (
     <div className="relative flex flex-col justify-between h-full">
-      <Link href={`/blog/${blog?._id}`}>
+      <Link href={`/blog/${blog?.slug}`}>
         <div className="relative w-full h-56 rounded-2xl overflow-hidden">
           <Image fill src={blog?.thumbnail} alt="image" />
         </div>
