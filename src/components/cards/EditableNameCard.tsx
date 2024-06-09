@@ -6,9 +6,11 @@ import { useState } from 'react';
 const EditableNameCard = ({
   name,
   handleEdit,
+  handleDelete,
 }: {
   name: any;
   handleEdit?: () => void;
+  handleDelete?: (id: string) => void;
 }) => {
   const [isHover, setIsHover] = useState(false);
 
@@ -47,16 +49,25 @@ const EditableNameCard = ({
 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          {name?.tags?.map((tag: string, index: any) => (
+          {name?.origin && (
             <p
-              key={index}
-              className={`px-2 py-0.5 rounded-full text-white text-xs font-medium ${
+              className={`px-2 py-0.5 rounded-full text-white text-xs font-medium capitalize ${
                 name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
               }`}
             >
-              {tag}
+              {name?.origin}
             </p>
-          ))}
+          )}
+
+          {name?.historic_significance && (
+            <p
+              className={`px-2 py-0.5 rounded-full text-white text-xs font-medium capitalize ${
+                name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
+              }`}
+            >
+              Historic
+            </p>
+          )}
         </div>
       </div>
 
@@ -68,6 +79,7 @@ const EditableNameCard = ({
         <div className="flex items-center gap-3 w-full h-full justify-center px-3">
           <button
             type="button"
+            onClick={() => handleDelete?.(name?._id)}
             className="w-full bg-slate-400 rounded-md text-base font-semibold text-white px-2.5 py-2 flex items-center justify-center hover:bg-red-700"
           >
             Delete

@@ -73,7 +73,7 @@ const NameSearchSection = () => {
     },
     fullname: {
       label: 'Full Name',
-      placeholder: 'Enter a full Baby Name - Example Mohammed Ibrahim Ali',
+      placeholder: 'Enter a Full Baby Name - Example Mohammed Ibrahim Ali',
     },
   };
 

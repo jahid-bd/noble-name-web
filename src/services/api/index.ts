@@ -141,9 +141,14 @@ export const deleteBlogApi = (id: string) =>
     withCredentials: true,
   });
 
-export const getAllName = (page: number) =>
-  axios.get(`${BASE_URL}/names`, {
-    params: { limit: 36, page: page ? page : 1 },
+export const getAllNameForAdmin = (page: number, params: string) =>
+  axios.get(`${BASE_URL}/names/for-admin?${params}`, {
+    params: { limit: 18, page: page ? page : 1 },
+    withCredentials: true,
+  });
+
+export const deleteNameForAdminApi = (id: string) =>
+  axios.delete(`${BASE_URL}/names/${id}`, {
     withCredentials: true,
   });
 

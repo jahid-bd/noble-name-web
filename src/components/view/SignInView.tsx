@@ -3,6 +3,7 @@
 import { userLogin } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
+import { jwtDecode } from 'jwt-decode';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -40,9 +41,15 @@ const SignInView = () => {
       console.log('error', error.message);
       setserverError(error.response.data.message);
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       setFormState(initialValues);
-      router.push('/');
+      const user: any =
+        data &&
+        data?.data?.data?.access_token &&
+        jwtDecode(data?.data?.data?.access_token);
+
+      if (user?.role !== 'admin') return router.push('/');
+      if (user?.role === 'admin') return router.push('/admin/dashboard');
     },
   });
 

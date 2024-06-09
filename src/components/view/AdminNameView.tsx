@@ -1,24 +1,31 @@
 'use client';
 
+import SearchBtn from '@/assets/icons/SarchBtn';
 import {
   createNameUsingCSV,
   createNameUsingForm,
-  getAllName,
+  deleteNameForAdminApi,
+  getAllNameForAdmin,
 } from '@/services/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import InputField from '../form/InputField';
 import AddNameModal from '../modal/AddNameModal';
 import ChooseInputType from '../modal/ChooseInputType';
 import AdminNameCardSection from '../section/AdminNameCardSection';
 
 const AdminNameView = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const activePage = searchParams.get('page');
+  const [searchName, setSearchName] = useState('');
   const [openAddName, setOpenAddName] = useState(false);
   const [chooseOne, setChooseOne] = useState(false);
+
+  const params = searchParams.toString();
 
   const handleOpenForm = () => {
     setOpenAddName(true);
@@ -30,8 +37,8 @@ const AdminNameView = () => {
     isLoading,
     error: isError,
   } = useQuery({
-    queryKey: ['names', activePage],
-    queryFn: () => getAllName(Number(activePage)),
+    queryKey: ['names', activePage, params],
+    queryFn: () => getAllNameForAdmin(Number(activePage), params),
   });
 
   const { mutate: createNameByForm, isPending } = useMutation({
@@ -58,6 +65,17 @@ const AdminNameView = () => {
     },
   });
 
+  const { mutate: deleteName } = useMutation({
+    mutationFn: (id: string) => deleteNameForAdminApi(id),
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data: any) => {
+      toast.success('Name delete successfully.');
+      queryClient.invalidateQueries();
+    },
+  });
+
   useEffect(() => {
     if (openAddName) {
       document.body.style.scrollBehavior = 'smooth';
@@ -70,7 +88,7 @@ const AdminNameView = () => {
 
   return (
     <div className="px-1.5">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-3">
         <p className="text-2xl font-semibold text-text-primary">Name List</p>
 
         <button
@@ -82,10 +100,36 @@ const AdminNameView = () => {
         </button>
       </div>
 
+      <div className="flex justify-between items-center mb-6">
+        <p className="text-base font-semibold text-text-tertiary">
+          {names?.data?.pagination?.totalItems} results
+        </p>
+
+        <div className="flex items-center gap-2">
+          <InputField
+            type="text"
+            name="name"
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+          />
+
+          <button
+            type="button"
+            onClick={() =>
+              router.push(`/admin/name${searchName && `?name=${searchName}`}`)
+            }
+            className="bg-primary px-4 py-2.5 rounded-full mb-1"
+          >
+            <SearchBtn />
+          </button>
+        </div>
+      </div>
+
       <AdminNameCardSection
         names={names}
         isError={isError}
         isLoading={isLoading}
+        handleDelete={deleteName}
         handleEdit={() => setOpenAddName(true)}
       />
 
