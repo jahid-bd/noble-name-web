@@ -60,7 +60,7 @@ const EditableNameCard = ({
         </div>
       </div>
 
-      {/* <div
+      <div
         className={`absolute h-[70px] left-0 right-0 bottom-0 bg-white bg-opacity-80 cursor-pointer ${
           isHover ? 'block' : 'hidden'
         }`}
@@ -68,7 +68,7 @@ const EditableNameCard = ({
         <div className="flex items-center gap-3 w-full h-full justify-center px-3">
           <button
             type="button"
-            className="w-full bg-slate-400 rounded-md text-base font-semibold text-white px-2.5 py-2 flex items-center justify-center hover:bg-dark-pink"
+            className="w-full bg-slate-400 rounded-md text-base font-semibold text-white px-2.5 py-2 flex items-center justify-center hover:bg-red-700"
           >
             Delete
           </button>
@@ -80,7 +80,7 @@ const EditableNameCard = ({
             Edit
           </button>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
