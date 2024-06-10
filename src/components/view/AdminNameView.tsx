@@ -16,12 +16,21 @@ import AddNameModal from '../modal/AddNameModal';
 import ChooseInputType from '../modal/ChooseInputType';
 import AdminNameCardSection from '../section/AdminNameCardSection';
 
+interface initialFormValueType {
+  gender: string;
+  origin: string;
+  meanings: [string];
+  arabic_name: string;
+  english_name: string;
+}
+
 const AdminNameView = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const activePage = searchParams.get('page');
   const [searchName, setSearchName] = useState('');
+  const [editName, setEditName] = useState(null);
   const [openAddName, setOpenAddName] = useState(false);
   const [chooseOne, setChooseOne] = useState(false);
 
@@ -76,6 +85,18 @@ const AdminNameView = () => {
     },
   });
 
+  const handleEdit = (value: initialFormValueType) => {
+    const name = {
+      gender: value.gender,
+      origin: value.origin,
+      meanings: value.meanings.toString(),
+      arabic_name: value.arabic_name,
+      english_name: value.english_name,
+    };
+
+    setEditName(name);
+  };
+
   useEffect(() => {
     if (openAddName) {
       document.body.style.scrollBehavior = 'smooth';
@@ -86,6 +107,7 @@ const AdminNameView = () => {
     }
   }, [openAddName]);
 
+  console.log(editName);
   return (
     <div className="px-1.5">
       <div className="flex justify-between items-center mb-3">
@@ -130,7 +152,7 @@ const AdminNameView = () => {
         isError={isError}
         isLoading={isLoading}
         handleDelete={deleteName}
-        handleEdit={() => setOpenAddName(true)}
+        handleEdit={(value) => handleEdit(value)}
       />
 
       {chooseOne && (
@@ -143,8 +165,18 @@ const AdminNameView = () => {
 
       {openAddName && (
         <AddNameModal
+          title="Add a New Name"
           handleClose={() => setOpenAddName(false)}
           handleSubmitForm={createNameByForm}
+        />
+      )}
+
+      {editName && (
+        <AddNameModal
+          title="Edit Name"
+          initialFormValue={editName}
+          handleSubmitForm={createNameByForm}
+          handleClose={() => setEditName(null)}
         />
       )}
     </div>

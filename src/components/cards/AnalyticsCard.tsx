@@ -3,7 +3,7 @@ interface cardPropsType {
   value: string;
   comparer?: string;
   progress?: boolean;
-  progressValue: number;
+  progressValue?: number;
 }
 
 const AnalyticsCard = ({
@@ -13,12 +13,12 @@ const AnalyticsCard = ({
   progressValue,
 }: cardPropsType) => {
   return (
-    <div className="shadow-sm p-6 rounded-xl bg-white">
+    <div className="shadow-sm p-6 rounded-xl bg-white w-full">
       <p className="text-base font-semibold text-text-primary mb-6">{title}</p>
 
       <p className="text-4xl font-semibold text-text-primary mb-4">{value}</p>
 
-      {progressValue >= 0 && (
+      {progressValue && progressValue >= 0 && (
         <p className="flex items-center text-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@ const AnalyticsCard = ({
         </p>
       )}
 
-      {progressValue < 0 && (
+      {progressValue && progressValue < 0 && (
         <p className="flex items-center text-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"

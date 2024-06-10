@@ -8,6 +8,7 @@ import { Suspense, useEffect, useState } from 'react';
 import AnalyticsFilterGroupBtn from '../buttons/AnalysticsFilterBtnGroup';
 import AccountCard from '../cards/AccountCard';
 import AnalyticsCard from '../cards/AnalyticsCard';
+import DownloadCard from '../cards/DownloadCard';
 import EditableNameCard from '../cards/EditableNameCard';
 import UserCard from '../cards/UserCard';
 import DateRangePicker from '../dateRange/DateRange';
@@ -83,7 +84,7 @@ const AdminDashboardView = () => {
 
         {!isLoading && !isError && analytics && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
               <AnalyticsCard
                 title="Total Searches"
                 value={analytics?.data?.data?.total_search}
@@ -113,13 +114,27 @@ const AdminDashboardView = () => {
                 comparer={analytics?.data?.data?.progress_duration}
                 progressValue={analytics?.data?.data?.active_user_progress}
               />
+
+              <AnalyticsCard
+                title="Total Name"
+                value={analytics?.data?.data?.total_name}
+              />
+
+              <AnalyticsCard
+                title="Total Newsletter"
+                value={analytics?.data?.data?.total_newsletter}
+              />
+
+              <div className="col-span-2">
+                <DownloadCard />
+              </div>
             </div>
 
             <div className="mb-6">
               <AccountCard accountData={analytics?.data?.data?.account} />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-5">
+            <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-4 gap-6 mb-5">
               <AnalyticsCard
                 title="Bounce Rate %"
                 value={analytics?.data?.data?.total_bounce}

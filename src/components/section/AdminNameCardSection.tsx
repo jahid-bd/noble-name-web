@@ -13,7 +13,7 @@ const AdminNameCardSection = ({
   names: any;
   isError: any;
   isLoading: any;
-  handleEdit: () => void;
+  handleEdit: (value: any) => void;
   handleDelete: (id: string) => void;
 }) => {
   return (

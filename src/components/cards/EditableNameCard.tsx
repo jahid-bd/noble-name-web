@@ -9,7 +9,7 @@ const EditableNameCard = ({
   handleDelete,
 }: {
   name: any;
-  handleEdit?: () => void;
+  handleEdit?: (value: any) => void;
   handleDelete?: (id: string) => void;
 }) => {
   const [isHover, setIsHover] = useState(false);
@@ -86,7 +86,7 @@ const EditableNameCard = ({
           </button>
           <button
             type="button"
-            onClick={handleEdit}
+            onClick={() => handleEdit?.(name)}
             className="w-full bg-primary rounded-md text-base font-semibold text-white px-2.5 py-2 flex items-center justify-center button-hover"
           >
             Edit
