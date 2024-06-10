@@ -221,7 +221,12 @@ const AddNameModal = ({
     }
   }, [initialFormValue]);
 
-  console.log(initialValues);
+  console.log(
+    originOptions.find(
+      (item) => item.value.toLowerCase() === formState?.origin?.toLowerCase(),
+    ),
+    formState?.origin,
+  );
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
@@ -268,6 +273,7 @@ const AddNameModal = ({
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
               <InputField
+                isCustom
                 type="text"
                 label="Name"
                 name="english_name"
@@ -292,6 +298,7 @@ const AddNameModal = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
               <InputField
+                isCustom
                 type="text"
                 name="arabic_name"
                 label="Arabic Spelling"
@@ -305,7 +312,9 @@ const AddNameModal = ({
                 label="Origin"
                 options={originOptions}
                 selectedOption={originOptions.find(
-                  (item) => item.value === formState?.origin,
+                  (item) =>
+                    item.value.toLowerCase() ===
+                    formState?.origin?.toLowerCase(),
                 )}
                 handleSelect={(opt) => handleSelect('origin', opt)}
                 error={errors.origin?.error && errors.origin?.message}
@@ -314,6 +323,7 @@ const AddNameModal = ({
 
             <div className="grid grid-cols-1 gap-[14px] mb-4">
               <TextareaField
+                isCustom
                 label="Meaning"
                 name="meanings"
                 onChange={handleChangeTextarea}
@@ -328,7 +338,7 @@ const AddNameModal = ({
                 type="submit"
                 className="py-2.5 px-20 rounded-lg bg-primary text-white text-base font-medium"
               >
-                Submit For Approval
+                {title ? title : 'Submit For Approval'}
               </button>
             </div>
           </form>

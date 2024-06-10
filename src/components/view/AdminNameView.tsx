@@ -5,6 +5,7 @@ import {
   createNameUsingCSV,
   createNameUsingForm,
   deleteNameForAdminApi,
+  editNameForAdminApi,
   getAllNameForAdmin,
 } from '@/services/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -17,9 +18,10 @@ import ChooseInputType from '../modal/ChooseInputType';
 import AdminNameCardSection from '../section/AdminNameCardSection';
 
 interface initialFormValueType {
+  _id: string;
   gender: string;
   origin: string;
-  meanings: [string];
+  meanings: string;
   arabic_name: string;
   english_name: string;
 }
@@ -30,7 +32,7 @@ const AdminNameView = () => {
   const searchParams = useSearchParams();
   const activePage = searchParams.get('page');
   const [searchName, setSearchName] = useState('');
-  const [editName, setEditName] = useState(null);
+  const [editName, setEditName] = useState<initialFormValueType | null>(null);
   const [openAddName, setOpenAddName] = useState(false);
   const [chooseOne, setChooseOne] = useState(false);
 
@@ -47,7 +49,7 @@ const AdminNameView = () => {
     error: isError,
   } = useQuery({
     queryKey: ['names', activePage, params],
-    queryFn: () => getAllNameForAdmin(Number(activePage), params),
+    queryFn: () => getAllNameForAdmin(params),
   });
 
   const { mutate: createNameByForm, isPending } = useMutation({
@@ -58,6 +60,19 @@ const AdminNameView = () => {
     onSuccess: (data: any) => {
       setOpenAddName(false);
       toast.success('Name create successfully');
+      queryClient.invalidateQueries({ queryKey: ['names'] });
+    },
+  });
+
+  const { mutate: editNameByForm } = useMutation({
+    mutationFn: (data: any) =>
+      editNameForAdminApi(editName?._id as string, data),
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message);
+    },
+    onSuccess: (data: any) => {
+      setEditName(null);
+      toast.success('Name edit successfully');
       queryClient.invalidateQueries({ queryKey: ['names'] });
     },
   });
@@ -87,6 +102,7 @@ const AdminNameView = () => {
 
   const handleEdit = (value: initialFormValueType) => {
     const name = {
+      _id: value?._id,
       gender: value.gender,
       origin: value.origin,
       meanings: value.meanings.toString(),
@@ -107,7 +123,6 @@ const AdminNameView = () => {
     }
   }, [openAddName]);
 
-  console.log(editName);
   return (
     <div className="px-1.5">
       <div className="flex justify-between items-center mb-3">
@@ -166,8 +181,8 @@ const AdminNameView = () => {
       {openAddName && (
         <AddNameModal
           title="Add a New Name"
-          handleClose={() => setOpenAddName(false)}
           handleSubmitForm={createNameByForm}
+          handleClose={() => setOpenAddName(false)}
         />
       )}
 
@@ -175,7 +190,7 @@ const AdminNameView = () => {
         <AddNameModal
           title="Edit Name"
           initialFormValue={editName}
-          handleSubmitForm={createNameByForm}
+          handleSubmitForm={editNameByForm}
           handleClose={() => setEditName(null)}
         />
       )}
