@@ -31,20 +31,20 @@ const SuggestedNameCard = ({ name }: { name: any }) => {
 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          {name?.name?.origin && (
+          {name?.origin && (
             <p
               className={`px-2 py-0.5 rounded-full text-white text-xs font-medium capitalize ${
-                name?.name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
+                name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
               }`}
             >
-              {name?.name?.origin}
+              {name?.origin}
             </p>
           )}
 
-          {name?.name?.historic_significance && (
+          {name?.historic_significance && (
             <p
               className={`px-2 py-0.5 rounded-full text-white text-xs font-medium capitalize ${
-                name?.name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
+                name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
               }`}
             >
               Historic

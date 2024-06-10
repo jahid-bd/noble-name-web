@@ -159,6 +159,7 @@ const HomeView = () => {
 
       {openAddName && (
         <AddNameModal
+          title="Add a New Name"
           handleSubmitForm={addSuggestedName}
           handleClose={() => setOpenAddName(false)}
         />
