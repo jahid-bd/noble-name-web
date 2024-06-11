@@ -1,6 +1,5 @@
 import SuggestedNameCard from '../cards/SuggestedNameCard';
 import PreLoader from '../loader/Loader';
-import NotFound from '../loader/NotFound';
 import GlobalPagination from '../pagination/GlobalPagination';
 
 const NameAddedCardSection = ({
@@ -21,7 +20,9 @@ const NameAddedCardSection = ({
       )}
 
       {(isError && !isLoading) ||
-        (suggestedName?.data?.pagination?.totalItems <= 0 && <NotFound />)}
+        (suggestedName?.data?.pagination?.totalItems <= 0 && (
+          <div className="h-20"></div>
+        ))}
 
       {!isError && !isLoading && suggestedName && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">

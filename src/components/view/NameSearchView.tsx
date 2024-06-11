@@ -70,7 +70,7 @@ const NameSearchView = () => {
             >
               <ResetIcon />
 
-              <span>Reset</span>
+              <span>Clear</span>
             </button>
 
             <button
@@ -80,7 +80,7 @@ const NameSearchView = () => {
             >
               <FilterIcon />
 
-              <span>Filter Results</span>
+              <span>Filter</span>
             </button>
           </div>
         </div>
@@ -110,6 +110,8 @@ const NameSearchView = () => {
                     meanings: item.meanings,
                     tags: item.tags,
                     gender: item.gender,
+                    origin: item.origin,
+                    historic_significance: item.historic_significance,
                   },
                   isFavorite: item.isFavorite,
                   isBookmarked: item.isBookmarked,

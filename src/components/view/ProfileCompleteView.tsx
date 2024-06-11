@@ -1,5 +1,6 @@
 'use client';
 
+import countries from '@/assets/data/countries';
 import { userProfileUpdate } from '@/services/api';
 import { UserUpdateData } from '@/types';
 import { useMutation } from '@tanstack/react-query';
@@ -17,17 +18,28 @@ const ProfileComplete = () => {
       label: 'Select',
     },
     {
-      value: '1-6',
-      label: '1-6 Years',
+      value: '0-3 months',
+      label: 'Newborns (0-3 months)',
     },
     {
-      value: '7-12 Years',
-      label: '7-12',
+      value: '4-12 months',
+      label: 'Infants (4-12 months)',
     },
-
     {
-      value: '13+',
-      label: '13+',
+      value: '1-3 years',
+      label: 'Toddlers (1-3 years)',
+    },
+    {
+      value: '3-5 years',
+      label: 'Preschoolers (3-5 years)',
+    },
+    {
+      value: '6-12 years',
+      label: 'School-Age Children (6-12 years)',
+    },
+    {
+      value: '13-18 years',
+      label: 'Teenagers (13-18 years)',
     },
   ];
 
@@ -50,8 +62,12 @@ const ProfileComplete = () => {
       label: '35-45',
     },
     {
-      value: '45+',
-      label: '45+',
+      value: '46-54',
+      label: '46-54',
+    },
+    {
+      value: '55+',
+      label: '55+',
     },
   ];
 
@@ -112,29 +128,31 @@ const ProfileComplete = () => {
     },
   ];
 
-  const countryOptions = [
-    {
-      value: '',
-      label: 'Select country',
-    },
+  const countryOptions = [...countries];
 
-    {
-      value: 'united-states',
-      label: 'United States',
-    },
-    {
-      value: 'united-kingdoms',
-      label: 'United Kingdoms',
-    },
-    {
-      value: 'pakistan',
-      label: 'Pakistan',
-    },
-    {
-      value: 'united-arab-emirates',
-      label: 'United Arab Emirates',
-    },
-  ];
+  // const countryOptions = [
+  //   {
+  //     value: '',
+  //     label: 'Select country',
+  //   },
+
+  //   {
+  //     value: 'united-states',
+  //     label: 'United States',
+  //   },
+  //   {
+  //     value: 'united-kingdoms',
+  //     label: 'United Kingdoms',
+  //   },
+  //   {
+  //     value: 'pakistan',
+  //     label: 'Pakistan',
+  //   },
+  //   {
+  //     value: 'united-arab-emirates',
+  //     label: 'United Arab Emirates',
+  //   },
+  // ];
 
   const [optionsState, setOptionsState] = useState({
     age: ageOptions[0],
@@ -142,7 +160,7 @@ const ProfileComplete = () => {
     sect: sectOptions[0],
     children: childrenOptions[0],
     country: countryOptions[0],
-    childAge: childeAgeOptions[0],
+    childAge: [],
   });
 
   const [isExpectingBaby, setIsexpectionBaby] = useState<boolean | null>(null);
@@ -150,16 +168,31 @@ const ProfileComplete = () => {
   const [isParent, setIsParent] = useState<boolean | null>(null);
 
   const [expectingDate, setExpectingDate] = useState<Date | null | string>(
-    null
+    null,
   );
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string }
+    option: { value: string; label: string },
   ) => {
     setOptionsState({
       ...optionsState,
       [key]: option,
+    });
+  };
+
+  const handleSelectChildren = (key: string, value: any) => {
+    setOptionsState({
+      ...optionsState,
+      [key]: value,
+      childAge: [],
+    });
+  };
+
+  const handleSelectChildAge = (key: string, value: any) => {
+    setOptionsState({
+      ...optionsState,
+      [key]: value,
     });
   };
 
@@ -340,15 +373,15 @@ const ProfileComplete = () => {
       }));
     }
 
-    if (isParent === true && !optionsState.childAge.value) {
-      setErrors((prev) => ({
-        ...prev,
-        childAge: {
-          ...prev.childAge,
-          error: true,
-        },
-      }));
-    }
+    // if (isParent === true && !optionsState.childAge) {
+    //   setErrors((prev) => ({
+    //     ...prev,
+    //     childAge: {
+    //       ...prev.childAge,
+    //       error: true,
+    //     },
+    //   }));
+    // }
 
     const hasErrors = Object.values(errors).some((field) => field.error);
 
@@ -369,7 +402,8 @@ const ProfileComplete = () => {
         country: optionsState.country.value,
         isExpectingBaby: isExpectingBaby || false,
         expectedDate: expectingDate || '',
-        childAgeGroup: optionsState.childAge.value,
+        childAgeGroup:
+          optionsState.childAge?.length > 0 ? optionsState.childAge : [],
         isAlreadyParent: isParent || false,
       });
     }
@@ -426,7 +460,7 @@ const ProfileComplete = () => {
                 htmlFor=""
                 className="font-medium text-sm text-text-secondary pb-3 block text-left"
               >
-                Are you already a parent
+                Are you expecting a baby?
               </label>
               <div className="w-full flex items-center gap-5">
                 <div className="w-full">
@@ -480,7 +514,7 @@ const ProfileComplete = () => {
                 htmlFor=""
                 className="font-medium text-sm text-text-secondary pb-3 block text-left"
               >
-                Are you already a parent
+                Are you already a parent?
               </label>
               <div className="w-full flex items-center gap-5">
                 <div className="w-full">
@@ -516,19 +550,50 @@ const ProfileComplete = () => {
             {isParent && (
               <>
                 <SelectInput
-                  label="How many children you have?"
+                  label="How many children do you have?"
                   options={childrenOptions}
-                  handleSelect={(opt) => handleSelect('children', opt)}
+                  handleSelect={(opt) => handleSelectChildren('children', opt)}
                   selectedOption={optionsState.children}
                   error={errors.children.message}
                 />
-                <SelectInput
+
+                {optionsState?.children?.value && (
+                  <div>
+                    <label>Age group of children</label>
+                    {[...Array(Number(optionsState?.children?.value))].map(
+                      (x, i) => (
+                        <SelectInput
+                          key={i}
+                          options={childeAgeOptions}
+                          handleSelect={(opt) =>
+                            handleSelectChildAge('childAge', [
+                              ...optionsState?.childAge,
+                              opt,
+                            ])
+                          }
+                          selectedOption={
+                            optionsState.childAge[i]
+                              ? optionsState.childAge[i]
+                              : childeAgeOptions[0]
+                          }
+                          error={
+                            errors.childAge.error
+                              ? errors.childAge.message
+                              : false
+                          }
+                        />
+                      ),
+                    )}
+                  </div>
+                )}
+
+                {/* <SelectInput
                   label="Age group of children"
                   options={childeAgeOptions}
                   handleSelect={(opt) => handleSelect('childAge', opt)}
                   selectedOption={optionsState.childAge}
                   error={errors.childAge.message}
-                />
+                /> */}
               </>
             )}
           </div>

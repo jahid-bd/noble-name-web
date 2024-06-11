@@ -62,12 +62,11 @@ const NewsLetterSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:items-center">
           <div>
             <h3 className="text-3xl md:text-4xl font-semibold text-text-primary mb-3 text-center md:text-left">
-              Sign up for our newsletter
+              Sign up for our Newsletter
             </h3>
 
             <p className="text-text-tertiary text-lg md:text-xl font-normal text-center md:text-left">
-              Be the first to know about releases and industry news and
-              insights.
+              Be the first to know about Muslim Parenting and more.
             </p>
           </div>
 
@@ -75,7 +74,7 @@ const NewsLetterSection = () => {
             className="md:flex md:justify-end md:gap-4 md:items-center"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="mb-4 md:mb-0">
+            <div className="mb-4 md:mb-0 md:w-[400px]">
               <InputField
                 type="text"
                 name="email"

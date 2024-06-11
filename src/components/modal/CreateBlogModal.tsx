@@ -201,10 +201,10 @@ const CreateBlogModal = ({
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
       <div className="container mx-auto px-1.5 md:px-20">
         <div className="px-4 py-8 md:px-8 bg-white rounded-[10px] shadow-modal max-h-[90vh] overflow-y-auto">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold text-text-tertiary ">
+          <div className="flex items-center justify-end mb-4">
+            {/* <h3 className="text-xl font-semibold text-text-tertiary ">
               Create Blog
-            </h3>
+            </h3> */}
 
             <button type="button" onClick={handleClose}>
               <svg
@@ -241,13 +241,11 @@ const CreateBlogModal = ({
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb4">
-              <h4>Thumbnail</h4>
-
               <div
                 {...getRootProps()}
                 className={clsx(
                   'my-4 border border-border-primary flex items-center justify-center w-full h-[350px] text-center relative rounded-md',
-                  customError.thumbnail.error && '!border-red-500'
+                  customError.thumbnail.error && '!border-red-500',
                 )}
               >
                 <div
@@ -319,7 +317,7 @@ const CreateBlogModal = ({
             <div className="grid grid-cols-1 gap-[14px] mb-4">
               <TextareaField
                 name="description"
-                label="Description"
+                label="Meta Description"
                 register={register}
                 error={errors.description?.message}
                 placeholder="Write your blog description"

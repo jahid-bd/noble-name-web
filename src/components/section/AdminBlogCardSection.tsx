@@ -27,7 +27,7 @@ const AdminBlogCardSection = ({
       {isError || (blogs?.data?.pagination?.totalItems <= 0 && <NotFound />)}
 
       {!isLoading && !isError && blogs && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {blogs?.data?.data?.map((item: any) => (
             <EditableBlogCard
               blog={item}

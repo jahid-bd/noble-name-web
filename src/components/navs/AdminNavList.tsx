@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-const AdminNavList = () => {
+const AdminNavList = ({ handleLogout }: { handleLogout: any }) => {
   return (
-    <div className="absolute right-1.5 top-[52px] md:top-[72px]">
+    <div className="absolute right-1.5 top-[52px] md:top-[72px] z-50">
       <div className="flex flex-col gap-2 bg-white rounded py-3 border border-border-primary">
         <Link
           href="/admin/dashboard"
@@ -17,12 +17,26 @@ const AdminNavList = () => {
           href="/admin/name-requested"
           className="py-1 px-3 hover:bg-border-primary"
         >
-          Name Request
+          New Name Request
         </Link>
 
-        <Link href="/admin/blog" className="py-1 px-3 hover:bg-border-primary">
-          Blog
+        <Link
+          href="/admin/article"
+          className="py-1 px-3 hover:bg-border-primary"
+        >
+          Article
         </Link>
+
+        <Link href="/settings" className="py-1 px-3 hover:bg-border-primary">
+          Settings
+        </Link>
+        <button
+          type="button"
+          className="py-1 px-3 hover:bg-border-primary text-left"
+          onClick={() => handleLogout()}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

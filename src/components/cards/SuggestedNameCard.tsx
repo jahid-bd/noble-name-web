@@ -9,7 +9,7 @@ const SuggestedNameCard = ({ name }: { name: any }) => {
 
   return (
     <div
-      className={`p-5 rounded-xl flex flex-col gap-4 ${
+      className={`p-5 rounded-xl flex flex-col gap-4 h-full justify-between ${
         name?.gender === 'girl' ? 'bg-pink' : 'bg-blue'
       }`}
     >

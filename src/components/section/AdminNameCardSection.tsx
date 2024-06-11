@@ -22,7 +22,7 @@ const AdminNameCardSection = ({
         </div>
       )}
 
-      {(!isLoading && isError) ||
+      {(isError && !isLoading) ||
         (names?.data?.pagination?.totalItems <= 0 && <NotFound />)}
 
       {!isLoading && !isError && names && (

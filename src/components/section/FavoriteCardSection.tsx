@@ -1,6 +1,5 @@
 import NameCard from '../cards/NameCard';
 import PreLoader from '../loader/Loader';
-import NotFound from '../loader/NotFound';
 import GlobalPagination from '../pagination/GlobalPagination';
 
 const FavoriteCardSection = ({
@@ -21,7 +20,9 @@ const FavoriteCardSection = ({
       )}
 
       {(isError && !isLoading) ||
-        (favorites?.data?.pagination?.totalItems <= 0 && <NotFound />)}
+        (favorites?.data?.pagination?.totalItems <= 0 && (
+          <div className="h-20"></div>
+        ))}
 
       {!isError && !isLoading && favorites && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">

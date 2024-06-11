@@ -36,6 +36,7 @@
     "react-share": "^5.1.0",
     "react-toastify": "^10.0.5",
     "share": "^0.7.40",
+    "sharp": "^0.33.4",
     "url-join": "^5.0.0",
     "usehooks-ts": "^3.1.0",
     "yup": "^1.4.0"

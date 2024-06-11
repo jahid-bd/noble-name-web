@@ -17,7 +17,7 @@ export interface UserUpdateData {
   expectedDate?: Date | null | string;
   isAlreadyParent: boolean;
   childrens?: string;
-  childAgeGroup?: string;
+  childAgeGroup?: any;
   name?: string;
 }
 

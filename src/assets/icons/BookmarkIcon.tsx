@@ -14,8 +14,8 @@ const BookmarkIcon = ({ isBookmarked }: { isBookmarked: boolean }) => {
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          fill={isBookmarked ? '#E95152' : '#ffff'}
-          stroke={isBookmarked ? '#E95152' : '#ffff'}
+          fill={isBookmarked ? '#FDE272' : '#ffff'}
+          stroke={isBookmarked ? '#FDE272' : '#ffff'}
         />
       </g>
     </svg>

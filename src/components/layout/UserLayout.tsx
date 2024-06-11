@@ -41,7 +41,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     onSuccess: (data: any) => {
       toast.success('user logout successfully.');
       queryClient.invalidateQueries({ queryKey: ['logged-in-user'] });
-      router.push('auth/sign-in');
+      router.push('/auth/sign-in');
     },
   });
 
@@ -67,7 +67,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
           {!isError && user ? (
             <div className="relative">
-              <div className="flex gap-4 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
+              <div className="flex gap-3 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
                 <svg
                   className="cursor-pointer"
                   onClick={() => setOpenNav((prev) => !prev)}
@@ -86,8 +86,23 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
                   />
                 </svg>
 
-                <div className="md:h-10 md:w-10 relative w-[30px] h-[30px] rounded-full overflow-hidden">
-                  <Image fill alt="Noble Names Logo" src="/images/Avatar.png" />
+                <div className="md:h-10 md:w-10 relative w-[30px] h-[30px] rounded-full overflow-hidden flex justify-center items-center">
+                  {/* <Image fill alt="Noble Names Logo" src="/images/Avatar.png" /> */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="40px"
+                    height="40px"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M5 20v-1a7 7 0 0 1 7-7v0a7 7 0 0 1 7 7v1m-7-8a4 4 0 1 0 0-8a4 4 0 0 0 0 8"
+                    />
+                  </svg>
                 </div>
               </div>
 
@@ -112,15 +127,16 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
       <footer className="py-8 bg-primary">
         <div className="container py-4 px-[6px] mx-auto">
-          <p className="text-center text-white text-base font-semibold mb-5">
-            &copy; 2023 Noble Names
-          </p>
-
-          <div className="flex flex-col md:flex-row gap-5 items-center justify-center font-normal text-white text-base">
+          <div className="flex flex-col md:flex-row gap-5 items-center justify-center font-normal text-white text-base mb-5">
+            <Link href="/blog">Blog</Link>
             <Link href="/fair-use-policy">Terms & Conditions</Link>
             <Link href="/fair-use-policy">Privacy Policy</Link>
             <Link href="/fair-use-policy">Fair Use Policy</Link>
           </div>
+
+          <p className="text-center text-white text-base font-semibold">
+            &copy; 2023 Noble Names
+          </p>
         </div>
       </footer>
     </>

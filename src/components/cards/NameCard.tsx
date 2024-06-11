@@ -97,7 +97,7 @@ const NameCard = ({ name }: { name: any }) => {
 
   return (
     <div
-      className={`p-5 rounded-xl flex flex-col gap-4 relative ${
+      className={`p-5 rounded-xl flex flex-col gap-4 relative h-full justify-between ${
         name?.name?.gender === 'girl' ? 'bg-pink' : 'bg-blue'
       }`}
     >
@@ -126,7 +126,27 @@ const NameCard = ({ name }: { name: any }) => {
 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          {name?.name?.tags?.map((tag: string) => (
+          {name?.name?.origin && (
+            <p
+              className={`px-2 py-0.5 rounded-full text-white text-xs font-medium capitalize ${
+                name?.name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
+              }`}
+            >
+              {name?.name?.origin}
+            </p>
+          )}
+
+          {name?.name?.historic_significance && (
+            <p
+              className={`px-2 py-0.5 rounded-full text-white text-xs font-medium capitalize ${
+                name?.name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
+              }`}
+            >
+              Historic
+            </p>
+          )}
+
+          {/* {name?.name?.tags?.map((tag: string) => (
             <p
               key={tag}
               className={`px-2 py-0.5 rounded-full text-white text-xs font-medium ${
@@ -135,7 +155,7 @@ const NameCard = ({ name }: { name: any }) => {
             >
               {tag}
             </p>
-          ))}
+          ))} */}
         </div>
 
         <div className="flex gap-3 items-center">
