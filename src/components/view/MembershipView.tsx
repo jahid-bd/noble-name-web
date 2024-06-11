@@ -1,17 +1,22 @@
 'use client';
 
 import PlanCard from '@/components/cards/PlanCard';
+import { BASE_URL, STRIPE_PUBLIC_KEY } from '@/constants';
 import {
   getActivePlan,
   getAllPlans,
   getUserProfile,
   subscribePlan,
 } from '@/services/api';
+import { loadStripe } from '@stripe/stripe-js';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PreLoader from '../loader/Loader';
+
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY as string);
 
 const MembershipPlanView = () => {
   const router = useRouter();
@@ -52,14 +57,41 @@ const MembershipPlanView = () => {
     },
   });
 
-  const handleSubscription = (id: string) => {
+  const handleSubscription = async (id: string) => {
     setLoadingId(id);
     if (!user) return toast.error('Please login before');
 
-    subscribeNow({
-      planId: id,
-      userId: user?._id,
+    // const response = await fetch(`${BASE_URL}/create-checkout-session`, {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     plan_id: id,
+    //     user_id: user?._id,
+    //   }),
+    // });
+
+    const response = await axios.post(`${BASE_URL}/create-checkout-session`, {
+      plan_id: id,
+      user_id: user?._id,
     });
+    const session = await response.data;
+    console.log(session);
+    const stripe = await stripePromise;
+    if (stripe) {
+      await stripe.redirectToCheckout({ sessionId: session.id });
+    }
+
+    // const response = await axios.post(`${BASE_URL}/create-checkout-session`, {
+    //   plan_id: id,
+    //   user_id: user?._id,
+    // });
+
+    // const session = await response.data;
+
+    // console.log({ session });
+    // const stripe = await stripePromise;
+    // if (stripe) {
+    //   await stripe.redirectToCheckout({ sessionId: session.id });
+    // }
   };
 
   return (
