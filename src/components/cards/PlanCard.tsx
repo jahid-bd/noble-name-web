@@ -1,8 +1,11 @@
 import CheckIcon from '@/assets/icons/CheckIcon';
 import LoadingIcon from '@/assets/icons/LoadingIcon';
 import XIcon from '@/assets/icons/XIcon';
+import { STRIPE_PUBLIC_KEY } from '@/constants';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import Link from 'next/link';
-
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY as string);
 interface PlanProps {
   title: string;
   price: number;
@@ -59,7 +62,7 @@ const PlanCard = ({
 
           {price > 0 && (
             <sub className="text-base font-medium text-text-tertiary">
-              a year
+              per month
             </sub>
           )}
         </p>
@@ -129,20 +132,22 @@ const PlanCard = ({
             ) : null}
           </div>
         ) : (
-          <button
-            type="button"
-            onClick={onClick}
-            className={`w-full rounded-lg  text-white py-4 ${
-              default_plan ? 'bg-green-light' : 'bg-primary'
-            }`}
-          >
-            <div className="flex items-center justify-center">
-              <span className="mr-2">
-                {is_loading ? <LoadingIcon /> : null}
-              </span>
-              <span>{button_title}</span>
-            </div>
-          </button>
+          <Elements stripe={stripePromise}>
+            <button
+              type="button"
+              onClick={onClick}
+              className={`w-full rounded-lg  text-white py-4 ${
+                default_plan ? 'bg-green-light' : 'bg-primary'
+              }`}
+            >
+              <div className="flex items-center justify-center">
+                <span className="mr-2">
+                  {is_loading ? <LoadingIcon /> : null}
+                </span>
+                <span>{button_title}</span>
+              </div>
+            </button>
+          </Elements>
         )}
       </div>
 
