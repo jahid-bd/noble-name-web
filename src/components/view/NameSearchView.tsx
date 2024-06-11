@@ -10,9 +10,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import SortingInput from '../inputs/SortingInput';
 import PreLoader from '../loader/Loader';
 import NotFound from '../loader/NotFound';
 import NameFilterModal from '../modal/NameFilterModal';
+import PlanUpgradeModal from '../modal/PlanUpgradeModal';
 
 const NameSearchView = () => {
   const router = useRouter();
@@ -44,6 +46,16 @@ const NameSearchView = () => {
     queryFn: () => getNames(params),
   });
 
+  useEffect(() => {
+    if (isError?.response?.status === 429) {
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        document.body.style.overflow = 'auto';
+      };
+    }
+  }, [isError]);
+
   if (isError) {
     toast.error(isError?.response?.data?.message);
   }
@@ -62,26 +74,32 @@ const NameSearchView = () => {
             {names?.data?.pagination?.totalItems} results
           </p>
 
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleReset}
-              className="flex items-center gap-1.5 text-text-secondary border border-border-primary rounded-lg drop-shadow-btn-shadow-xs px-3.5 py-2.5"
-            >
-              <ResetIcon />
+          <div className="flex items-center gap-2 flex-col md:flex-row">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="flex items-center gap-1.5 text-text-secondary border border-border-primary rounded-lg drop-shadow-btn-shadow-xs px-3.5 py-2.5"
+              >
+                <ResetIcon />
 
-              <span>Clear</span>
-            </button>
+                <span>Clear</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={() => setOpenFilter(true)}
-              className="flex items-center gap-1.5 text-text-secondary border border-border-primary rounded-lg drop-shadow-btn-shadow-xs px-3.5 py-2.5"
-            >
-              <FilterIcon />
+              <button
+                type="button"
+                onClick={() => setOpenFilter(true)}
+                className="flex items-center gap-1.5 text-text-secondary border border-border-primary rounded-lg drop-shadow-btn-shadow-xs px-3.5 py-2.5"
+              >
+                <FilterIcon />
 
-              <span>Filter</span>
-            </button>
+                <span>Filter</span>
+              </button>
+            </div>
+
+            <div>
+              <SortingInput />
+            </div>
           </div>
         </div>
 
@@ -133,6 +151,9 @@ const NameSearchView = () => {
       {openFilter && (
         <NameFilterModal handleCloseFilter={() => setOpenFilter(false)} />
       )}
+
+      {isError?.response?.status === 429 && <PlanUpgradeModal />}
+      {/* {isError && <PlanUpgradeModal />} */}
     </main>
   );
 };
