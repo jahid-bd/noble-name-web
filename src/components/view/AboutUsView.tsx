@@ -7,20 +7,20 @@ const AboutUsView = () => {
           parenthood, dedicated to helping Muslim families around the world
           choose the perfect names for their children and navigate the sacred
           art of parenting. Our mission is to support you in shaping your
-          child's identity from cradle and grounded in the profound traditions
-          of Islam.
+          child&lsquo;s identity from cradle and grounded in the profound
+          traditions of Islam.
         </h1>
 
         <h3 className="text-lg font-semibold mb-1">Our Vision</h3>
         <p className="text-black text-base font-normal mb-5">
           At Noble Names, we understand that a name is more than just a word. In
-          Islam, a name is a reflection of one’s essence, a beacon of one's
-          identity, and a continuous source of inspiration throughout their
-          life. It is a gift that carries the weight of tradition, the beauty of
-          language, and the hope of a bright future. Our vision is to be the
-          premier global resource for Muslim parents, providing guidance,
-          knowledge, and inspiration in naming their children and raising them
-          with values rooted in our rich heritage.
+          Islam, a name is a reflection of one’s essence, a beacon of
+          one&lsquo;s identity, and a continuous source of inspiration
+          throughout their life. It is a gift that carries the weight of
+          tradition, the beauty of language, and the hope of a bright future.
+          Our vision is to be the premier global resource for Muslim parents,
+          providing guidance, knowledge, and inspiration in naming their
+          children and raising them with values rooted in our rich heritage.
         </p>
 
         <h3 className="text-lg font-semibold mb-1">Our Mission</h3>
@@ -92,9 +92,9 @@ const AboutUsView = () => {
           At Noble Names, we are more than just a website; we are a community
           dedicated to nurturing the next generation of Muslims with love,
           knowledge, and faith. Join us on this sacred journey of naming and
-          parenting, and together, let's create a future rooted in the noble
-          values of Islam. Explore, learn, and connect with Noble Names – where
-          every name tells a story, and every story shapes a future.
+          parenting, and together, let&lsquo;s create a future rooted in the
+          noble values of Islam. Explore, learn, and connect with Noble Names –
+          where every name tells a story, and every story shapes a future.
         </p>
 
         {/* <h3 className="text-black text-xl font-bold text-center">
