@@ -2,16 +2,10 @@
 
 import PlanCard from '@/components/cards/PlanCard';
 import { BASE_URL, STRIPE_PUBLIC_KEY } from '@/constants';
-import {
-  getActivePlan,
-  getAllPlans,
-  getUserProfile,
-  subscribePlan,
-} from '@/services/api';
+import { getActivePlan, getAllPlans, getUserProfile } from '@/services/api';
 import { loadStripe } from '@stripe/stripe-js';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PreLoader from '../loader/Loader';
@@ -19,7 +13,7 @@ import PreLoader from '../loader/Loader';
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY as string);
 
 const MembershipPlanView = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
   const {
     data: activePlan,
@@ -41,23 +35,25 @@ const MembershipPlanView = () => {
   });
 
   const [loadingId, setLoadingId] = useState('');
+  const [isPending, setIsPending] = useState(false);
 
-  const { mutate: subscribeNow, isPending } = useMutation({
-    mutationFn: (data: { planId: string; userId: string }) =>
-      subscribePlan({
-        plan_id: data.planId,
-        user_id: data.userId,
-      }),
-    onError: (error: any) => {
-      console.log('error', error);
-    },
-    onSuccess: (data: any) => {
-      console.log(data);
-      router.push(data.data.url);
-    },
-  });
+  // const { mutate: subscribeNow, isPending } = useMutation({
+  //   mutationFn: (data: { planId: string; userId: string }) =>
+  //     subscribePlan({
+  //       plan_id: data.planId,
+  //       user_id: data.userId,
+  //     }),
+  //   onError: (error: any) => {
+  //     console.log('error', error);
+  //   },
+  //   onSuccess: (data: any) => {
+  //     console.log(data);
+  //     router.push(data.data.url);
+  //   },
+  // });
 
   const handleSubscription = async (id: string) => {
+    setIsPending(true);
     setLoadingId(id);
     if (!user) return toast.error('Please login before');
 
@@ -78,6 +74,7 @@ const MembershipPlanView = () => {
     const stripe = await stripePromise;
     if (stripe) {
       await stripe.redirectToCheckout({ sessionId: session.id });
+      setIsPending(false);
     }
 
     // const response = await axios.post(`${BASE_URL}/create-checkout-session`, {

@@ -64,7 +64,7 @@ const BlogDetailView = () => {
 
                 <div className="flex flex-col gap-4">
                   {blog?.data?.blogList?.map((item: any) => (
-                    <Link href={`/blog/${item?.slug}`}>
+                    <Link href={`/blog/${item?.slug}`} key={item.slug}>
                       <div
                         className="flex gap-2 items-start overflow-hidden hover:bg-gray-200"
                         key={item?._id}
