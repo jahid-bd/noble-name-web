@@ -26,7 +26,7 @@ interface PropTypes {
 const options = [
   {
     label: 'Ascending (A to Z)',
-    value: 'a-Z',
+    value: 'a-z',
   },
   {
     label: 'Descending (Z to A)',

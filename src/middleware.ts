@@ -27,13 +27,22 @@ export function middleware(request: NextRequest) {
     '/auth/reset-password',
   ];
 
+  const userRoutes = [
+    '/name-search',
+    '/dashboard',
+    '/settings',
+    '/subscription',
+    '/membership-plan',
+  ];
+
   const path = request?.nextUrl?.pathname;
 
   const isAdminRoute = adminRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
+  const isUserRoute = userRoutes.includes(path);
   const isAdmin = user && user?.role === 'admin' ? true : false;
 
-  if (!user && !isPublicRoute) {
+  if (!user && isUserRoute) {
     return NextResponse.redirect(new URL('/auth/sign-in', request.url));
   }
 
