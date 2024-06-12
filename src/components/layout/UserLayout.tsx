@@ -2,6 +2,7 @@
 
 import { getUserProfile, userLogout } from '@/services/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -40,6 +41,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     },
     onSuccess: (data: any) => {
       toast.success('user logout successfully.');
+      Cookies.remove('access_token');
       queryClient.invalidateQueries({ queryKey: ['logged-in-user'] });
       router.push('/auth/sign-in');
     },

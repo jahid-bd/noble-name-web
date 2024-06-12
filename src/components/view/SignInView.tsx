@@ -49,9 +49,7 @@ const SignInView = () => {
         data?.data?.data?.access_token &&
         jwtDecode(data?.data?.data?.access_token);
 
-      localStorage.setItem('access_token', data?.data?.data?.access_token);
       Cookies.set('access_token', data?.data?.data?.access_token);
-      // document.cookie = `access_token=${data?.data?.data?.access_token}`;
 
       if (user?.role !== 'admin') return router.push('/');
       if (user?.role === 'admin') return router.push('/admin/dashboard');

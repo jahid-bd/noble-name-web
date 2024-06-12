@@ -8,6 +8,7 @@ import SearchIcon from '@/assets/icons/SearchIcon';
 import SettingIcon from '@/assets/icons/SettingIcon';
 import { userLogout } from '@/services/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -54,6 +55,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     },
     onSuccess: (data: any) => {
       toast.success('user logout successfully.');
+      Cookies.remove('access_token');
       queryClient.invalidateQueries({ queryKey: ['logged-in-user'] });
       router.push('/auth/sign-in');
     },

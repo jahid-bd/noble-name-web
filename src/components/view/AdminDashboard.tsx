@@ -9,7 +9,7 @@ import AnalyticsFilterGroupBtn from '../buttons/AnalysticsFilterBtnGroup';
 import AccountCard from '../cards/AccountCard';
 import AnalyticsCard from '../cards/AnalyticsCard';
 import DownloadCard from '../cards/DownloadCard';
-import EditableNameCard from '../cards/EditableNameCard';
+import TopListNameCard from '../cards/TopListNameCard';
 import UserCard from '../cards/UserCard';
 import DateRangePicker from '../dateRange/DateRange';
 import PreLoader from '../loader/Loader';
@@ -192,7 +192,7 @@ const AdminDashboardView = () => {
                   <div className="grid grid-cols-1 gap-4">
                     {analytics?.data?.data?.top_ten_data?.top_ten_favorite?.map(
                       (item: any) => (
-                        <EditableNameCard name={item} key={item._id} />
+                        <TopListNameCard name={item} key={item._id} />
                       ),
                     )}
                   </div>
@@ -209,7 +209,7 @@ const AdminDashboardView = () => {
                   <div className="grid grid-cols-1 gap-4">
                     {analytics?.data?.data?.top_ten_data?.top_ten_bookmark?.map(
                       (item: any) => (
-                        <EditableNameCard name={item} key={item._id} />
+                        <TopListNameCard name={item} key={item._id} />
                       ),
                     )}
                   </div>

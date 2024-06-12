@@ -1,8 +1,10 @@
 'use client';
 
 import SortIcon from '@/assets/icons/SortIcon';
+import useSearchQueryParam from '@/hooks/useSearchQueryParam';
 import clsx from 'clsx';
-import { useRef, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 interface PropTypes {
@@ -24,37 +26,49 @@ interface PropTypes {
 const options = [
   {
     label: 'Ascending (A to Z)',
-    value: 'Ascending (A to Z)',
+    value: 'a-Z',
   },
   {
     label: 'Descending (Z to A)',
-    value: 'Descending (Z to A)',
+    value: 'z-a',
   },
   {
     label: 'Most Recent',
-    value: 'Most Recent',
+    value: 'recent',
   },
   {
     label: 'Most Loved',
-    value: 'Most Loved',
+    value: 'loved',
   },
   {
     label: 'Most Bookmarked',
-    value: 'Most Bookmarked',
+    value: 'bookmarked',
   },
 ];
 
-const SortingInput = (
-  {
-    // label,
-    // options,
-    // handleSelect,
-    // selectedOption,
-    // error,
-  },
-) => {
+const SortingInput = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectOption] = useState(options[0]);
+  const { setQueryParams, deleteParams } = useSearchQueryParam();
+
+  const handleSelectOption = ({
+    label,
+    value,
+  }: {
+    label: string;
+    value: string;
+  }) => {
+    let url: any = searchParams.toString();
+    setSelectOption({ label, value });
+
+    url = value
+      ? setQueryParams(url, 'sort_by', value)
+      : deleteParams(url, 'sort_by');
+
+    router.push(`/name-search${url ? `?${url}` : ''}`);
+  };
 
   const handleToggle = () => {
     setShowOptions(!showOptions);
@@ -71,6 +85,16 @@ const SortingInput = (
   };
 
   useOnClickOutside(ref, handleClickOutside);
+
+  useEffect(() => {
+    const sort_by = searchParams.get('sort_by');
+
+    if (sort_by) {
+      const find = options.find((item) => item.value === sort_by);
+
+      find && setSelectOption(find);
+    }
+  }, []);
 
   return (
     <div>
@@ -100,7 +124,7 @@ const SortingInput = (
                     'py-[11px] px-[14px] transition-all duration-300  hover:bg-gray-100 flex items-center justify-between',
                     selectedOption?.value === opt.value && 'bg-gray-100',
                   )}
-                  onClick={() => setSelectOption(opt)}
+                  onClick={() => handleSelectOption(opt)}
                 >
                   <span className="font-medium text-text-primary ">
                     {opt?.label}
