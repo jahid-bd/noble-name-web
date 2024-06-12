@@ -131,6 +131,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="container py-4 px-[6px] mx-auto">
           <div className="flex flex-col md:flex-row gap-5 items-center justify-center font-normal text-white text-base mb-5">
             <Link href="/blog">Blog</Link>
+            <Link href="/about-us">About Us</Link>
             <Link href="/fair-use-policy">Terms & Conditions</Link>
             <Link href="/fair-use-policy">Privacy Policy</Link>
             <Link href="/fair-use-policy">Fair Use Policy</Link>
