@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
 
   const user: any = access_token && jwtDecode(access_token);
 
-  // console.log(localStorage.getItem('access_token'), 'local');
+  console.log(request.headers, 'local');
 
   console.log(user, access_token, console.log(request.cookies.getAll()));
 
