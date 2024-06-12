@@ -3,6 +3,7 @@
 import { userLogin } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -49,7 +50,8 @@ const SignInView = () => {
         jwtDecode(data?.data?.data?.access_token);
 
       localStorage.setItem('access_token', data?.data?.data?.access_token);
-      document.cookie = `access_token=${data?.data?.data?.access_token}`;
+      Cookies.set('access_token', data?.data?.data?.access_token);
+      // document.cookie = `access_token=${data?.data?.data?.access_token}`;
 
       if (user?.role !== 'admin') return router.push('/');
       if (user?.role === 'admin') return router.push('/admin/dashboard');
