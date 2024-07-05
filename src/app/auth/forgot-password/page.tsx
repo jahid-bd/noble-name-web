@@ -5,6 +5,7 @@ import InputField from '@/components/form/InputField';
 import { forgotPassword } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -16,6 +17,11 @@ import * as yup from 'yup';
 interface FormType {
   email: string;
 }
+
+export const metadata: Metadata = {
+  title: 'Forgot Password',
+  description: 'This is forgot password page.',
+};
 
 const ForgotPass = () => {
   const initialValues = {

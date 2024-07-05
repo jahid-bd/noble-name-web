@@ -95,7 +95,7 @@ const MembershipPlanView = () => {
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
       <div className="container mx-auto px-[6px]">
         <h1 className="text-center text-2xl md:text-4xl font-semibold text-text-primary mb-[6px] md:mb-5">
-          Choose the plan you need
+          Select your Plan
         </h1>
 
         {isLoading && !isError ? (

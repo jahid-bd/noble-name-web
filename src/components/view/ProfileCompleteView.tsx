@@ -554,7 +554,11 @@ const ProfileComplete = () => {
                   options={childrenOptions}
                   handleSelect={(opt) => handleSelectChildren('children', opt)}
                   selectedOption={optionsState.children}
-                  error={errors.children.message}
+                  error={
+                    optionsState.childAge.length <= 0
+                      ? errors.children.message
+                      : ''
+                  }
                 />
 
                 {optionsState?.children?.value && (

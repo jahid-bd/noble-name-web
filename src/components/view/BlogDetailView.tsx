@@ -20,8 +20,6 @@ const BlogDetailView = () => {
     queryFn: () => getBlogBySlug(params.blog_id as string),
   });
 
-  console.log(blog);
-
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
       <div className="container mx-auto px-[6px]">
@@ -51,6 +49,7 @@ const BlogDetailView = () => {
                 </p>
 
                 <div
+                  className="overflow-hidden"
                   dangerouslySetInnerHTML={{
                     __html: blog?.data?.content?.content,
                   }}
@@ -59,27 +58,43 @@ const BlogDetailView = () => {
             </div>
 
             <div className="col-span-12 md:col-span-3">
-              <div className="drop-shadow-sm rounded-md bg-slate-100 px-3 py-5">
-                <h3 className="text-xl font-semibold mb-4">Recent Articles</h3>
+              <div className="drop-shadow-sm rounded-md bg-slate-100 px-3 py-5 shadow-md">
+                <h3 className="text-xl font-semibold mb-4">Latest Articles</h3>
 
                 <div className="flex flex-col gap-4">
                   {blog?.data?.blogList?.map((item: any) => (
-                    <Link href={`/blog/${item?.slug}`} key={item.slug}>
-                      <div
-                        className="flex gap-2 items-start overflow-hidden hover:bg-gray-200"
-                        key={item?._id}
-                      >
-                        <div className="w-[65px] h-[95px] relative">
-                          <Image
-                            fill
-                            alt={item?.title}
-                            src={item?.thumbnail}
-                            className="w-full  object-cover"
-                          />
-                        </div>
-                        <h4>{item?.title}</h4>
+                    <Link href={`/article/${item?.slug}`} key={item._id}>
+                      <div className="relative w-full h-[160px] rounded-2xl overflow-hidden">
+                        <Image
+                          fill
+                          src={item?.thumbnail}
+                          alt="image"
+                          className="object-cover"
+                        />
+                      </div>
+
+                      <div className="mt-3">
+                        <h3 className="mb-2 text-text-primary font-semibold text-base">
+                          {item?.title}
+                        </h3>
                       </div>
                     </Link>
+                    // <Link href={`/blog/${item?.slug}`} key={item.slug}>
+                    //   <div
+                    //     className="flex gap-2 items-start overflow-hidden hover:bg-gray-200"
+                    //     key={item?._id}
+                    //   >
+                    //     <div className="w-[65px] h-[95px] relative">
+                    //       <Image
+                    //         fill
+                    //         alt={item?.title}
+                    //         src={item?.thumbnail}
+                    //         className="w-full  object-cover"
+                    //       />
+                    //     </div>
+                    //     <h4>{item?.title}</h4>
+                    //   </div>
+                    // </Link>
                   ))}
                 </div>
               </div>

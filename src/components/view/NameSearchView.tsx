@@ -20,6 +20,7 @@ const NameSearchView = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [openFilter, setOpenFilter] = useState(false);
+  const [openPlanModal, setOpenPlanModal] = useState(false);
 
   const params = searchParams.toString();
 
@@ -48,7 +49,9 @@ const NameSearchView = () => {
 
   useEffect(() => {
     if (isError?.response?.status === 429) {
+      window.scrollTo(0, 0);
       document.body.style.overflow = 'hidden';
+      setOpenPlanModal(true);
 
       return () => {
         document.body.style.overflow = 'auto';
@@ -152,8 +155,15 @@ const NameSearchView = () => {
         <NameFilterModal handleCloseFilter={() => setOpenFilter(false)} />
       )}
 
-      {isError?.response?.status === 429 && <PlanUpgradeModal />}
-      {/* {isError && <PlanUpgradeModal />} */}
+      {/* {isError?.response?.status === 429 && <PlanUpgradeModal />} */}
+      {openPlanModal && (
+        <PlanUpgradeModal
+          handleClosePlanModal={() => {
+            setOpenPlanModal(false);
+            document.body.style.overflow = 'auto';
+          }}
+        />
+      )}
     </main>
   );
 };

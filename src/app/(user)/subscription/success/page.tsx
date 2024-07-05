@@ -1,7 +1,13 @@
 'use client';
 
+import { Metadata } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+
+export const metadata: Metadata = {
+  title: 'Success',
+  description: 'This is success page.',
+};
 
 const Seccess = () => {
   const router = useRouter();
@@ -13,13 +19,10 @@ const Seccess = () => {
   }, []);
 
   return (
-     <div className="my-40">
-            <h1 className="text-center text-xl text-green-500">
-                Payment Success
-            </h1>
-        </div>
+    <div className="my-40">
+      <h1 className="text-center text-xl text-green-500">Payment Success</h1>
+    </div>
   );
-
 };
 
 export default Seccess;

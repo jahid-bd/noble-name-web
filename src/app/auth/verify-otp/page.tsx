@@ -1,6 +1,11 @@
-import type { NextPage } from 'next';
+import type { Metadata, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 const OtpVerifyView = dynamic(() => import('@/components/view/OtpVerifyView'));
+
+export const metadata: Metadata = {
+  title: 'Verify OTP',
+  description: 'This is verify OTP page.',
+};
 
 const VerifyOtp: NextPage = () => {
   return <OtpVerifyView />;

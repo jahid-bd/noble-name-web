@@ -3,7 +3,11 @@
 import ChildHand from '@/assets/images/child_hand.jpg';
 import Button from '@/components/buttons/Button';
 import NameSearchSection from '@/components/section/NameSearchSection';
-import { createSuggestedName, getAllBlog } from '@/services/api';
+import {
+  createSuggestedName,
+  getAllBlog,
+  getUserProfile,
+} from '@/services/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Caveat } from 'next/font/google';
 import Image from 'next/image';
@@ -18,6 +22,11 @@ const caveat = Caveat({ subsets: ['latin'] });
 
 const HomeView = () => {
   const [openAddName, setOpenAddName] = useState(false);
+
+  const { data: user, isError } = useQuery({
+    queryKey: ['logged-in-user'],
+    queryFn: getUserProfile,
+  });
 
   const { data: blogs } = useQuery({
     queryKey: ['blogs'],
@@ -97,12 +106,14 @@ const HomeView = () => {
                   <p className="text-base font-normal">Founder</p>
                 </div>
 
-                <Link
-                  href="/auth/sign-up"
-                  className="bg-primary rounded-md text-base font-semibold text-white py-2.5 px-4 flex items-center justify-center button-hover"
-                >
-                  Register
-                </Link>
+                {!user && (
+                  <Link
+                    href="/auth/sign-up"
+                    className="bg-primary rounded-md text-base font-semibold text-white py-2.5 px-4 flex items-center justify-center button-hover"
+                  >
+                    Register
+                  </Link>
+                )}
               </div>
             </div>
 

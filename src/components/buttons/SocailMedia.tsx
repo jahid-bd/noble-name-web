@@ -24,7 +24,20 @@ const SocialMedia = ({ handleShare }: { handleShare: any }) => {
       <h3 className="mb-3 text-lg">Share social media</h3>
 
       <div className="flex gap-2">
-        <EmailShareButton url={shareUrl} onClick={handleShare}>
+        <EmailShareButton
+          url={shareUrl}
+          onClick={() => {
+            handleShare();
+
+            window.location.href = `mailto:?subject=${encodeURIComponent(
+              'Share',
+            )}&body=${encodeURIComponent('Name Share')} ${encodeURIComponent(
+              shareUrl,
+            )}`;
+          }}
+          subject="Share"
+          body="Hotel detail"
+        >
           <EmailIcon round={true} size={32} />
         </EmailShareButton>
 
