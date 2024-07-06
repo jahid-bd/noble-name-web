@@ -158,7 +158,7 @@ export const editNameForAdminApi = (id: string, data: any) =>
   });
 
 export const createNameUsingCSV = (data: any) =>
-  axios.post(`${BASE_URL}/names/csv`, data, {
+  axios.post(`${BASE_URL}/names/csv/file`, data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

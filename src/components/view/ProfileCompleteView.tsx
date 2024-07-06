@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Button from '../buttons/Button';
-import InputField from '../form/InputField';
+import Calender from '../dateRange/Calender';
 import RadioButton from '../form/RadioButton';
 import SelectInput from '../form/SelectInput';
 
@@ -494,19 +494,34 @@ const ProfileComplete = () => {
             </div>
 
             {isExpectingBaby && (
-              <InputField
-                label="Expecting Date"
-                name="date"
-                value={expectingDate}
-                onChange={(e) => {
-                  setExpectingDate(e.target.value);
-                }}
-                type="date"
-                error={
-                  errors.childExpectingDate.error &&
-                  errors.childExpectingDate.message
-                }
-              />
+              <>
+                {/* <InputField
+                  label="Expecting Date"
+                  name="date"
+                  value={expectingDate}
+                  onChange={(e) => {
+                    setExpectingDate(e.target.value);
+                  }}
+                  type="date"
+                  error={
+                    errors.childExpectingDate.error &&
+                    errors.childExpectingDate.message
+                  }
+                /> */}
+
+                <Calender
+                  label="Expecting Date"
+                  value={expectingDate}
+                  handelSelect={(value) => {
+                    setExpectingDate(value);
+                  }}
+                  error={
+                    errors.childExpectingDate.error
+                      ? errors.childExpectingDate.message
+                      : ''
+                  }
+                />
+              </>
             )}
 
             <div>

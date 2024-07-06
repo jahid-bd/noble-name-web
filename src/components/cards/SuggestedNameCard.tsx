@@ -25,7 +25,7 @@ const SuggestedNameCard = ({ name }: { name: any }) => {
         <p className="text-white text-base font-bold">{name?.arabic_name}</p>
       </div>
 
-      <p className="mb-10 text-white text-xs font-normal">
+      <p className="mb-10 text-white text-xs font-normal break-words">
         {name?.meanings.toString()}
       </p>
 

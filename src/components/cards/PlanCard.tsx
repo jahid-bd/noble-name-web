@@ -20,6 +20,7 @@ interface PlanProps {
   default_plan?: boolean;
   free_plan?: boolean;
   is_loading?: boolean;
+  disabled?: boolean;
   active_membership?: boolean;
   onClick?: () => void;
   handleCancel?: () => void;
@@ -30,6 +31,7 @@ const PlanCard = ({
   price,
   onClick,
   features,
+  disabled = false,
   description,
   active_plan,
   default_plan,
@@ -136,6 +138,7 @@ const PlanCard = ({
             <button
               type="button"
               onClick={onClick}
+              disabled={disabled}
               className={`w-full rounded-lg  text-white py-4 ${
                 default_plan ? 'bg-green-light' : 'bg-primary'
               }`}

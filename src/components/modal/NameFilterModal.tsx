@@ -16,20 +16,36 @@ const originOptions = [
     label: 'Arabic',
   },
   {
-    value: 'persian:',
+    value: 'persian',
     label: 'Persian',
   },
   {
-    value: 'turkish:',
+    value: 'turkish',
     label: 'Turkish',
   },
   {
-    value: 'kurdish:',
-    label: 'Kurdish',
+    value: 'central asian',
+    label: 'Central Asian',
   },
   {
-    value: 'urdu:',
+    value: 'urdu',
     label: 'Urdu',
+  },
+  {
+    value: 'european',
+    label: 'European',
+  },
+  {
+    value: 'south east asian',
+    label: 'South East Asian',
+  },
+  {
+    value: 'east asian',
+    label: 'East Asian',
+  },
+  {
+    value: 'african',
+    label: 'African',
   },
 ];
 
@@ -105,7 +121,7 @@ const NameFilterModal = ({
     starting_letter && setStartLetter(starting_letter);
 
     if (letter_range_from && letter_range_to) {
-      letter_range_from === '0' && letter_range_to === '4' && setTab('0to3');
+      letter_range_from === '0' && letter_range_to === '3' && setTab('0to3');
       letter_range_from === '4' && letter_range_to === '6' && setTab('4to6');
       letter_range_from === '7' && letter_range_to === 'null' && setTab('7+');
     }

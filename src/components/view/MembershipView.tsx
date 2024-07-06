@@ -111,6 +111,7 @@ const MembershipPlanView = () => {
                 title={plan?.title}
                 features={plan?.features}
                 description={plan?.description}
+                disabled={plan?._id === activePlan?._id ? true : false}
                 button_title={
                   plan?._id === activePlan?._id ? 'Current Plan' : 'Upgrade'
                 }

@@ -5,6 +5,7 @@ import ResetIcon from '@/assets/icons/ResetIcon';
 import NameCard from '@/components/cards/NameCard';
 import GlobalPagination from '@/components/pagination/GlobalPagination';
 import NameSearchSection from '@/components/section/NameSearchSection';
+import useSearchQueryParam from '@/hooks/useSearchQueryParam';
 import { getNames } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -21,11 +22,24 @@ const NameSearchView = () => {
   const searchParams = useSearchParams();
   const [openFilter, setOpenFilter] = useState(false);
   const [openPlanModal, setOpenPlanModal] = useState(false);
+  const { setQueryParams, deleteParams } = useSearchQueryParam();
 
   const params = searchParams.toString();
 
   const handleReset = () => {
-    router.push('/name-search');
+    let url: any = '';
+
+    const search = searchParams.get('search');
+    const language = searchParams.get('language');
+    const gender = searchParams.get('gender');
+    const search_by = searchParams.get('search_by');
+
+    url = search && setQueryParams(url, 'search', search);
+    url = language && setQueryParams(url, 'language', language);
+    url = gender && setQueryParams(url, 'gender', gender);
+    url = search_by && setQueryParams(url, 'search_by', search_by);
+
+    router.push(`/name-search${url ? `?${url}` : ''}`);
   };
 
   useEffect(() => {

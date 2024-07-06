@@ -145,6 +145,10 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                 <DatabaseIcon />
               </AdminLink>
 
+              <AdminLink href="/admin/csv-download" title="CSV Download">
+                <DatabaseIcon />
+              </AdminLink>
+
               <AdminLink href="/admin/name-requested" title="New Name Request">
                 <NameIcon />
               </AdminLink>

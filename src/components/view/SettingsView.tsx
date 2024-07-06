@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Button from '../buttons/Button';
+import Calender from '../dateRange/Calender';
 import InputField from '../form/InputField';
 import RadioButton from '../form/RadioButton';
 import SelectInput from '../form/SelectInput';
@@ -670,7 +671,7 @@ const SettingsView = () => {
                 <div className="w-full flex max-md:flex-col  items-center gap-5">
                   {isExpectingBaby && (
                     <div className="w-full">
-                      <InputField
+                      {/* <InputField
                         label="Expecting Date"
                         name="date"
                         value={expectingDate}
@@ -683,6 +684,19 @@ const SettingsView = () => {
                           errors.childExpectingDate.message
                         }
                         isCustom={true}
+                      /> */}
+
+                      <Calender
+                        label="Expecting Date"
+                        value={expectingDate}
+                        handelSelect={(value) => {
+                          setExpectingDate(value);
+                        }}
+                        error={
+                          errors.childExpectingDate.error
+                            ? errors.childExpectingDate.message
+                            : ''
+                        }
                       />
                     </div>
                   )}

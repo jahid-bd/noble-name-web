@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const AdminNavList = ({ handleLogout }: { handleLogout: any }) => {
   return (
-    <div className="absolute right-1.5 top-[52px] md:top-[72px] z-50">
+    <div className="absolute right-1.5 top-[52px] md:top-[72px] z-[99999]">
       <div className="flex flex-col gap-2 bg-white rounded py-3 border border-border-primary">
         <Link
           href="/admin/dashboard"

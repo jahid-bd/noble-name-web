@@ -37,20 +37,36 @@ const originOptions = [
     label: 'Arabic',
   },
   {
+    value: 'persian',
+    label: 'Persian',
+  },
+  {
     value: 'turkish',
     label: 'Turkish',
+  },
+  {
+    value: 'central asian',
+    label: 'Central Asian',
   },
   {
     value: 'urdu',
     label: 'Urdu',
   },
   {
-    value: 'persian',
-    label: 'Persian',
+    value: 'european',
+    label: 'European',
   },
   {
-    value: 'kurdish',
-    label: 'Kurdish',
+    value: 'south east asian',
+    label: 'South East Asian',
+  },
+  {
+    value: 'east asian',
+    label: 'East Asian',
+  },
+  {
+    value: 'african',
+    label: 'African',
   },
 ];
 

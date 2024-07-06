@@ -8,7 +8,6 @@ import { Suspense, useEffect, useState } from 'react';
 import AnalyticsFilterGroupBtn from '../buttons/AnalysticsFilterBtnGroup';
 import AccountCard from '../cards/AccountCard';
 import AnalyticsCard from '../cards/AnalyticsCard';
-import DownloadCard from '../cards/DownloadCard';
 import TopListNameCard from '../cards/TopListNameCard';
 import UserCard from '../cards/UserCard';
 import DateRangePicker from '../dateRange/DateRange';
@@ -116,18 +115,28 @@ const AdminDashboardView = () => {
               />
 
               <AnalyticsCard
+                title="Total Newsletter"
+                value={analytics?.data?.data?.total_newsletter}
+              />
+
+              <AnalyticsCard
                 title="Total Name"
                 value={analytics?.data?.data?.total_name}
               />
 
               <AnalyticsCard
-                title="Total Newsletter"
-                value={analytics?.data?.data?.total_newsletter}
+                title="Total Girls"
+                value={analytics?.data?.data?.total_girl_name}
               />
 
-              <div className="col-span-2">
+              <AnalyticsCard
+                title="Total Boys"
+                value={analytics?.data?.data?.total_boy_name}
+              />
+
+              {/* <div className="col-span-2">
                 <DownloadCard />
-              </div>
+              </div> */}
             </div>
 
             <div className="mb-6">

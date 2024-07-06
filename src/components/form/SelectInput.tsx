@@ -89,7 +89,7 @@ const SelectInput = ({
         </div>
 
         {showOptions && (
-          <div className="absolute left-0 top-full mt-2 bg-white max-h-[300px] overflow-auto z-50 py-2 select-shadow rounded-md w-full border  border-border-primary">
+          <div className="absolute left-0 bottom-12 mt-2 bg-white max-h-[300px] overflow-auto z-50 py-2 select-shadow rounded-md w-full border  border-border-primary">
             {options?.map((opt) => (
               <>
                 <div
