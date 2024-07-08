@@ -8,13 +8,12 @@ export function middleware(request: NextRequest) {
 
   const user: any = access_token && jwtDecode(access_token);
 
-  console.log(request.headers.get('cookie')?.split(';'), 'local');
-
   // console.log(user, access_token, console.log(request.cookies.getAll()));
 
   const adminRoutes = [
     '/admin/name',
-    '/admin/blog',
+    '/admin/article',
+    '/admin/csv-download',
     '/admin/dashboard',
     '/admin/name-requested',
   ];

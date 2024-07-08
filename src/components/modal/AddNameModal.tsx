@@ -237,13 +237,6 @@ const AddNameModal = ({
     }
   }, [initialFormValue]);
 
-  console.log(
-    originOptions.find(
-      (item) => item.value.toLowerCase() === formState?.origin?.toLowerCase(),
-    ),
-    formState?.origin,
-  );
-
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
       <div className="container mx-auto px-1.5 md:px-20">

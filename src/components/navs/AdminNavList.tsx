@@ -13,6 +13,14 @@ const AdminNavList = ({ handleLogout }: { handleLogout: any }) => {
         <Link href="/admin/name" className="py-1 px-3 hover:bg-border-primary">
           Name
         </Link>
+
+        <Link
+          href="/admin/csv-download"
+          className="py-1 px-3 hover:bg-border-primary"
+        >
+          CSV Download
+        </Link>
+
         <Link
           href="/admin/name-requested"
           className="py-1 px-3 hover:bg-border-primary"

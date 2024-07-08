@@ -12,6 +12,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Caveat } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AddNameModal from '../modal/AddNameModal';
@@ -21,6 +22,7 @@ import NewsLetterSection from '../section/NewsLetterSection';
 const caveat = Caveat({ subsets: ['latin'] });
 
 const HomeView = () => {
+  const router = useRouter();
   const [openAddName, setOpenAddName] = useState(false);
 
   const { data: user, isError } = useQuery({
@@ -36,6 +38,14 @@ const HomeView = () => {
   const { mutate: addSuggestedName } = useMutation({
     mutationFn: (data: any) => createSuggestedName(data),
     onError: (error: any) => {
+      if (error?.response?.data?.message === 'Authentication Failed') {
+        setTimeout(() => {
+          router.push('/auth/sign-up');
+        }, 5000);
+
+        return toast.error('To Add a New Name, Please Register');
+      }
+
       toast.error(error?.response?.data?.message);
     },
     onSuccess: () => {
