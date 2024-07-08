@@ -5,7 +5,7 @@ const NameSearchView = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: 'Name Search',
+  title: 'Name Search - Noble Names',
   description: 'This is name search page.',
 };
 

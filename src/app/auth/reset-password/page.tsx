@@ -5,7 +5,7 @@ const ResetPasswordView = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: 'Reset Password',
+  title: 'Reset Password - Noble Names',
   description: 'This is reset password page.',
 };
 

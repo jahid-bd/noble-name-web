@@ -5,7 +5,7 @@ const ProfileComplete = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: 'Profile Complete',
+  title: 'Profile Complete - Noble Names',
   description: 'This is profile complete page.',
 };
 

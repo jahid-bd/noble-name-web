@@ -1,27 +1,13 @@
-'use client';
-
+import ErrorView from '@/components/view/ErrorView';
 import { Metadata } from 'next';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Error',
+  title: 'Error - Noble Names',
   description: 'This is error page.',
 };
 
 const Error = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    setTimeout(() => {
-      router.push('/');
-    }, 3000);
-  }, []);
-  return (
-    <div className="my-40">
-      <h1 className="text-center text-xl text-red-500">Payment Error</h1>
-    </div>
-  );
+  return <ErrorView />;
 };
 
 export default Error;

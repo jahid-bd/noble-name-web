@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 const OtpVerifyView = dynamic(() => import('@/components/view/OtpVerifyView'));
 
 export const metadata: Metadata = {
-  title: 'Verify OTP',
+  title: 'Verify OTP - Noble Names',
   description: 'This is verify OTP page.',
 };
 

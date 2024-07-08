@@ -5,7 +5,7 @@ const SettingsViewContactView = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: 'Settings',
+  title: 'Settings - Noble Names',
   description: 'This is settings page.',
 };
 

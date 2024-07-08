@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 const SignupView = dynamic(() => import('@/components/view/SignupView'));
 
 export const metadata: Metadata = {
-  title: 'Sign Up',
+  title: 'Sign Up - Noble Names',
   description: 'This is sign up page.',
 };
 

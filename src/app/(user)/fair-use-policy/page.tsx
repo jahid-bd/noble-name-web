@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Fair Use Policy',
+  title: 'Fair Use Policy - Noble Names',
   description: 'This is fair use policy page.',
 };
 

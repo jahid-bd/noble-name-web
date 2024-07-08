@@ -11,7 +11,7 @@ const SubscriptionView = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: 'Subscription',
+  title: 'Subscription - Noble Names',
   description: 'This is Subscription page.',
 };
 

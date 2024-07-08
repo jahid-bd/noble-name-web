@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 const ContactView = dynamic(() => import('@/components/view/DashboardView'));
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
+  title: 'Dashboard - Noble Names',
   description: 'This is dashboard page.',
 };
 

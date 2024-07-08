@@ -5,7 +5,7 @@ const MembershipPlanView = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: 'Membership Plan',
+  title: 'Membership Plan - Noble Names',
   description: 'This is membership plan page.',
 };
 

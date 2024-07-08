@@ -1,7 +1,4 @@
-'use client';
-
-import UserLayout from '@/components/layout/UserLayout';
-import NotFound from '@/components/loader/NotFound';
+import NotFoundView from '@/components/view/NotFoundView';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,11 +7,7 @@ export const metadata: Metadata = {
 };
 
 const page = () => {
-  return (
-    <UserLayout>
-      <NotFound />
-    </UserLayout>
-  );
+  return <NotFoundView />;
 };
 
 export default page;
