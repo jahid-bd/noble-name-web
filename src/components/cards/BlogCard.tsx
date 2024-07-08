@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const BlogCard = ({ blog }: { blog: any }) => {
   return (
-    <Link href={`/article/${blog?.slug}`}>
+    <Link href={`/articles/${blog?.slug}`}>
       <div className="relative w-full h-[320px] rounded-2xl overflow-hidden">
         <Image
           fill

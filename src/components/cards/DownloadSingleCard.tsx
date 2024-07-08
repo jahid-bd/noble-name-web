@@ -8,9 +8,11 @@ interface cardPropsType {
 const DownloadSingleCard = ({ url, title, value, download }: cardPropsType) => {
   return (
     <div className="shadow-sm p-6 rounded-xl bg-white w-full">
-      <p className="text-base font-semibold text-text-primary mb-6">{title}</p>
+      <p className="text-base font-semibold text-text-primary mb-6 text-center">
+        {title}
+      </p>
 
-      <p className="text-4xl font-semibold text-text-primary mb-4">{value}</p>
+      {/* <p className="text-4xl font-semibold text-text-primary mb-4">{value}</p> */}
 
       <a href={`${process.env.NEXT_PUBLIC_API_URL}${url}`} download>
         <div className="w-full text-white bg-primary px-2 py-2 rounded-md flex items-center justify-center">

@@ -6,21 +6,21 @@ const CSVDownloadView = () => {
       <DownloadSingleCard
         download="User"
         value="500"
-        title="Total User"
+        title="Click & Download"
         url="/users/csv/download"
       />
 
       <DownloadSingleCard
         download="Name"
         value="500"
-        title="Total Name"
+        title="Click & Download"
         url="/names/csv/download"
       />
 
       <DownloadSingleCard
         download="Newsletter"
         value="500"
-        title="Total Newsletter"
+        title="Click & Download"
         url="/subscribe-newsletters/csv/download"
       />
     </div>

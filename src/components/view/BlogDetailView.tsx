@@ -63,7 +63,7 @@ const BlogDetailView = () => {
 
                 <div className="flex flex-col gap-4">
                   {blog?.data?.blogList?.map((item: any) => (
-                    <Link href={`/article/${item?.slug}`} key={item._id}>
+                    <Link href={`/articles/${item?.slug}`} key={item._id}>
                       <div className="relative w-full h-[160px] rounded-2xl overflow-hidden">
                         <Image
                           fill

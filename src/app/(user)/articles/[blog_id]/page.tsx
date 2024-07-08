@@ -5,7 +5,7 @@ const BlogDetailView = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: 'Article Details',
+  title: 'Article Details - Noble Names',
   description: 'This is article  details page.',
 };
 
