@@ -56,7 +56,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <header className="bg-border-tertiary py-4 px-[6px]">
+      <header className="bg-border-tertiary py-4 px-[6px] sticky top-0 z-[9999999999] shadow-md">
         <div className="container px-1.5 flex justify-between items-center mx-auto">
           <div className="w-[120px] md:w-44 h-12 md:h-16 relative">
             <Link
