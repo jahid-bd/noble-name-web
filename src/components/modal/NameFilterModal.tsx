@@ -128,8 +128,8 @@ const NameFilterModal = ({
   }, []);
 
   return (
-    <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center max-sm:z-[9999999999] md:z-40">
-      <div className="container mx-auto px-1.5 md:px-20 max-sm:h-[80%] overflow-y-auto">
+    <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center z-[9999999999]">
+      <div className="container mx-auto px-1.5 md:px-20 max-md:h-[80%] overflow-y-auto">
         <div className="px-4 py-8 md:px-8 bg-white rounded-[10px] shadow-modal">
           <div className="flex items-center justify-end mb-4">
             <button type="button" onClick={handleCloseFilter}>
