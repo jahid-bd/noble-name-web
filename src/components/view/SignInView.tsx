@@ -44,6 +44,12 @@ const SignInView = () => {
     },
     onSuccess: (data: any) => {
       setFormState(initialValues);
+
+      // toast.success('2FA OTP code send on your email');
+
+      // if (data && data?.data?.data?.id)
+      //   return router.push(`/auth/otp-verify-2fa?key=${data?.data?.data?.id}`);
+
       const user: any =
         data &&
         data?.data?.data?.access_token &&
