@@ -3,13 +3,12 @@
 import { userLogin } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import Button from '../buttons/Button';
 import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
@@ -45,20 +44,20 @@ const SignInView = () => {
     onSuccess: (data: any) => {
       setFormState(initialValues);
 
-      // toast.success('2FA OTP code send on your email');
+      toast.success('2FA OTP code send on your email');
 
-      // if (data && data?.data?.data?.id)
-      //   return router.push(`/auth/otp-verify-2fa?key=${data?.data?.data?.id}`);
+      if (data && data?.data?.data?.id)
+        return router.push(`/auth/otp-verify-2fa?key=${data?.data?.data?.id}`);
 
-      const user: any =
-        data &&
-        data?.data?.data?.access_token &&
-        jwtDecode(data?.data?.data?.access_token);
+      // const user: any =
+      //   data &&
+      //   data?.data?.data?.access_token &&
+      //   jwtDecode(data?.data?.data?.access_token);
 
-      Cookies.set('access_token', data?.data?.data?.access_token);
+      // Cookies.set('access_token', data?.data?.data?.access_token);
 
-      if (user?.role !== 'admin') return router.push('/');
-      if (user?.role === 'admin') return router.push('/admin/dashboard');
+      // if (user?.role !== 'admin') return router.push('/');
+      // if (user?.role === 'admin') return router.push('/admin/dashboard');
     },
   });
 
