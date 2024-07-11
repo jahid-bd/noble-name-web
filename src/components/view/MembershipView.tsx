@@ -112,8 +112,15 @@ const MembershipPlanView = () => {
                 features={plan?.features}
                 description={plan?.description}
                 disabled={plan?._id === activePlan?._id ? true : false}
+                // button_title={
+                //   plan?._id === activePlan?._id ? 'Current Plan' : 'Upgrade'
+                // }
                 button_title={
-                  plan?._id === activePlan?._id ? 'Current Plan' : 'Upgrade'
+                  plan?._id === activePlan?._id
+                    ? 'Current Plan'
+                    : plan?.price > activePlan?.price
+                    ? 'Upgrade'
+                    : 'Downgrade'
                 }
                 active_plan={plan?._id === activePlan?._id}
                 default_plan={plan?._id === activePlan?._id}

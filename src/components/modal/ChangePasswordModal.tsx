@@ -1,47 +1,29 @@
 'use client';
 import { useState } from 'react';
-import InputField from '../form/InputField';
 
+import { changePasswordSchema } from '@/schema/auth';
 import { changePassword } from '@/services/api';
 import { ChangePassReq } from '@/types';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
+import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
-import * as yup from 'yup';
 import Button from '../buttons/Button';
+import InputGroup from '../inputs/InputGroup';
+
+interface FormType {
+  current_password: string;
+  new_password: string;
+  confirm_password: string;
+}
+
+const initialValues = {
+  current_password: '',
+  new_password: '',
+  confirm_password: '',
+};
 
 const ChangePasswordModal = ({ handleClose }: { handleClose: () => void }) => {
   const [serverError, setserverError] = useState<string>();
-
-  const schema = yup.object().shape({
-    currentPassword: yup
-      .string()
-      .trim()
-      .required('Please enter current password'),
-    newPassword: yup
-      .string()
-      .trim()
-      .required('Please set a new password')
-      .min(8, 'At least 8 characters'),
-    confirmPassword: yup
-      .string()
-      .trim()
-      .required('Please confirm password')
-      .min(8, 'At least 8 characters')
-      .oneOf([yup.ref('newPassword'), ''], 'Passwords must match'),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    criteriaMode: 'all',
-    mode: 'onChange',
-  });
 
   const { mutate: change, isPending } = useMutation({
     mutationFn: (data: ChangePassReq) => changePassword(data),
@@ -49,23 +31,24 @@ const ChangePasswordModal = ({ handleClose }: { handleClose: () => void }) => {
       console.log('error', error.message);
       setserverError(error.response.data.message);
     },
+
     onSuccess: (data) => {
       handleClose();
-      reset();
       toast.success(data.data.message);
     },
   });
 
-  const onSubmit = (data: { currentPassword: string; newPassword: string }) => {
+  const onSubmit = (data: FormType) => {
     setserverError('');
+
     change({
-      current_password: data.currentPassword,
-      new_password: data.newPassword,
+      current_password: data.current_password,
+      new_password: data.new_password,
     });
   };
 
   return (
-    <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-40 flex items-center justify-center">
+    <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-[9999999999] flex items-center justify-center">
       <div className="md:w-[800px] w-[80%] mx-auto px-1.5 md:px-20">
         <div className="px-4 py-8 md:px-8 bg-white rounded-[10px] shadow-modal">
           <div className="flex items-center justify-between mb-4">
@@ -106,7 +89,55 @@ const ChangePasswordModal = ({ handleClose }: { handleClose: () => void }) => {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <Formik
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            validationSchema={changePasswordSchema}
+          >
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
+                <div className="mb-5">
+                  <InputGroup
+                    type="password"
+                    label="Cureent password"
+                    name="current_password"
+                    placeholder="Enter your cureent password"
+                  />
+                  {serverError ? (
+                    <div className="pt-1">
+                      <p className="text-sm  text-red-500">{serverError}</p>
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className="mb-5">
+                  <InputGroup
+                    type="password"
+                    label="New Password"
+                    name="new_password"
+                    placeholder="Enter a new password"
+                  />
+                </div>
+
+                <div className="mb-5">
+                  <InputGroup
+                    type="password"
+                    label="Confirm Password"
+                    name="confirm_password"
+                    placeholder="Enter confirm password"
+                  />
+                </div>
+
+                <div>
+                  <Button isLoading={isPending} className="max-w-[220px]">
+                    Change Password
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+
+          {/* <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <InputField
                 type="password"
@@ -151,7 +182,7 @@ const ChangePasswordModal = ({ handleClose }: { handleClose: () => void }) => {
                 Change Password
               </Button>
             </div>
-          </form>
+          </form> */}
         </div>
       </div>
     </div>

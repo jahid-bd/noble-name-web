@@ -49,11 +49,16 @@ const resetPasswordSchema = object().shape({
 });
 
 const changePasswordSchema = object().shape({
-  current_password: string().required('This field must not be empty.'),
+  current_password: string().trim().required('Please enter current password'),
   new_password: string()
-    .min(8, 'This field must be at least 8 characters long.')
-    .max(50, 'This field must be at most 50 characters long.')
-    .required('This  field must not be empty.'),
+    .trim()
+    .required('Please set a new password')
+    .min(8, 'At least 8 characters'),
+  confirm_password: string()
+    .trim()
+    .required('Please confirm password')
+    .min(8, 'At least 8 characters')
+    .oneOf([ref('new_password'), ''], 'Confirm passwords must match'),
 });
 
 export {
