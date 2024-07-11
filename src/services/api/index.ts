@@ -29,7 +29,9 @@ export const verifyOtp = (data: OtpParams) =>
   axios.post(`${BASE_URL}/auth/verify-otp`, data);
 
 export const verifyOtp2fa = (data: OtpParams) =>
-  axios.post(`${BASE_URL}/auth/verify-otp-2fa`, data);
+  axios.post(`${BASE_URL}/auth/verify-otp-2fa`, data, {
+    withCredentials: true,
+  });
 
 export const resetPassword = (data: ResetPassParams) =>
   axios.post(`${BASE_URL}/auth/reset-password`, data);

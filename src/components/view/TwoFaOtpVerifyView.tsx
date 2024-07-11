@@ -4,6 +4,7 @@ import PreLoader from '@/components/loader/Loader';
 import { verifyOtp2fa } from '@/services/api';
 import { OtpParams } from '@/types';
 import { useMutation } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,7 +33,7 @@ const TwoFaOtpVerifyView = () => {
 
       console.log(user);
 
-      // Cookies.set('access_token', data?.data?.data?.access_token);
+      Cookies.set('access_token', data?.data?.data?.access_token);
 
       if (user?.role !== 'admin') return router.push('/');
       if (user?.role === 'admin') return router.push('/admin/dashboard');
