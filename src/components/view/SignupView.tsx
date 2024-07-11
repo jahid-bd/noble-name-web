@@ -1,17 +1,17 @@
 'use client';
 
+import { signupSchema } from '@/schema/auth';
 import { userRegister } from '@/services/api';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
+import { Form, Formik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import Button from '../buttons/Button';
 import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
-import InputField from '../form/InputField';
+import InputGroup from '../inputs/InputGroup';
+
 interface RegisterData {
   name: string;
   email: string;
@@ -25,15 +25,8 @@ const SignupView = () => {
     password: '',
   };
 
-  const [formState, setFormState] = useState({ ...initialValues });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const [serverError, setserverError] = useState<string>();
-
   const router = useRouter();
+  const [serverError, setserverError] = useState<string>();
 
   const { mutate: signup, isPending } = useMutation({
     mutationFn: (data: RegisterData) => userRegister(data),
@@ -41,51 +34,8 @@ const SignupView = () => {
       setserverError(error.response.data.message);
     },
     onSuccess: () => {
-      setFormState(initialValues);
       router.push('/auth/email-verification');
     },
-  });
-
-  const passMessages = {
-    min: 'At least 8 characters',
-    lower: 'Lower case letters (a-z)',
-    upper: 'Upper case letters (A-Z)',
-    special: 'Numbers (0-9)',
-    number: 'Special characters (e.g. !@#$%^&*)',
-  };
-
-  const schema = yup
-    .object({
-      email: yup
-        .string()
-        .trim()
-        .nullable()
-        .email('Please enter a valid email address')
-        .required('Please enter an email address'),
-      password: yup
-        .string()
-        .trim()
-        .min(8, passMessages.min)
-        // .matches(/^\w{8,}$/, passMessages.min)
-        // .matches(/^(?=.*[a-z])/, passMessages.lower)
-        // .matches(/^(?=.*[A-Z]
-        .required('Password is required'),
-      name: yup
-        .string()
-        .trim()
-        .required('Please enter a valid name')
-        .min(3, 'Name must be at least 3 characters'),
-    })
-    .required();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    criteriaMode: 'all',
-    mode: 'onChange',
   });
 
   const onSubmit = (data: RegisterData) => {
@@ -116,6 +66,60 @@ const SignupView = () => {
         </div>
 
         <div className="my-8 ">
+          <Formik
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            validationSchema={signupSchema}
+          >
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
+                <div className="mb-5">
+                  <InputGroup
+                    type="text"
+                    name="name"
+                    label="Name*"
+                    placeholder="Enter your name"
+                  />
+                </div>
+
+                <div className="mb-5">
+                  <InputGroup
+                    type="email"
+                    name="email"
+                    label="Email*"
+                    placeholder="Enter your email"
+                  />
+                </div>
+
+                <div className="mb-5">
+                  <InputGroup
+                    type="password"
+                    name="password"
+                    label="Password*"
+                    placeholder="Create a password"
+                  />
+                </div>
+
+                <div>
+                  {serverError ? (
+                    <div className="pb-3">
+                      <p className="text-sm text-center text-red-500">
+                        {serverError}
+                      </p>
+                    </div>
+                  ) : null}
+                  <Button isLoading={isPending}>Get started</Button>
+                </div>
+
+                <div className="mt-4">
+                  <GoogleSignupBtn text="Sign up with Google" />
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+
+        {/* <div className="my-8 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <InputField
@@ -174,7 +178,7 @@ const SignupView = () => {
               <GoogleSignupBtn text="Sign up with Google" />
             </div>
           </form>
-        </div>
+        </div> */}
 
         <div className="flex items-center justify-center gap-1 mb-5">
           <p className="text-text-tertiary">Already have an account?</p>

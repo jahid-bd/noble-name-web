@@ -1,19 +1,18 @@
 'use client';
 
 import Button from '@/components/buttons/Button';
-import InputField from '@/components/form/InputField';
 import PreLoader from '@/components/loader/Loader';
+import { resetPasswordSchema } from '@/schema/auth';
 import { resetPassword } from '@/services/api';
 import { ResetPassParams } from '@/types';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
+import { Form, Formik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import * as yup from 'yup';
+import InputGroup from '../inputs/InputGroup';
 
 interface FormType {
   email: string;
@@ -23,12 +22,6 @@ const ResetPass = () => {
   const initialValues = {
     newPassword: '',
     confirmPassword: '',
-  };
-
-  const [formState, setFormState] = useState(initialValues);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const [serverError, setserverError] = useState<string>();
@@ -44,34 +37,9 @@ const ResetPass = () => {
       setserverError(error.response.data.message);
     },
     onSuccess: (data) => {
-      setFormState(initialValues);
       toast.success('You have successfully updated password');
       router.push('/auth/sign-in');
     },
-  });
-
-  const schema = yup.object().shape({
-    newPassword: yup
-      .string()
-      .trim()
-      .min(8, 'At least 8 characters')
-      .required('Please set a new password'),
-    confirmPassword: yup
-      .string()
-      .trim()
-      .min(8, 'At least 8 characters')
-      .oneOf([yup.ref('newPassword'), undefined], 'Passwords must match')
-      .required('Please confirm password'),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    criteriaMode: 'all',
-    mode: 'onChange',
   });
 
   const onSubmit = (data: any) => {
@@ -87,7 +55,6 @@ const ResetPass = () => {
     <Suspense fallback={<PreLoader />}>
       <div className="flex items-center justify-center h-screen overflow-auto">
         <div className="w-full max-md:px-4 max-w-[450px] mx-auto">
-          {/* logo */}
           <div className="mb-6">
             <Link
               href="/"
@@ -103,7 +70,6 @@ const ResetPass = () => {
             </Link>
           </div>
 
-          {/* Title */}
           <div>
             <h1 className="heading-text max-md:text-[30px] text-center">
               Reset your password
@@ -113,8 +79,48 @@ const ResetPass = () => {
             </p>
           </div>
 
-          {/* Signup Form */}
           <div className="my-8 ">
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={resetPasswordSchema}
+            >
+              {({ handleSubmit }) => (
+                <Form onSubmit={handleSubmit}>
+                  <div className="mb-5">
+                    <InputGroup
+                      type="password"
+                      label="New Password"
+                      name="newPassword"
+                      placeholder="Enter a new password"
+                    />
+                  </div>
+
+                  <div className="mb-5">
+                    <InputGroup
+                      type="password"
+                      label="Confirm Password*"
+                      name="confirmPassword"
+                      placeholder="Enter confirm password"
+                    />
+                  </div>
+
+                  <div>
+                    {serverError ? (
+                      <div className="pb-3">
+                        <p className="text-sm text-center text-red-500">
+                          {serverError}
+                        </p>
+                      </div>
+                    ) : null}
+                    <Button isLoading={isPending}>Reset Password</Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
+
+          {/* <div className="my-8 ">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-5">
                 <InputField
@@ -154,7 +160,7 @@ const ResetPass = () => {
                 <Button isLoading={isPending}>Reset Password</Button>
               </div>
             </form>
-          </div>
+          </div> */}
         </div>
       </div>
     </Suspense>

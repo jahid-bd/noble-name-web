@@ -1,17 +1,16 @@
 'use client';
 
 import Button from '@/components/buttons/Button';
-import InputField from '@/components/form/InputField';
+import { forgotPasswordSchema } from '@/schema/auth';
 import { forgotPassword } from '@/services/api';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
+import { Form, Formik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import * as yup from 'yup';
+import InputGroup from '../inputs/InputGroup';
 
 interface FormType {
   email: string;
@@ -20,12 +19,6 @@ interface FormType {
 const ForgotPasswordView = () => {
   const initialValues = {
     email: '',
-  };
-
-  const [formState, setFormState] = useState(initialValues);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const [serverError, setserverError] = useState<string>();
@@ -38,32 +31,10 @@ const ForgotPasswordView = () => {
       setserverError(error.response.data.message);
     },
     onSuccess: (data) => {
-      setFormState(initialValues);
       toast.success('Sent OTP on your mail successfully.');
 
       router.push(`${'/auth/verify-otp'}?token=${data?.data?.data?.id}`);
     },
-  });
-
-  const schema = yup
-    .object({
-      email: yup
-        .string()
-        .trim()
-        .nullable()
-        .email('Please enter a valid email address')
-        .required('Please enter your email address'),
-    })
-    .required();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    criteriaMode: 'all',
-    mode: 'onChange',
   });
 
   const onSubmit = (data: FormType) => {
@@ -100,6 +71,66 @@ const ForgotPasswordView = () => {
           </p>
         </div>
 
+        <div className="my-8 ">
+          <Formik
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            validationSchema={forgotPasswordSchema}
+          >
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
+                <div className="mb-5">
+                  <InputGroup
+                    type="text"
+                    label="Email*"
+                    name="email"
+                    placeholder="Enter your email address"
+                  />
+                </div>
+
+                <div>
+                  {serverError ? (
+                    <div className="pb-3">
+                      <p className="text-sm text-center text-red-500">
+                        {serverError}
+                      </p>
+                    </div>
+                  ) : null}
+
+                  <Button isLoading={isPending}>Send</Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+
+          <Link
+            href={'/auth/sign-in'}
+            className="flex items-center justify-center"
+          >
+            <button className="mt-5 flex items-center justify-center gap-2">
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M20 12H4M4 12L10 6M4 12L10 18"
+                    stroke="#808284"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </div>
+              <div className="text-text-tertiary">Back to Sign in</div>
+            </button>
+          </Link>
+        </div>
+
+        {/* 
         <div className="my-8 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
@@ -154,7 +185,7 @@ const ForgotPasswordView = () => {
               <div className="text-text-tertiary">Back to Sign in</div>
             </button>
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );
