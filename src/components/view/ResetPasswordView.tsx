@@ -14,10 +14,6 @@ import { Suspense, useState } from 'react';
 import { toast } from 'react-toastify';
 import InputGroup from '../inputs/InputGroup';
 
-interface FormType {
-  email: string;
-}
-
 const ResetPass = () => {
   const initialValues = {
     newPassword: '',
@@ -119,48 +115,6 @@ const ResetPass = () => {
               )}
             </Formik>
           </div>
-
-          {/* <div className="my-8 ">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-5">
-                <InputField
-                  type="password"
-                  label="New Password"
-                  name="newPassword"
-                  placeholder="Enter a new password"
-                  onChange={handleChange}
-                  value={formState.newPassword}
-                  register={register}
-                  className={serverError ? 'border-red-500' : ''}
-                  error={errors.newPassword?.message}
-                />
-              </div>
-              <div className="mb-5">
-                <InputField
-                  type="password"
-                  label="Confirm Password*"
-                  name="confirmPassword"
-                  placeholder="Enter confirm password"
-                  onChange={handleChange}
-                  value={formState.newPassword}
-                  register={register}
-                  className={serverError ? 'border-red-500' : ''}
-                  error={errors.confirmPassword?.message}
-                />
-              </div>
-
-              <div>
-                {serverError ? (
-                  <div className="pb-3">
-                    <p className="text-sm text-center text-red-500">
-                      {serverError}
-                    </p>
-                  </div>
-                ) : null}
-                <Button isLoading={isPending}>Reset Password</Button>
-              </div>
-            </form>
-          </div> */}
         </div>
       </div>
     </Suspense>

@@ -119,67 +119,6 @@ const SignupView = () => {
           </Formik>
         </div>
 
-        {/* <div className="my-8 ">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-5">
-              <InputField
-                type="text"
-                name="name"
-                label="Name*"
-                register={register}
-                value={formState.name}
-                onChange={handleChange}
-                error={errors.name?.message}
-                placeholder="Enter your name"
-                className={serverError ? 'border-red-500' : ''}
-              />
-            </div>
-            <div className="mb-5">
-              <InputField
-                type="email"
-                name="email"
-                label="Email*"
-                register={register}
-                onChange={handleChange}
-                value={formState.email}
-                error={errors.email?.message}
-                placeholder="Enter your email"
-                className={serverError ? 'border-red-500' : ''}
-              />
-            </div>
-
-            <div className="mb-5">
-              <InputField
-                type="password"
-                name="password"
-                label="Password*"
-                register={register}
-                onChange={handleChange}
-                value={formState.password}
-                placeholder="Create a password"
-                error={errors.password?.message}
-                message="Must be at least 8 characters."
-                className={serverError ? 'border-red-500' : ''}
-              />
-            </div>
-
-            <div>
-              {serverError ? (
-                <div className="pb-3">
-                  <p className="text-sm text-center text-red-500">
-                    {serverError}
-                  </p>
-                </div>
-              ) : null}
-              <Button isLoading={isPending}>Get started</Button>
-            </div>
-
-            <div className="mt-4">
-              <GoogleSignupBtn text="Sign up with Google" />
-            </div>
-          </form>
-        </div> */}
-
         <div className="flex items-center justify-center gap-1 mb-5">
           <p className="text-text-tertiary">Already have an account?</p>
           <Link href="/auth/sign-in">

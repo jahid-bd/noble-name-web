@@ -129,63 +129,6 @@ const ForgotPasswordView = () => {
             </button>
           </Link>
         </div>
-
-        {/* 
-        <div className="my-8 ">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-5">
-              <InputField
-                type="text"
-                label="Email*"
-                name="email"
-                placeholder="Enter your email address"
-                onChange={handleChange}
-                value={formState.email}
-                register={register}
-                error={errors.email?.message}
-                className={serverError ? 'border-red-500' : ''}
-              />
-            </div>
-
-            <div>
-              {serverError ? (
-                <div className="pb-3">
-                  <p className="text-sm text-center text-red-500">
-                    {serverError}
-                  </p>
-                </div>
-              ) : null}
-
-              <Button isLoading={isPending}>Send</Button>
-            </div>
-          </form>
-
-          <Link
-            href={'/auth/sign-in'}
-            className="flex items-center justify-center"
-          >
-            <button className="mt-5 flex items-center justify-center gap-2">
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M20 12H4M4 12L10 6M4 12L10 18"
-                    stroke="#808284"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></path>
-                </svg>
-              </div>
-              <div className="text-text-tertiary">Back to Sign in</div>
-            </button>
-          </Link>
-        </div> */}
       </div>
     </div>
   );

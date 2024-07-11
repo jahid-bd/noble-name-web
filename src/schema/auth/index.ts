@@ -13,6 +13,13 @@ const signupSchema = object().shape({
   password: string()
     .min(8, 'Password must be at least 8 characters long.')
     .max(50, 'Password must be at most 50 characters long.')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+    .matches(/\d/, 'Password must contain at least one number.')
+    .matches(
+      /[@$!%*?&]/,
+      'Password must contain at least one special character.',
+    )
     .required('Please enter your password.'),
 });
 
@@ -25,6 +32,13 @@ const signInSchema = object().shape({
   password: string()
     .min(8, 'Password must be at least 8 characters long.')
     .max(50, 'Password must be at most 50 characters long.')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+    .matches(/\d/, 'Password must contain at least one number.')
+    .matches(
+      /[@$!%*?&]/,
+      'Password must contain at least one special character.',
+    )
     .required('Please enter your password.'),
 });
 
@@ -39,25 +53,67 @@ const forgotPasswordSchema = object().shape({
 const resetPasswordSchema = object().shape({
   newPassword: string()
     .trim()
-    .min(8, 'At least 8 characters')
-    .required('Please set a new password'),
+    .min(8, 'Password must be at least 8 characters long.')
+    .max(50, 'Password must be at most 50 characters long.')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+    .matches(/\d/, 'Password must contain at least one number.')
+    .matches(
+      /[@$!%*?&]/,
+      'Password must contain at least one special character.',
+    )
+    .required('Please enter your password.'),
   confirmPassword: string()
     .trim()
-    .min(8, 'At least 8 characters')
-    .oneOf([ref('newPassword'), undefined], 'Passwords must match')
-    .required('Please confirm password'),
+    .min(8, 'Password must be at least 8 characters long.')
+    .max(50, 'Password must be at most 50 characters long.')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+    .matches(/\d/, 'Password must contain at least one number.')
+    .matches(
+      /[@$!%*?&]/,
+      'Password must contain at least one special character.',
+    )
+    .required('Please enter your password.'),
 });
 
 const changePasswordSchema = object().shape({
-  current_password: string().trim().required('Please enter current password'),
+  current_password: string()
+    .trim()
+    .min(8, 'Password must be at least 8 characters long.')
+    .max(50, 'Password must be at most 50 characters long.')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+    .matches(/\d/, 'Password must contain at least one number.')
+    .matches(
+      /[@$!%*?&]/,
+      'Password must contain at least one special character.',
+    )
+    .required('Please enter current password'),
   new_password: string()
     .trim()
-    .required('Please set a new password')
-    .min(8, 'At least 8 characters'),
+    .min(8, 'Password must be at least 8 characters long.')
+    .max(50, 'Password must be at most 50 characters long.')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+    .matches(/\d/, 'Password must contain at least one number.')
+    .matches(
+      /[@$!%*?&]/,
+      'Password must contain at least one special character.',
+    )
+    .required('Please set a new password'),
   confirm_password: string()
     .trim()
+    .min(8, 'Password must be at least 8 characters long.')
+    .max(50, 'Password must be at most 50 characters long.')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+    .matches(/\d/, 'Password must contain at least one number.')
+    .matches(
+      /[@$!%*?&]/,
+      'Password must contain at least one special character.',
+    )
     .required('Please confirm password')
-    .min(8, 'At least 8 characters')
     .oneOf([ref('new_password'), ''], 'Confirm passwords must match'),
 });
 
