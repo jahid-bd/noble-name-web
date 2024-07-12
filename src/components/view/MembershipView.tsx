@@ -42,7 +42,7 @@ const MembershipPlanView = () => {
   const [loadingId, setLoadingId] = useState('');
   const [isPending, setIsPending] = useState(false);
 
-  const { mutate: subscribeNow } = useMutation({
+  const { mutate: subscribeFree } = useMutation({
     mutationFn: (id: string) => freeSubscription(''),
     onError: (error: any) => {
       console.log('error', error);
@@ -79,22 +79,24 @@ const MembershipPlanView = () => {
   const handleFreeSubscription = async (id: string) => {
     setIsPending(true);
     setLoadingId(id);
-    try {
-      if (!user) return toast.error('Please login before');
 
-      const response = await axios.post(
-        `${BASE_URL}/subscribe-free-plan`,
-        {},
-        { withCredentials: true },
-      );
+    subscribeFree(id);
+    // try {
+    //   if (!user) return toast.error('Please login before');
 
-      setIsPending(false);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+    //   const response = await axios.post(
+    //     `${BASE_URL}/subscribe-free-plan`,
+    //     {},
+    //     { withCredentials: true },
+    //   );
 
-      setIsPending(false);
-    }
+    //   setIsPending(false);
+    //   console.log(response);
+    // } catch (error) {
+    //   console.log(error);
+
+    //   setIsPending(false);
+    // }
   };
 
   return (
