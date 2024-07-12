@@ -73,9 +73,9 @@ const MembershipPlanView = () => {
   };
 
   const handleFreeSubscription = async (id: string) => {
+    setIsPending(true);
+    setLoadingId(id);
     try {
-      setIsPending(true);
-      setLoadingId(id);
       if (!user) return toast.error('Please login before');
 
       const response = await axios.post(
@@ -84,9 +84,12 @@ const MembershipPlanView = () => {
         { withCredentials: true },
       );
 
+      setIsPending(false);
       console.log(response);
     } catch (error) {
       console.log(error);
+
+      setIsPending(false);
     }
   };
 
