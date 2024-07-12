@@ -486,11 +486,6 @@ const SettingsView = () => {
         country: user.country
           ? countryOptions.find((item) => item.value === user.country)
           : countryOptions[0],
-        // childAge: [
-        //   user.childAgeGroup
-        //     ? childeAgeOptions.find((item) => item.value === user.childAgeGroup)
-        //     : childeAgeOptions[0],
-        // ],
         childAge: user.childAgeGroup?.length > 0 ? user?.childAgeGroup : [],
       });
 
@@ -543,6 +538,7 @@ const SettingsView = () => {
                 Change Password
               </Button>
             </div>
+
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col gap-8 border border-border-primary rounded-xl shadow-xs p-6">
                 <div className="w-full max-md:flex-col flex items-start justify-between gap-6 ">

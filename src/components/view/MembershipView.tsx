@@ -57,38 +57,33 @@ const MembershipPlanView = () => {
     setLoadingId(id);
     if (!user) return toast.error('Please login before');
 
-    // const response = await fetch(`${BASE_URL}/create-checkout-session`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     plan_id: id,
-    //     user_id: user?._id,
-    //   }),
-    // });
-
     const response = await axios.post(`${BASE_URL}/create-checkout-session`, {
       plan_id: id,
       user_id: user?._id,
     });
     const session = await response.data;
     console.log(session);
+
     const stripe = await stripePromise;
+
     if (stripe) {
       await stripe.redirectToCheckout({ sessionId: session.id });
       setIsPending(false);
     }
+  };
 
-    // const response = await axios.post(`${BASE_URL}/create-checkout-session`, {
-    //   plan_id: id,
-    //   user_id: user?._id,
-    // });
+  const handleFreeSubscription = async (id: string) => {
+    try {
+      setIsPending(true);
+      setLoadingId(id);
+      if (!user) return toast.error('Please login before');
 
-    // const session = await response.data;
+      const response = await axios.post(`${BASE_URL}/subscribe-free-plan`, {});
 
-    // console.log({ session });
-    // const stripe = await stripePromise;
-    // if (stripe) {
-    //   await stripe.redirectToCheckout({ sessionId: session.id });
-    // }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -124,7 +119,11 @@ const MembershipPlanView = () => {
                 }
                 active_plan={plan?._id === activePlan?._id}
                 default_plan={plan?._id === activePlan?._id}
-                onClick={() => handleSubscription(plan?._id)}
+                onClick={() =>
+                  plan?.price === 0
+                    ? handleFreeSubscription(plan?._id)
+                    : handleSubscription(plan?._id)
+                }
                 is_loading={plan?._id === loadingId && isPending}
               />
             ))}
