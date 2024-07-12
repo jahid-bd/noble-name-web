@@ -46,12 +46,16 @@ const MembershipPlanView = () => {
     mutationFn: (id: string) => freeSubscription(''),
     onError: (error: any) => {
       console.log('error', error);
+
+      setIsPending(false);
+      setLoadingId('');
     },
     onSuccess: (data: any) => {
       console.log(data);
 
       toast.success('Free plan subscribe successfully');
-      setIsPending(true);
+      setIsPending(false);
+      setLoadingId('');
       queryClient.invalidateQueries({ queryKey: ['active-plan'] });
     },
   });
@@ -80,7 +84,7 @@ const MembershipPlanView = () => {
     setIsPending(true);
     setLoadingId(id);
 
-    subscribeFree(id);
+    await subscribeFree(id);
     // try {
     //   if (!user) return toast.error('Please login before');
 
