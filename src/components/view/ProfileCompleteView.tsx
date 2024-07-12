@@ -81,7 +81,7 @@ const ProfileComplete = () => {
       label: 'Male',
     },
     {
-      value: 'female:',
+      value: 'female',
       label: 'Female',
     },
   ];
@@ -130,30 +130,6 @@ const ProfileComplete = () => {
 
   const countryOptions = [...countries];
 
-  // const countryOptions = [
-  //   {
-  //     value: '',
-  //     label: 'Select country',
-  //   },
-
-  //   {
-  //     value: 'united-states',
-  //     label: 'United States',
-  //   },
-  //   {
-  //     value: 'united-kingdoms',
-  //     label: 'United Kingdoms',
-  //   },
-  //   {
-  //     value: 'pakistan',
-  //     label: 'Pakistan',
-  //   },
-  //   {
-  //     value: 'united-arab-emirates',
-  //     label: 'United Arab Emirates',
-  //   },
-  // ];
-
   const [optionsState, setOptionsState] = useState({
     age: ageOptions[0],
     gender: genderOptions[0],
@@ -196,7 +172,6 @@ const ProfileComplete = () => {
     });
   };
 
-  // Api call to update to the server
   const [serverError, setserverError] = useState<string>();
   const [errors, setErrors] = useState({
     age: {
@@ -292,7 +267,6 @@ const ProfileComplete = () => {
       },
     });
 
-    // Update error states based on form values
     if (!optionsState.age.value) {
       setErrors((prev) => ({
         ...prev,
@@ -373,16 +347,6 @@ const ProfileComplete = () => {
       }));
     }
 
-    // if (isParent === true && !optionsState.childAge) {
-    //   setErrors((prev) => ({
-    //     ...prev,
-    //     childAge: {
-    //       ...prev.childAge,
-    //       error: true,
-    //     },
-    //   }));
-    // }
-
     const hasErrors = Object.values(errors).some((field) => field.error);
 
     if (hasErrors) return;
@@ -442,8 +406,8 @@ const ProfileComplete = () => {
             <SelectInput
               label="Country"
               options={countryOptions}
-              handleSelect={(opt) => handleSelect('country', opt)}
               selectedOption={optionsState.country}
+              handleSelect={(opt) => handleSelect('country', opt)}
               error={errors.country.error && errors.country.message}
             />
 
@@ -466,7 +430,6 @@ const ProfileComplete = () => {
                 <div className="w-full">
                   <RadioButton
                     active={isExpectingBaby}
-                    // label="Are you expecting a baby"
                     text="Yes"
                     onClick={() => {
                       setIsexpectionBaby(true);
@@ -495,20 +458,6 @@ const ProfileComplete = () => {
 
             {isExpectingBaby && (
               <>
-                {/* <InputField
-                  label="Expecting Date"
-                  name="date"
-                  value={expectingDate}
-                  onChange={(e) => {
-                    setExpectingDate(e.target.value);
-                  }}
-                  type="date"
-                  error={
-                    errors.childExpectingDate.error &&
-                    errors.childExpectingDate.message
-                  }
-                /> */}
-
                 <Calender
                   label="Expecting Date"
                   value={expectingDate}
@@ -535,7 +484,6 @@ const ProfileComplete = () => {
                 <div className="w-full">
                   <RadioButton
                     active={isParent}
-                    // label="Are you already a parent"
                     text="Yes"
                     onClick={() => {
                       setIsParent(true);
@@ -546,7 +494,6 @@ const ProfileComplete = () => {
                 <div className="w-full">
                   <RadioButton
                     active={isParent === false}
-                    // label=""
                     text="No"
                     onClick={() => {
                       setIsParent(false);
@@ -605,14 +552,6 @@ const ProfileComplete = () => {
                     )}
                   </div>
                 )}
-
-                {/* <SelectInput
-                  label="Age group of children"
-                  options={childeAgeOptions}
-                  handleSelect={(opt) => handleSelect('childAge', opt)}
-                  selectedOption={optionsState.childAge}
-                  error={errors.childAge.message}
-                /> */}
               </>
             )}
           </div>

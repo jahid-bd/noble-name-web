@@ -4,7 +4,6 @@ import countries from '@/assets/data/countries';
 import { getUserProfile, userProfileUpdate } from '@/services/api';
 import { UserUpdateData } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import moment from 'moment';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -502,9 +501,7 @@ const SettingsView = () => {
       setIsexpectionBaby(user.isExpectingBaby);
       setIsParent(user.isAlreadyParent);
 
-      const formattedDate = user?.expectedDate
-        ? moment(user?.expectedDate).format('YYYY-MM-DD')
-        : null;
+      const formattedDate = user?.expectedDate ? user?.expectedDate : null;
       setExpectingDate(formattedDate);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

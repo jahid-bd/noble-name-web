@@ -71,20 +71,6 @@ const SuggestedNameCard = ({ name }: { name: any }) => {
             </p>
           )}
         </div>
-
-        {/* <div className="flex gap-3 items-center">
-          <button type="button">
-            <LoveIcon isFavorite={name?.isFavorite} />
-          </button>
-
-          <button type="button">
-            <BookmarkIcon isBookmarked={name?.isBookmarked} />
-          </button>
-
-          <button type="button">
-            <ShareIcon />
-          </button>
-        </div> */}
       </div>
     </div>
   );

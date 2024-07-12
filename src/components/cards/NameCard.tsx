@@ -145,17 +145,6 @@ const NameCard = ({ name }: { name: any }) => {
               Historic
             </p>
           )}
-
-          {/* {name?.name?.tags?.map((tag: string) => (
-            <p
-              key={tag}
-              className={`px-2 py-0.5 rounded-full text-white text-xs font-medium ${
-                name?.name?.gender === 'girl' ? 'bg-dark-pink' : 'bg-dark-blue '
-              }`}
-            >
-              {tag}
-            </p>
-          ))} */}
         </div>
 
         <div className="flex gap-3 items-center">
@@ -189,42 +178,6 @@ const NameCard = ({ name }: { name: any }) => {
 
       {openSocial && (
         <>
-          <button
-            type="button"
-            onClick={() => setOpenSocial(false)}
-            className="absolute right-3 top-3 z-[999999]"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                stroke="#292D32"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M9.16992 14.8299L14.8299 9.16992"
-                stroke="#292D32"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M14.8299 14.8299L9.16992 9.16992"
-                stroke="#292D32"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-
           <div
             className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-white bg-opacity-35"
             ref={socialRef}

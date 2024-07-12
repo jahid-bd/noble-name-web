@@ -81,29 +81,6 @@ const PlanCard = ({
               {item.value ? <CheckIcon /> : <XIcon />} <span>{item.title}</span>
             </li>
           ))}
-
-          {/* <li className="flex gap-3 items-center">
-            <CheckIcon /> <span>Add to love</span>
-          </li>
-
-          <li className="flex gap-3 items-center">
-            <CheckIcon />
-            <span>Add to favorite</span>
-          </li>
-
-          <li className="flex gap-3 items-center">
-            <CheckIcon /> <span>Just one device</span>
-          </li>
-
-          <li className="flex gap-3 items-center">
-            <XIcon />
-            <span>Unlimited Results</span>
-          </li>
-
-          <li className="flex gap-3 items-center">
-            <XIcon />
-            <span>No Ads</span>
-          </li> */}
         </ul>
       </div>
 

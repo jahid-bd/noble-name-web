@@ -45,6 +45,7 @@ const Calender = ({
     };
   }, [handleClickOutside]);
 
+  console.log(value);
   return (
     <div className="relative" ref={calenderRef}>
       {label && (
