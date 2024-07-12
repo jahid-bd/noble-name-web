@@ -1,6 +1,6 @@
 'use client';
 
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Calendar } from 'react-date-range';
 
@@ -15,7 +15,13 @@ const Calender = ({
   value?: string | null | Date;
   handelSelect: (value: string) => void;
 }) => {
-  const [date, setDate] = useState(value ? new Date(value) : '');
+  const parseDate = (dateString: string | null | Date) => {
+    if (!dateString) return null;
+    if (dateString instanceof Date) return dateString;
+    return parse(dateString, 'dd/MM/yyyy', new Date());
+  };
+
+  const [date, setDate] = useState(value ? parseDate(value) : '');
   const calenderRef = useRef<HTMLDivElement>(null);
   const [openCalender, setOpenCalender] = useState(false);
 

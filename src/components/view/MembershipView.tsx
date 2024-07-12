@@ -51,8 +51,6 @@ const MembershipPlanView = () => {
       setLoadingId('');
     },
     onSuccess: (data: any) => {
-      console.log(data);
-
       toast.success('Free plan subscribe successfully');
       setIsPending(false);
       setLoadingId('');
@@ -85,22 +83,6 @@ const MembershipPlanView = () => {
     setLoadingId(id);
 
     await subscribeFree(id);
-    // try {
-    //   if (!user) return toast.error('Please login before');
-
-    //   const response = await axios.post(
-    //     `${BASE_URL}/subscribe-free-plan`,
-    //     {},
-    //     { withCredentials: true },
-    //   );
-
-    //   setIsPending(false);
-    //   console.log(response);
-    // } catch (error) {
-    //   console.log(error);
-
-    //   setIsPending(false);
-    // }
   };
 
   return (
