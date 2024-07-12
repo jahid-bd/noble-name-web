@@ -78,7 +78,11 @@ const MembershipPlanView = () => {
       setLoadingId(id);
       if (!user) return toast.error('Please login before');
 
-      const response = await axios.post(`${BASE_URL}/subscribe-free-plan`, {});
+      const response = await axios.post(
+        `${BASE_URL}/subscribe-free-plan`,
+        {},
+        { withCredentials: true },
+      );
 
       console.log(response);
     } catch (error) {
