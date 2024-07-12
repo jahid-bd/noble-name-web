@@ -2,9 +2,14 @@
 
 import PlanCard from '@/components/cards/PlanCard';
 import { BASE_URL, STRIPE_PUBLIC_KEY } from '@/constants';
-import { getActivePlan, getAllPlans, getUserProfile } from '@/services/api';
+import {
+  freeSubscription,
+  getActivePlan,
+  getAllPlans,
+  getUserProfile,
+} from '@/services/api';
 import { loadStripe } from '@stripe/stripe-js';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -13,7 +18,7 @@ import PreLoader from '../loader/Loader';
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY as string);
 
 const MembershipPlanView = () => {
-  // const router = useRouter();
+  const queryClient = useQueryClient();
 
   const {
     data: activePlan,
@@ -37,20 +42,19 @@ const MembershipPlanView = () => {
   const [loadingId, setLoadingId] = useState('');
   const [isPending, setIsPending] = useState(false);
 
-  // const { mutate: subscribeNow, isPending } = useMutation({
-  //   mutationFn: (data: { planId: string; userId: string }) =>
-  //     subscribePlan({
-  //       plan_id: data.planId,
-  //       user_id: data.userId,
-  //     }),
-  //   onError: (error: any) => {
-  //     console.log('error', error);
-  //   },
-  //   onSuccess: (data: any) => {
-  //     console.log(data);
-  //     router.push(data.data.url);
-  //   },
-  // });
+  const { mutate: subscribeNow } = useMutation({
+    mutationFn: (id: string) => freeSubscription(''),
+    onError: (error: any) => {
+      console.log('error', error);
+    },
+    onSuccess: (data: any) => {
+      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ['active-plan'] });
+
+      toast.success('Free plan subscribe successfully');
+      setIsPending(true);
+    },
+  });
 
   const handleSubscription = async (id: string) => {
     setIsPending(true);

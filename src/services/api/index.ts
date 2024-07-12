@@ -220,6 +220,15 @@ export const getActivePlan = async () => {
   }
 };
 
+export const freeSubscription = async (id: string) =>
+  axios.post(
+    `${BASE_URL}/subscribe-free-plan`,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+
 export const subscribePlan = async (data: {
   plan_id: string;
   user_id: string;
