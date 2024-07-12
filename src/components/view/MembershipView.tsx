@@ -49,10 +49,10 @@ const MembershipPlanView = () => {
     },
     onSuccess: (data: any) => {
       console.log(data);
-      queryClient.invalidateQueries({ queryKey: ['active-plan'] });
 
       toast.success('Free plan subscribe successfully');
       setIsPending(true);
+      queryClient.invalidateQueries({ queryKey: ['active-plan'] });
     },
   });
 
