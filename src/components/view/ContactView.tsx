@@ -9,6 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import Button from '../buttons/Button';
 import InputField from '../form/InputField';
@@ -24,7 +25,7 @@ const ContactView = () => {
   const [formState, setFormState] = useState({ ...initialValues });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -80,10 +81,14 @@ const ContactView = () => {
     onError: (error: any) => {
       console.log('error', error);
       setserverError(error.response.data.message);
+
+      toast.error(error.response.data.message);
     },
     onSuccess: (data) => {
       console.log(data);
       reset();
+
+      toast.success('Contact message submit successfully.');
     },
   });
 
@@ -189,7 +194,7 @@ const ContactView = () => {
                   {...register('message', { value: formState.message })}
                   className={clsx(
                     'w-full h-[134px] outline-none border border-border-primary px-[14px] py-[10px] rounded-md shadow-sm placeholder:text-text-placeholder resize-none',
-                    errors.message?.message && 'border-red-500'
+                    errors.message?.message && 'border-red-500',
                   )}
                 />
                 {errors.message?.message ? (
