@@ -72,13 +72,13 @@ const TwoFaOtpVerifyView = () => {
             <h1 className="heading-text text-center max-md:text-[30px]">
               Two Factor Authentication
             </h1>
-            <p className=" text-text-tertiary pt-[6px]">
+            <p className=" text-text-tertiary mt-[6px]">
               Noble Names is committed to safeguarding your personal information
               and ensuring the confidentiality of your data. Our robust security
               measures are in place to protect your account from unauthorized
               access
             </p>
-            <p className=" text-text-tertiary pt-1">
+            <p className=" text-text-tertiary mt-3">
               We have sent you a 4 digit OTP (One-Time Password) to your email.
               Please check the spam folder if you are unable to find your inbox.
             </p>
