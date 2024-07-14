@@ -26,16 +26,13 @@ const SubscriptionView = () => {
       console.log('error', error);
     },
     onSuccess: (data: any) => {
-      console.log(data);
-      router.push('/subscription/success');
+      router.push('/subscription/cancel');
     },
   });
 
   const handleCanncel = () => {
     cancel(activePlan?._id);
   };
-
-  console.log('activePlan', activePlan);
 
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">

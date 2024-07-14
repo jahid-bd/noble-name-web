@@ -43,7 +43,6 @@ const TwoFaOtpVerifyView = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    console.log(otp);
     verifyOtpCode({
       otp_code: Number(otp),
       otp_id,
@@ -74,8 +73,14 @@ const TwoFaOtpVerifyView = () => {
               Two Factor Authentication
             </h1>
             <p className=" text-text-tertiary pt-[6px]">
-              We&rsquo;ve sent you an OTP (One-Time Password) to verify your
-              identity for 2FA. Please check your registered email for the OTP.
+              Noble Names is committed to safeguarding your personal information
+              and ensuring the confidentiality of your data. Our robust security
+              measures are in place to protect your account from unauthorized
+              access
+            </p>
+            <p className=" text-text-tertiary pt-1">
+              We have sent you a 4 digit OTP (One-Time Password) to your email.
+              Please check the spam folder if you are unable to find your inbox.
             </p>
           </div>
 
