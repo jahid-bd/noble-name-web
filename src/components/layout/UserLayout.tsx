@@ -137,7 +137,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           <p className="text-center text-white text-base font-semibold">
-            &copy; 2023 Noble Names
+            &copy; {new Date().getFullYear()} Noble Names
           </p>
         </div>
       </footer>

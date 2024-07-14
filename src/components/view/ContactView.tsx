@@ -79,13 +79,11 @@ const ContactView = () => {
   const { mutate: send, isPending } = useMutation({
     mutationFn: (data: ContactParams) => sendMessage(data),
     onError: (error: any) => {
-      console.log('error', error);
       setserverError(error.response.data.message);
 
       toast.error(error.response.data.message);
     },
     onSuccess: (data) => {
-      console.log(data);
       reset();
 
       toast.success('Contact message submit successfully.');
@@ -99,7 +97,6 @@ const ContactView = () => {
   // message: '',
 
   const onSubmit = (data: any) => {
-    console.log('Called');
     setserverError('');
     send({
       email: data.email,
