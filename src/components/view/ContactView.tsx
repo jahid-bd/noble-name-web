@@ -6,7 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -89,12 +88,6 @@ const ContactView = () => {
       toast.success('Contact message submit successfully.');
     },
   });
-
-  // firstName: '',
-  // lastName: '',
-  // phoneNumber: '',
-  // email: '',
-  // message: '',
 
   const onSubmit = (data: any) => {
     setserverError('');
@@ -201,7 +194,7 @@ const ContactView = () => {
                 ) : null}
               </div>
 
-              <div className="mb-6 flex items-center gap-3">
+              {/* <div className="mb-6 flex items-center gap-3">
                 <input
                   type="checkbox"
                   id="agree"
@@ -211,10 +204,10 @@ const ContactView = () => {
                   You agree to our friendly{' '}
                   <Link href={'/fair-use-policy'}>privacy policy.</Link>
                 </label>
-              </div>
+              </div> */}
 
               <div>
-                <Button isLoading={isPending}>Send message</Button>
+                <Button isLoading={isPending}>Send</Button>
               </div>
             </form>
           </div>
