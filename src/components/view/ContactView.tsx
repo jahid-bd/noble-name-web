@@ -12,6 +12,31 @@ import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import Button from '../buttons/Button';
 import InputField from '../form/InputField';
+import SelectInput from '../form/SelectInput';
+
+const issueOptions = [
+  {
+    value: '',
+    label: 'Select Issue',
+  },
+  {
+    value: 'Billing',
+    label: 'Billing',
+  },
+  {
+    value: 'Issue with Website',
+    label: 'Issue with Website',
+  },
+
+  {
+    value: 'Suggest an Idea',
+    label: 'Suggest an Idea',
+  },
+  {
+    value: 'Customer Service',
+    label: 'Customer Service',
+  },
+];
 
 const ContactView = () => {
   const initialValues = {
@@ -22,6 +47,10 @@ const ContactView = () => {
     message: '',
   };
   const [formState, setFormState] = useState({ ...initialValues });
+  const [issueError, setIssueError] = useState('');
+  const [issue, setIssue] = useState<null | { value: string; label: string }>(
+    null,
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -91,13 +120,23 @@ const ContactView = () => {
 
   const onSubmit = (data: any) => {
     setserverError('');
+    setIssueError('');
+
+    if (!issue?.value) {
+      return setIssueError('Please select a issue type.');
+    }
+
     send({
       email: data.email,
       phone: data.phone,
       message: data.message,
+      issue_type: issue.value,
       full_name: `${data.firstName}  ${data.lastName}`,
       subject: `${data.firstName} send a contact message from Noble Name`,
     });
+
+    setIssueError('');
+    setIssue(null);
   };
 
   return (
@@ -129,6 +168,7 @@ const ContactView = () => {
                     className={serverError ? 'border-red-500' : ''}
                   />
                 </div>
+
                 <div className="w-full">
                   <InputField
                     type="text"
@@ -171,6 +211,16 @@ const ContactView = () => {
               </div>
 
               <div className="mb-6">
+                <SelectInput
+                  label="Issue Type"
+                  error={issueError}
+                  options={issueOptions}
+                  handleSelect={(opt) => setIssue(opt)}
+                  selectedOption={issue ? issue : issueOptions[0]}
+                />
+              </div>
+
+              <div className="mb-6">
                 <label
                   htmlFor="message"
                   className="font-medium text-sm text-text-secondary pb-[6px] block"
@@ -193,8 +243,8 @@ const ContactView = () => {
                   </p>
                 ) : null}
               </div>
-
-              {/* <div className="mb-6 flex items-center gap-3">
+              {/* 
+              <div className="mb-6 flex items-center gap-3">
                 <input
                   type="checkbox"
                   id="agree"

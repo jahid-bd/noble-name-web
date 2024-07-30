@@ -43,4 +43,5 @@ export interface ContactParams {
   subject: string;
   message: string;
   full_name: string;
+  issue_type: string;
 }

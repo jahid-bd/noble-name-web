@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>{children}</QueryProvider>
-        <ToastContainer />
+        <ToastContainer style={{ zIndex: '1000000000000' }} />
         <GoogleAnalytics
           gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string}
         />
