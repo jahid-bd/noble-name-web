@@ -108,17 +108,19 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
 
-            {openNav && !isError && user && (
-              <div ref={navRef}>
-                <UserNavList handleLogout={handleLogout} closeNav={closeNav} />
-              </div>
-            )}
-
-            {openNav && isError && !user && (
-              <div ref={navRef}>
-                <PublicNavList closeNav={closeNav} />
-              </div>
-            )}
+            {openNav &&
+              (!isError && user ? (
+                <div ref={navRef}>
+                  <UserNavList
+                    handleLogout={handleLogout}
+                    closeNav={closeNav}
+                  />
+                </div>
+              ) : (
+                <div ref={navRef}>
+                  <PublicNavList closeNav={closeNav} />
+                </div>
+              ))}
           </div>
 
           {/* {!isError && user ? (
