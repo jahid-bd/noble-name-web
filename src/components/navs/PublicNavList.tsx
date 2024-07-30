@@ -16,7 +16,7 @@ const PublicNavList = ({ closeNav }: { closeNav?: () => void }) => {
           }`}
           onClick={closeNav}
         >
-          Dashboard
+          Sign Up
         </Link>
         <Link
           href="/auth/sign-in"
@@ -25,7 +25,7 @@ const PublicNavList = ({ closeNav }: { closeNav?: () => void }) => {
           }`}
           onClick={closeNav}
         >
-          Settings
+          Sign In
         </Link>
       </div>
     </div>
