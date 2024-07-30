@@ -7,7 +7,7 @@ const PublicNavList = ({ closeNav }: { closeNav?: () => void }) => {
   const pathname = usePathname();
 
   return (
-    <div className="absolute right-0 top-[52px] md:top-[72px] z-[999999]">
+    <div className="absolute right-0 top-[52px] md:top-[72px] z-[999999] w-[150px]">
       <div className="flex flex-col gap-2 bg-white rounded py-3 border border-border-primary">
         <Link
           href="/auth/sign-up"
