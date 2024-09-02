@@ -5,11 +5,40 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import PreLoader from '../loader/Loader';
 import NotFound from '../loader/NotFound';
 
+const childeAgeOptions = [
+  {
+    value: '0-3 months',
+    label: 'Newborns (0-3 months)',
+  },
+  {
+    value: '4-12 months',
+    label: 'Infants (4-12 months)',
+  },
+  {
+    value: '1-3 years',
+    label: 'Toddlers (1-3 years)',
+  },
+  {
+    value: '3-5 years',
+    label: 'Preschoolers (3-5 years)',
+  },
+  {
+    value: '6-12 years',
+    label: 'School-Age Children (6-12 years)',
+  },
+  {
+    value: '13-18 years',
+    label: 'Teenagers (13-18 years)',
+  },
+];
+
 const BlogDetailView = () => {
   const params = useParams();
+  const [category, setCategory] = useState('');
 
   const {
     data: blog,
@@ -19,6 +48,18 @@ const BlogDetailView = () => {
     queryKey: ['blog'],
     queryFn: () => getBlogBySlug(params.blog_id as string),
   });
+
+  useEffect(() => {
+    if (blog) {
+      if (blog?.data?.content?.category) {
+        const find = childeAgeOptions.find(
+          (item) => item.value === blog?.data?.content?.category
+        );
+
+        setCategory(find ? find.label : '');
+      }
+    }
+  }, [blog]);
 
   return (
     <main className="bg-white pt-6 md:pt-[26px] pb-[60px] md:pb-[60px]">
@@ -40,17 +81,19 @@ const BlogDetailView = () => {
               </div>
 
               <div className="mt-6">
-                <p className="text-base font-normal px-1 bg-slate-400">
-                  {blog?.data?.content?.category}
-                </p>
+                <div className="flex gap-2">
+                  <p className="text-[15px] font-normal bg-[rgba(0, 169, 145, 0.3)] w-fit">
+                    {category}
+                  </p>
 
-                <h1 className="text-2xl text-text-primary font-semibold mb-4">
-                  {blog?.data?.content?.title}
-                </h1>
+                  <h1 className="text-2xl text-text-primary font-semibold">
+                    {blog?.data?.content?.title}
+                  </h1>
 
-                <p className="text-base font-normal text-slate-400">
-                  By {blog?.data?.content?.author}
-                </p>
+                  <p className="text-[15px] font-normal text-slate-400">
+                    By {blog?.data?.content?.author}
+                  </p>
+                </div>
 
                 <p className="mb-4 text-base font-medium">
                   {blog?.data?.content?.description}

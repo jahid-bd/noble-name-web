@@ -174,8 +174,6 @@ const CreateBlogModal = ({
     maxFiles: 1,
   });
 
-  console.log(thumbnail);
-
   const onSubmit = (data: any) => {
     setCustomError({
       content: {
