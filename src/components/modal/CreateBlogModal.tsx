@@ -71,7 +71,7 @@ const CreateBlogModal = ({
   const queryClient = useQueryClient();
   const [content, setContent] = useState<string>('');
   const [category, setCategory] = useState<{ label: string; value: string }>(
-    childeAgeOptions[0],
+    childeAgeOptions[0]
   );
   const [customError, setCustomError] = useState({
     content: {
@@ -257,7 +257,7 @@ const CreateBlogModal = ({
 
       if (initialValues?.category) {
         const find = childeAgeOptions.find(
-          (item) => item.value === initialValues.category,
+          (item) => item.value === initialValues.category
         );
 
         setCategory(find ? find : childeAgeOptions[0]);
@@ -313,7 +313,7 @@ const CreateBlogModal = ({
                 {...getRootProps()}
                 className={clsx(
                   'my-4 border border-border-primary flex items-center justify-center w-full h-[350px] text-center relative rounded-md',
-                  customError.thumbnail.error && '!border-red-500',
+                  customError.thumbnail.error && '!border-red-500'
                 )}
               >
                 <div
@@ -375,7 +375,7 @@ const CreateBlogModal = ({
               <InputField
                 type="text"
                 name="metaTittle"
-                label="Meta Tittle"
+                label="Meta Title"
                 register={register}
                 error={errors.metaTittle?.message}
                 placeholder="Enter blog meta title"

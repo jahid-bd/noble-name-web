@@ -40,9 +40,17 @@ const BlogDetailView = () => {
               </div>
 
               <div className="mt-6">
+                <p className="text-base font-normal px-1 bg-slate-400">
+                  {blog?.data?.content?.category}
+                </p>
+
                 <h1 className="text-2xl text-text-primary font-semibold mb-4">
                   {blog?.data?.content?.title}
                 </h1>
+
+                <p className="text-base font-normal text-slate-400">
+                  By {blog?.data?.content?.author}
+                </p>
 
                 <p className="mb-4 text-base font-medium">
                   {blog?.data?.content?.description}
