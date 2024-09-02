@@ -81,7 +81,7 @@ const BlogDetailView = () => {
               </div>
 
               <div className="mt-6">
-                <div className="flex gap-2 flex-col items-start">
+                <div className="flex gap-2 flex-col items-start mb-4">
                   <p className="text-[15px] font-normal bg-green-100 w-fit">
                     {category}
                   </p>
