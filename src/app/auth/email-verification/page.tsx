@@ -1,13 +1,50 @@
+'use client';
+
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export const metadata: Metadata = {
   title: 'Email Verify - Noble Names',
   description: 'This is email verify page.',
 };
 
+const getCookie = (cookieName: string) => {
+  const name = cookieName + '=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(';');
+
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i].trim();
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+
+  return '';
+};
+
 const EmailVerification = () => {
+  const router = useRouter();
+  const checkAccessToken = () => {
+    const accessToken = getCookie('access_token');
+    if (accessToken) {
+      console.log('Access token found:', accessToken);
+      // Redirect to the homepage if token exists
+      router.push('/'); // Use history to navigate
+    } else {
+      console.log('Access token not found');
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(checkAccessToken, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
       <div className="w-full max-md:px-4 max-w-[500px] mx-auto">

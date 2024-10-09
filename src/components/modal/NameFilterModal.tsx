@@ -62,11 +62,11 @@ const NameFilterModal = ({
   const { setQueryParams, deleteParams } = useSearchQueryParam();
 
   const handleStartLetter = (value: string) => {
-    setStartLetter(value);
+    setStartLetter((prev) => (prev === value ? '' : value));
   };
 
   const handleEndLetter = (value: string) => {
-    setEndLetter(value);
+    setEndLetter((prev) => (prev === value ? '' : value));
   };
 
   const router = useRouter();
@@ -74,7 +74,10 @@ const NameFilterModal = ({
   const onFilter = () => {
     const queryParams: any = {};
     let url: string = searchParams.toString();
-    console.log(origin);
+
+    if (searchParams.get('page')) {
+      url = deleteParams(url, 'origin');
+    }
 
     url = origin.value
       ? setQueryParams(url, 'origin', origin.value)

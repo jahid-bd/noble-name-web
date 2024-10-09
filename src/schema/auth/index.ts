@@ -18,7 +18,7 @@ const signupSchema = object().shape({
     .matches(/\d/, 'Password must contain at least one number.')
     .matches(
       /[@$!%*?&]/,
-      'Password must contain at least one special character.',
+      'Password must contain at least one special character.'
     )
     .required('Please enter your password.'),
 });
@@ -37,7 +37,7 @@ const signInSchema = object().shape({
     .matches(/\d/, 'Password must contain at least one number.')
     .matches(
       /[@$!%*?&]/,
-      'Password must contain at least one special character.',
+      'Password must contain at least one special character.'
     )
     .required('Please enter your password.'),
 });
@@ -60,7 +60,7 @@ const resetPasswordSchema = object().shape({
     .matches(/\d/, 'Password must contain at least one number.')
     .matches(
       /[@$!%*?&]/,
-      'Password must contain at least one special character.',
+      'Password must contain at least one special character.'
     )
     .required('Please enter your password.'),
   confirmPassword: string()
@@ -72,9 +72,10 @@ const resetPasswordSchema = object().shape({
     .matches(/\d/, 'Password must contain at least one number.')
     .matches(
       /[@$!%*?&]/,
-      'Password must contain at least one special character.',
+      'Password must contain at least one special character.'
     )
-    .required('Please enter your password.'),
+    .required('Please enter your password.')
+    .oneOf([ref('newPassword'), ''], 'Confirm passwords must match'),
 });
 
 const changePasswordSchema = object().shape({
@@ -87,7 +88,7 @@ const changePasswordSchema = object().shape({
     .matches(/\d/, 'Password must contain at least one number.')
     .matches(
       /[@$!%*?&]/,
-      'Password must contain at least one special character.',
+      'Password must contain at least one special character.'
     )
     .required('Please enter current password'),
   new_password: string()
@@ -99,7 +100,7 @@ const changePasswordSchema = object().shape({
     .matches(/\d/, 'Password must contain at least one number.')
     .matches(
       /[@$!%*?&]/,
-      'Password must contain at least one special character.',
+      'Password must contain at least one special character.'
     )
     .required('Please set a new password'),
   confirm_password: string()
@@ -111,7 +112,7 @@ const changePasswordSchema = object().shape({
     .matches(/\d/, 'Password must contain at least one number.')
     .matches(
       /[@$!%*?&]/,
-      'Password must contain at least one special character.',
+      'Password must contain at least one special character.'
     )
     .required('Please confirm password')
     .oneOf([ref('new_password'), ''], 'Confirm passwords must match'),

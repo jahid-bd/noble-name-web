@@ -5,8 +5,8 @@ import NameSearchBy from '@/components/buttons/NameSearchBy';
 import InputField from '@/components/form/InputField';
 import SelectInput from '@/components/form/SelectInput';
 import useSearchQueryParam from '@/hooks/useSearchQueryParam';
-import { getUserProfile } from '@/services/api';
-import { useQuery } from '@tanstack/react-query';
+import { getUserProfile, userSearchCount } from '@/services/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -59,6 +59,16 @@ const NameSearchSection = () => {
     language: languageOptions[0],
   });
 
+  const { mutate: createNewsLetter, isPending } = useMutation({
+    mutationFn: () => userSearchCount(),
+    onError: (error: any) => {
+      console.log('error', error);
+    },
+    onSuccess: (data) => {
+      // toast.success('Sign up newsletter successfully');
+    },
+  });
+
   const labelPlaceholder: Record<
     SearchBy,
     { label: string; placeholder: string }
@@ -84,7 +94,7 @@ const NameSearchSection = () => {
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string },
+    option: { value: string; label: string }
   ) => {
     setOptionsState({
       ...optionsState,
@@ -111,7 +121,7 @@ const NameSearchSection = () => {
     setSearchValue(e.target.value);
   };
 
-  const onSearch = () => {
+  const onSearch = async () => {
     setSearchError({ name: false, language: false, gender: false });
 
     if (!searchValue || searchValue?.length < 2) {
@@ -148,6 +158,7 @@ const NameSearchSection = () => {
       : deleteParams(url, 'search_by');
 
     if (data) {
+      await createNewsLetter();
       router.push(`/name-search${url ? `?${url}` : ''}`);
     } else {
       toast.error('Please login before search');

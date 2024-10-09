@@ -24,6 +24,7 @@ export function middleware(request: NextRequest) {
     '/auth/verify-otp',
     '/auth/forgot-password',
     '/auth/reset-password',
+    '/auth/email-verification',
   ];
 
   const userRoutes = [

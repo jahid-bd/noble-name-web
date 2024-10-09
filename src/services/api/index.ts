@@ -65,7 +65,7 @@ export const addUserFavorite = (name: string) =>
     { name },
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const removeUserFavorite = (id: string) =>
@@ -79,7 +79,7 @@ export const addUserBookmark = (name: string) =>
     { name },
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const shareNameApi = (name: string) =>
@@ -88,7 +88,7 @@ export const shareNameApi = (name: string) =>
     { name },
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const removeUserBookmark = (id: string) =>
@@ -186,7 +186,7 @@ export const approveRequestedName = (id: string) =>
     {},
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const rejectRequestedName = (id: string) =>
@@ -195,7 +195,7 @@ export const rejectRequestedName = (id: string) =>
     {},
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const getAllPlans = async () => {
@@ -226,7 +226,7 @@ export const freeSubscription = async (id: string) =>
     {},
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const subscribePlan = async (data: {
@@ -241,7 +241,7 @@ export const cancelSubscription = async (id: string) =>
     {},
     {
       withCredentials: true,
-    },
+    }
   );
 
 export const sendMessage = (data: ContactParams) =>
@@ -249,6 +249,9 @@ export const sendMessage = (data: ContactParams) =>
 
 export const newsLetterApi = (data: ContactParams) =>
   axios.post(`${BASE_URL}/subscribe-newsletters`, data);
+
+export const userSearchCount = () =>
+  axios.post(`${BASE_URL}/search-name-count`, {});
 
 export const getNames = async (params: string) => {
   try {

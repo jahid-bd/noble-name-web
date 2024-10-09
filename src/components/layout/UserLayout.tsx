@@ -27,7 +27,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
       return setOpenNav(true);
     }
 
-    return setOpenNav(false);
+    // return setOpenNav(false);
   }, []);
 
   const { data: user, isError } = useQuery({
@@ -70,23 +70,39 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
           <div className="relative">
             <div className="flex gap-3 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
-              <svg
-                className="cursor-pointer"
-                onClick={() => setOpenNav((prev) => !prev)}
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 12H21M3 6H21M3 18H21"
-                  stroke="#344054"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <div ref={navRef}>
+                <svg
+                  className="cursor-pointer"
+                  onClick={() => setOpenNav((prev) => !prev)}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 12H21M3 6H21M3 18H21"
+                    stroke="#344054"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+
+                {openNav &&
+                  (!isError && user ? (
+                    <div>
+                      <UserNavList
+                        handleLogout={handleLogout}
+                        closeNav={closeNav}
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <PublicNavList closeNav={closeNav} />
+                    </div>
+                  ))}
+              </div>
 
               <div className="md:h-10 md:w-10 relative w-[30px] h-[30px] rounded-full overflow-hidden flex justify-center items-center">
                 {/* <Image fill alt="Noble Names Logo" src="/images/Avatar.png" /> */}
@@ -107,76 +123,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
                 </svg>
               </div>
             </div>
-
-            {openNav &&
-              (!isError && user ? (
-                <div ref={navRef}>
-                  <UserNavList
-                    handleLogout={handleLogout}
-                    closeNav={closeNav}
-                  />
-                </div>
-              ) : (
-                <div ref={navRef}>
-                  <PublicNavList closeNav={closeNav} />
-                </div>
-              ))}
           </div>
-
-          {/* {!isError && user ? (
-            <div className="relative">
-              <div className="flex gap-3 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
-                <svg
-                  className="cursor-pointer"
-                  onClick={() => setOpenNav((prev) => !prev)}
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3 12H21M3 6H21M3 18H21"
-                    stroke="#344054"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-
-                <div className="md:h-10 md:w-10 relative w-[30px] h-[30px] rounded-full overflow-hidden flex justify-center items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="40px"
-                    height="40px"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="1.5"
-                      d="M5 20v-1a7 7 0 0 1 7-7v0a7 7 0 0 1 7 7v1m-7-8a4 4 0 1 0 0-8a4 4 0 0 0 0 8"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              {openNav && !isError && user && (
-                <div ref={navRef}>
-                  <UserNavList
-                    handleLogout={handleLogout}
-                    closeNav={closeNav}
-                  />
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link href="/auth/sign-in" className="text-primary">
-              Sign In
-            </Link>
-          )} */}
         </div>
       </header>
 

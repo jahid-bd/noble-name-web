@@ -1,13 +1,30 @@
 'use client';
 
-import { formatISO, subDays } from 'date-fns';
+import { differenceInDays, formatISO, parseISO, subDays } from 'date-fns';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const AnalyticsFilterGroupBtn = () => {
+  const [activeTab, setActiveTab] = useState<number | null>(365);
   const searchParams = useSearchParams();
-  const tab = searchParams.get('to');
-  const type = searchParams.get('form');
+  const to = searchParams.get('to');
+  const form = searchParams.get('form');
+
+  useEffect(() => {
+    const parseTo = to && parseISO(to);
+    const parseForm = form && parseISO(form);
+
+    if (parseTo && parseForm) {
+      const difference = differenceInDays(parseForm, parseTo);
+
+      if (difference) {
+        setActiveTab(difference);
+      }
+    } else {
+      setActiveTab(365);
+    }
+  }, [to, form]);
 
   return (
     <div className="border rounded-md border-border-primary overflow-hidden w-fit bg-white">
@@ -19,7 +36,9 @@ const AnalyticsFilterGroupBtn = () => {
           },
         }}
         type="button"
-        className="text-text-secondary font-semibol"
+        className={`py-2 text-text-secondary font-semibold  border-x border-border-primary ${
+          activeTab === 365 ? 'bg-[#00a991] text-white' : ''
+        }`}
       >
         <button type="button" className={`px-3 py-2 font-semibold'}`}>
           12 months
@@ -33,14 +52,11 @@ const AnalyticsFilterGroupBtn = () => {
             form: formatISO(new Date()),
           },
         }}
-        className="py-2 text-text-secondary font-semibold  border-x border-border-primary"
+        className={`py-2 text-text-secondary font-semibold  border-x border-border-primary ${
+          activeTab === 30 ? 'bg-[#00a991] text-white' : ''
+        }`}
       >
-        <button
-          type="button"
-          className={`px-3 py-2 font-semibold ${
-            type == 'boy' ? 'bg-gray-bg' : ''
-          }`}
-        >
+        <button type="button" className={`px-3 py-2 font-semibold`}>
           30 days
         </button>
       </Link>
@@ -52,14 +68,11 @@ const AnalyticsFilterGroupBtn = () => {
             form: formatISO(new Date()),
           },
         }}
-        className="text-text-secondary font-semibold py-2 border-r border-border-primary"
+        className={`py-2 text-text-secondary font-semibold  border-x border-border-primary ${
+          activeTab === 7 ? 'bg-[#00a991] text-white' : ''
+        }`}
       >
-        <button
-          type="button"
-          className={`px-3 py-2 font-semibold ${
-            type == 'girl' ? 'bg-gray-bg' : ''
-          }`}
-        >
+        <button type="button" className={`px-3 py-2 font-semibold`}>
           7 days
         </button>
       </Link>
@@ -71,14 +84,11 @@ const AnalyticsFilterGroupBtn = () => {
             form: formatISO(new Date()),
           },
         }}
-        className="text-text-secondary font-semibold"
+        className={`py-2 text-text-secondary font-semibold  border-x border-border-primary ${
+          activeTab === 1 ? 'bg-[#00a991] text-white' : ''
+        }`}
       >
-        <button
-          type="button"
-          className={`px-3 py-2 font-semibold ${
-            type == 'girl' ? 'bg-gray-bg' : ''
-          }`}
-        >
+        <button type="button" className={`px-3 py-2 font-semibold`}>
           24 hours
         </button>
       </Link>
