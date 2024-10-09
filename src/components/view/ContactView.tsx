@@ -5,7 +5,6 @@ import { ContactParams } from '@/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -49,11 +48,11 @@ const ContactView = () => {
   const [formState, setFormState] = useState({ ...initialValues });
   const [issueError, setIssueError] = useState('');
   const [issue, setIssue] = useState<null | { value: string; label: string }>(
-    null,
+    null
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -142,7 +141,7 @@ const ContactView = () => {
   return (
     <main>
       <div className="container mx-auto px-1.5 min-h-screen pt-[64px] pb-[96px]">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <div className="lg:w-1/2 w-full md:mr-[64px]">
             <div>
               <h1 className="heading-text text-[36px]">Get in touch</h1>
@@ -234,7 +233,7 @@ const ContactView = () => {
                   {...register('message', { value: formState.message })}
                   className={clsx(
                     'w-full h-[134px] outline-none border border-border-primary px-[14px] py-[10px] rounded-md shadow-sm placeholder:text-text-placeholder resize-none',
-                    errors.message?.message && 'border-red-500',
+                    errors.message?.message && 'border-red-500'
                   )}
                 />
                 {errors.message?.message ? (
@@ -261,7 +260,7 @@ const ContactView = () => {
               </div>
             </form>
           </div>
-          <div className="lg:w-1/2 max-md:hidden">
+          {/* <div className="lg:w-1/2 max-md:hidden">
             <div className="relative">
               <Image
                 src="/images/contact.png"
@@ -270,7 +269,7 @@ const ContactView = () => {
                 height={800}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>
