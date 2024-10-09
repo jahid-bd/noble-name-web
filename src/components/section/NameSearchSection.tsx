@@ -170,19 +170,23 @@ const NameSearchSection = () => {
     const language = searchParams.get('language');
     const search_by = searchParams.get('search_by');
 
-    search && setSearchValue(search);
-    search_by && setSearchBy(search_by as SearchBy);
+    search ? setSearchValue(search) : setSearchValue('');
+    search_by ? setSearchBy(search_by as SearchBy) : setSearchBy('name');
 
     if (gender) {
       const find = genderOptions.find((item) => item.value === gender);
 
       find && setOptionsState((prev) => ({ ...prev, gender: find }));
+    } else {
+      setOptionsState((prev) => ({ ...prev, gender: genderOptions[0] }));
     }
 
     if (language) {
       const find = languageOptions.find((item) => item.value === language);
 
       find && setOptionsState((prev) => ({ ...prev, language: find }));
+    } else {
+      setOptionsState((prev) => ({ ...prev, language: languageOptions[0] }));
     }
   }, [searchParams]);
 
