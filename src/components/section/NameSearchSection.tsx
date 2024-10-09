@@ -184,7 +184,7 @@ const NameSearchSection = () => {
 
       find && setOptionsState((prev) => ({ ...prev, language: find }));
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="bg-white p-3 md:p-5 rounded-xl border border-border-secondary">
