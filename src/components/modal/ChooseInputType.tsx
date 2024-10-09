@@ -15,8 +15,7 @@ const ChooseInputType = ({
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
-    // Do something with the selected file
-    console.log('Selected file:', file);
+
     const formData = new FormData();
     formData.append('file', file);
     handleCSVfileUpload(formData);

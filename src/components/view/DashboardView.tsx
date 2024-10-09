@@ -23,8 +23,6 @@ const DashboardView = () => {
   const activePage = searchParams.get('page');
   const gender = searchParams.get('type');
 
-  console.log({ gender });
-
   const {
     data: favorites,
     isLoading: favoriteLoading,

@@ -18,8 +18,6 @@ const EmailVerificationPage = () => {
   const checkAccessToken = () => {
     if (user && !isError) {
       router.push('/settings');
-    } else {
-      console.log('Access token not found');
     }
   };
 

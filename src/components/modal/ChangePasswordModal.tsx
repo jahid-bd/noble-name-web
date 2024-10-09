@@ -28,7 +28,6 @@ const ChangePasswordModal = ({ handleClose }: { handleClose: () => void }) => {
   const { mutate: change, isPending } = useMutation({
     mutationFn: (data: ChangePassReq) => changePassword(data),
     onError: (error: any) => {
-      console.log('error', error.message);
       setserverError(error.response.data.message);
     },
 

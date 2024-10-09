@@ -222,7 +222,6 @@ const CreateBlogModal = ({
 
     if (!isEdit) {
       if (data && content && thumbnail && category.value) {
-        console.log('called inside eidt');
         return createBlog({
           ...data,
           content,

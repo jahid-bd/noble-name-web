@@ -27,7 +27,6 @@ const ForgotPasswordView = () => {
   const { mutate: forgot, isPending } = useMutation({
     mutationFn: (data: FormType) => forgotPassword(data),
     onError: (error: any) => {
-      console.log('error', error.message);
       setserverError(error.response.data.message);
     },
     onSuccess: (data) => {

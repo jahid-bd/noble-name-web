@@ -31,7 +31,6 @@ const SignInView = () => {
   const { mutate: signin, isPending } = useMutation({
     mutationFn: (data: SignInData) => userLogin(data),
     onError: (error: any) => {
-      console.log('error', error.message);
       setserverError(error.response.data.message);
     },
     onSuccess: (data: any) => {

@@ -22,7 +22,6 @@ const NewsLetterSection = () => {
   const { mutate: createNewsLetter, isPending } = useMutation({
     mutationFn: (data: any) => newsLetterApi(data),
     onError: (error: any) => {
-      console.log('error', error);
       toast.error(error?.response?.data);
     },
     onSuccess: (data) => {

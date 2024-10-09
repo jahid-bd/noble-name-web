@@ -22,9 +22,7 @@ const SubscriptionView = () => {
 
   const { mutate: cancel, isPending: isCancelling } = useMutation({
     mutationFn: (id: string) => cancelSubscription(id),
-    onError: (error: any) => {
-      console.log('error', error);
-    },
+    onError: (error: any) => {},
     onSuccess: (data: any) => {
       router.push('/subscription/cancel');
     },

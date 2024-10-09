@@ -45,8 +45,6 @@ const MembershipPlanView = () => {
   const { mutate: subscribeFree } = useMutation({
     mutationFn: (id: string) => freeSubscription(''),
     onError: (error: any) => {
-      console.log('error', error);
-
       setIsPending(false);
       setLoadingId('');
     },
@@ -68,7 +66,6 @@ const MembershipPlanView = () => {
       user_id: user?._id,
     });
     const session = await response.data;
-    console.log(session);
 
     const stripe = await stripePromise;
 

@@ -29,7 +29,6 @@ const ResetPass = () => {
   const { mutate: reset, isPending } = useMutation({
     mutationFn: (data: ResetPassParams) => resetPassword(data),
     onError: (error: any) => {
-      console.log('error', error.message);
       setserverError(error.response.data.message);
     },
     onSuccess: (data) => {

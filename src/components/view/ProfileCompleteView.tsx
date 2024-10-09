@@ -144,12 +144,12 @@ const ProfileComplete = () => {
   const [isParent, setIsParent] = useState<boolean | null>(null);
 
   const [expectingDate, setExpectingDate] = useState<Date | null | string>(
-    null,
+    null
   );
 
   const handleSelect = (
     key: string,
-    option: { value: string; label: string },
+    option: { value: string; label: string }
   ) => {
     setOptionsState({
       ...optionsState,
@@ -216,11 +216,9 @@ const ProfileComplete = () => {
   const { mutate: updateProfile, isPending } = useMutation({
     mutationFn: (data: UserUpdateData) => userProfileUpdate(data),
     onError: (error: any) => {
-      console.log('error', error);
       setserverError(error.response.data.message);
     },
     onSuccess: (data) => {
-      console.log(data);
       router.push('/');
     },
   });
@@ -548,7 +546,7 @@ const ProfileComplete = () => {
                               : false
                           }
                         />
-                      ),
+                      )
                     )}
                   </div>
                 )}

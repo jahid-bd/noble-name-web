@@ -83,10 +83,10 @@ const buttons = [
     popup: (editor: any, current: any, self: any, close: any) => {
       function onSelected(e: any) {
         let mergeField = e.target.value;
+
         if (mergeField) {
-          console.log(mergeField);
           editor.selection.insertNode(
-            editor.create.inside.fromHTML('{{' + mergeField + '}}'),
+            editor.create.inside.fromHTML('{{' + mergeField + '}}')
           );
         }
       }
@@ -100,15 +100,14 @@ const buttons = [
       let selectElement = document.createElement('select');
       selectElement.setAttribute('class', 'merge-field-select');
       selectElement.appendChild(
-        createOptionGroupElement(facilityMergeFields, 'Facility'),
+        createOptionGroupElement(facilityMergeFields, 'Facility')
       );
       selectElement.appendChild(
-        createOptionGroupElement(inspectionMergeFields, 'Inspection'),
+        createOptionGroupElement(inspectionMergeFields, 'Inspection')
       );
       selectElement.onchange = onSelected;
       divElement.appendChild(selectElement);
 
-      console.log(divElement);
       return divElement;
     },
   },

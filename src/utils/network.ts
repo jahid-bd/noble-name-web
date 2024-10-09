@@ -16,7 +16,6 @@ export const request = async <T>(options: AxiosRequestConfig): Promise<T> => {
     token = undefined;
   }
 
-  // Set the authorization header
   token && (client.defaults.headers.common.Authorization = `Bearer ${token}`);
 
   const onSuccess = (response: AxiosResponse<T>) => {
