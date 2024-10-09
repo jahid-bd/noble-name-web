@@ -76,7 +76,7 @@ const NameFilterModal = ({
     let url: string = searchParams.toString();
 
     if (searchParams.get('page')) {
-      url = deleteParams(url, 'origin');
+      url = deleteParams(url, 'page');
     }
 
     url = origin.value
