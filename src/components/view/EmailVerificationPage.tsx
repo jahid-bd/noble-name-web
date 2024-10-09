@@ -1,7 +1,5 @@
 'use client';
 
-import { getUserProfile } from '@/services/api';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,19 +8,8 @@ import { useEffect } from 'react';
 const EmailVerificationPage = () => {
   const router = useRouter();
 
-  const { data: user, isError } = useQuery({
-    queryKey: ['logged-in-user'],
-    queryFn: getUserProfile,
-  });
-
-  const checkAccessToken = () => {
-    if (user && !isError) {
-      router.push('/settings');
-    }
-  };
-
   useEffect(() => {
-    const intervalId = setInterval(checkAccessToken, 1000);
+    const intervalId = setInterval(() => router.push('/'), 5000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -30,7 +17,6 @@ const EmailVerificationPage = () => {
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
       <div className="w-full max-md:px-4 max-w-[500px] mx-auto">
-        {/* logo */}
         <div className="mb-8">
           <Link
             href="/"
