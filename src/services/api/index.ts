@@ -48,7 +48,6 @@ export const getUserProfile = async () => {
     });
     return res.data.data;
   } catch (error) {
-    console.error('Error fetching user:', error);
     throw error;
   }
 };
@@ -251,7 +250,13 @@ export const newsLetterApi = (data: ContactParams) =>
   axios.post(`${BASE_URL}/subscribe-newsletters`, data);
 
 export const userSearchCount = () =>
-  axios.post(`${BASE_URL}/search-name-count`, {});
+  axios.post(
+    `${BASE_URL}/search-name-count`,
+    {},
+    {
+      withCredentials: true,
+    }
+  );
 
 export const getNames = async (params: string) => {
   try {

@@ -63,7 +63,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
   const handleClickOutside = useCallback((event: any) => {
     if (navRef.current && navRef?.current?.contains(event.target)) {
-      return setOpenNav(true);
+      return setOpenNav((prev) => !prev);
     }
 
     return setOpenNav(false);
@@ -90,10 +90,10 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               </Link>
             </div>
 
-            <div className="p-2">
+            <div className="p-2" ref={navRef}>
               <svg
                 className="cursor-pointer"
-                onClick={() => setOpenNav((prev) => !prev)}
+                // onClick={() => setOpenNav((prev) => !prev)}
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -111,14 +111,20 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                   />
                 </g>
               </svg>
+
+              {openNav && (
+                <div>
+                  <AdminNavList handleLogout={handleLogout} />
+                </div>
+              )}
             </div>
           </div>
 
-          {openNav && (
+          {/* {openNav && (
             <div ref={navRef}>
               <AdminNavList handleLogout={handleLogout} />
             </div>
-          )}
+          )} */}
         </header>
 
         {children}

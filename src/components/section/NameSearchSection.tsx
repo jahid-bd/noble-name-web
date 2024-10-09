@@ -61,12 +61,6 @@ const NameSearchSection = () => {
 
   const { mutate: createNewsLetter, isPending } = useMutation({
     mutationFn: () => userSearchCount(),
-    onError: (error: any) => {
-      console.log('error', error);
-    },
-    onSuccess: (data) => {
-      // toast.success('Sign up newsletter successfully');
-    },
   });
 
   const labelPlaceholder: Record<
@@ -142,6 +136,7 @@ const NameSearchSection = () => {
       return 0;
     }
 
+    let prevUrl: any = searchParams.toString();
     let url: any = searchParams.toString();
 
     url = searchValue
@@ -157,11 +152,15 @@ const NameSearchSection = () => {
       ? setQueryParams(url, 'search_by', searchBy)
       : deleteParams(url, 'search_by');
 
-    if (data) {
-      await createNewsLetter();
-      router.push(`/name-search${url ? `?${url}` : ''}`);
+    if (prevUrl === url) {
+      toast.error('Please add your new search');
     } else {
-      toast.error('Please login before search');
+      if (data) {
+        await createNewsLetter();
+        router.push(`/name-search${url ? `?${url}` : ''}`);
+      } else {
+        toast.error('Please login before search');
+      }
     }
   };
 

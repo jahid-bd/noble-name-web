@@ -70,7 +70,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
           <div className="relative">
             <div className="flex gap-3 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
-              <div ref={navRef}>
+              <div>
                 <svg
                   className="cursor-pointer"
                   onClick={() => setOpenNav((prev) => !prev)}
@@ -91,14 +91,14 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
                 {openNav &&
                   (!isError && user ? (
-                    <div>
+                    <div ref={navRef}>
                       <UserNavList
                         handleLogout={handleLogout}
                         closeNav={closeNav}
                       />
                     </div>
                   ) : (
-                    <div>
+                    <div ref={navRef}>
                       <PublicNavList closeNav={closeNav} />
                     </div>
                   ))}
