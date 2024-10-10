@@ -98,9 +98,9 @@ const ChangePasswordModal = ({ handleClose }: { handleClose: () => void }) => {
                 <div className="mb-5">
                   <InputGroup
                     type="password"
-                    label="Cureent password"
+                    label="Current password"
                     name="current_password"
-                    placeholder="Enter your cureent password"
+                    placeholder="Enter your current password"
                   />
                   {serverError ? (
                     <div className="pt-1">
@@ -135,53 +135,6 @@ const ChangePasswordModal = ({ handleClose }: { handleClose: () => void }) => {
               </Form>
             )}
           </Formik>
-
-          {/* <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-5">
-              <InputField
-                type="password"
-                label="Cureent password"
-                name="currentPassword"
-                placeholder="Enter your cureent password"
-                register={register}
-                className={serverError ? 'border-red-500' : ''}
-                error={errors.currentPassword?.message}
-              />
-              {serverError ? (
-                <div className="pt-1">
-                  <p className="text-sm  text-red-500">{serverError}</p>
-                </div>
-              ) : null}
-            </div>
-            <div className="mb-5">
-              <InputField
-                type="password"
-                label="New Password"
-                name="newPassword"
-                placeholder="Enter a new password"
-                register={register}
-                // className={serverError ? 'border-red-500' : ''}
-                error={errors.newPassword?.message}
-              />
-            </div>
-            <div className="mb-5">
-              <InputField
-                type="password"
-                label="Confirm Password"
-                name="confirmPassword"
-                placeholder="Enter confirm password"
-                register={register}
-                // className={serverError ? 'border-red-500' : ''}
-                error={errors.confirmPassword?.message}
-              />
-            </div>
-
-            <div>
-              <Button isLoading={isPending} className="max-w-[220px]">
-                Change Password
-              </Button>
-            </div>
-          </form> */}
         </div>
       </div>
     </div>

@@ -24,10 +24,10 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
   const handleClickOutside = useCallback((event: any) => {
     if (navRef.current && navRef?.current?.contains(event.target)) {
-      return setOpenNav(true);
+      return setOpenNav((prev) => !prev);
     }
 
-    // return setOpenNav(false);
+    return setOpenNav(false);
   }, []);
 
   const { data: user, isError } = useQuery({
@@ -70,10 +70,10 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
           <div className="relative">
             <div className="flex gap-3 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
-              <div>
+              <div ref={navRef}>
                 <svg
                   className="cursor-pointer"
-                  onClick={() => setOpenNav((prev) => !prev)}
+                  // onClick={() => setOpenNav((prev) => !prev)}
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
@@ -91,14 +91,14 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
                 {openNav &&
                   (!isError && user ? (
-                    <div ref={navRef}>
+                    <div>
                       <UserNavList
                         handleLogout={handleLogout}
                         closeNav={closeNav}
                       />
                     </div>
                   ) : (
-                    <div ref={navRef}>
+                    <div>
                       <PublicNavList closeNav={closeNav} />
                     </div>
                   ))}
