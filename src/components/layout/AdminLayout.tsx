@@ -43,6 +43,7 @@ const AdminLink = ({
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const navRef = useRef<HTMLDivElement>(null);
+  const navBtnRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState(false);
   const queryClient = useQueryClient();
 
@@ -62,7 +63,9 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   });
 
   const handleClickOutside = useCallback((event: any) => {
-    if (navRef.current && navRef?.current?.contains(event.target)) {
+    if (navRef.current && navBtnRef?.current?.contains(event.target)) {
+      return null;
+    } else if (navRef.current && navRef?.current?.contains(event.target)) {
       return setOpenNav((prev) => !prev);
     }
 
@@ -90,30 +93,32 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               </Link>
             </div>
 
-            <div className="p-2" ref={navRef}>
-              <svg
-                className="cursor-pointer"
-                // onClick={() => setOpenNav((prev) => !prev)}
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g id="menu-02">
-                  <path
-                    id="Icon"
-                    d="M3 12H15M3 6H21M3 18H21"
-                    stroke="#344054"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </g>
-              </svg>
+            <div className="p-2">
+              <div ref={navBtnRef}>
+                <svg
+                  className="cursor-pointer"
+                  onClick={() => setOpenNav((prev) => !prev)}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="menu-02">
+                    <path
+                      id="Icon"
+                      d="M3 12H15M3 6H21M3 18H21"
+                      stroke="#344054"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                </svg>
+              </div>
 
               {openNav && (
-                <div>
+                <div ref={navRef}>
                   <AdminNavList handleLogout={handleLogout} />
                 </div>
               )}

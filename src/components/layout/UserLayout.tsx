@@ -13,6 +13,7 @@ import UserNavList from '../navs/UserNavList';
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const navRef = useRef<HTMLDivElement>(null);
+  const navBtnRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState(false);
   const queryClient = useQueryClient();
 
@@ -23,8 +24,10 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const handleClickOutside = useCallback((event: any) => {
-    if (navRef.current && navRef?.current?.contains(event.target)) {
-      return setOpenNav((prev) => !prev);
+    if (navRef.current && navBtnRef?.current?.contains(event.target)) {
+      return null;
+    } else if (navRef.current && navRef?.current?.contains(event.target)) {
+      return setOpenNav(true);
     }
 
     return setOpenNav(false);
@@ -70,35 +73,37 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
           <div className="relative">
             <div className="flex gap-3 items-center bg-white p-2 md:p-3 shadow-menu rounded-full">
-              <div ref={navRef}>
-                <svg
-                  className="cursor-pointer"
-                  // onClick={() => setOpenNav((prev) => !prev)}
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3 12H21M3 6H21M3 18H21"
-                    stroke="#344054"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+              <div>
+                <div ref={navBtnRef}>
+                  <svg
+                    className="cursor-pointer"
+                    onClick={() => setOpenNav((prev) => !prev)}
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 12H21M3 6H21M3 18H21"
+                      stroke="#344054"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
 
                 {openNav &&
                   (!isError && user ? (
-                    <div>
+                    <div ref={navRef}>
                       <UserNavList
                         handleLogout={handleLogout}
                         closeNav={closeNav}
                       />
                     </div>
                   ) : (
-                    <div>
+                    <div ref={navRef}>
                       <PublicNavList closeNav={closeNav} />
                     </div>
                   ))}
