@@ -66,7 +66,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     if (navRef.current && navBtnRef?.current?.contains(event.target)) {
       return null;
     } else if (navRef.current && navRef?.current?.contains(event.target)) {
-      return setOpenNav((prev) => !prev);
+      return setOpenNav(true);
     }
 
     return setOpenNav(false);
