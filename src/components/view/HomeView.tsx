@@ -127,11 +127,11 @@ const HomeView = () => {
               </div>
             </div>
 
-            <div className="w-full h-full">
+            <div>
               <Image
                 src={ChildHand}
                 alt="child hand"
-                className="w-full h-full object-fit"
+                className="w-full h-auto"
               />
             </div>
           </div>
