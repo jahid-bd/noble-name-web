@@ -29,15 +29,15 @@ const NameSearchView = () => {
   const handleReset = () => {
     let url: any = '';
 
-    // const search = searchParams.get('search');
-    // const language = searchParams.get('language');
-    // const gender = searchParams.get('gender');
-    // const search_by = searchParams.get('search_by');
+    const search = searchParams.get('search');
+    const language = searchParams.get('language');
+    const gender = searchParams.get('gender');
+    const search_by = searchParams.get('search_by');
 
-    // url = search && setQueryParams(url, 'search', search);
-    // url = language && setQueryParams(url, 'language', language);
-    // url = gender && setQueryParams(url, 'gender', gender);
-    // url = search_by && setQueryParams(url, 'search_by', search_by);
+    url = search && setQueryParams(url, 'search', search);
+    url = language && setQueryParams(url, 'language', language);
+    url = gender && setQueryParams(url, 'gender', gender);
+    url = search_by && setQueryParams(url, 'search_by', search_by);
 
     router.push(`/name-search${url ? `?${url}` : ''}`);
   };

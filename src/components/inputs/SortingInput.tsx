@@ -92,7 +92,7 @@ const SortingInput = () => {
     if (sort_by) {
       const find = options.find((item) => item.value === sort_by);
 
-      find && setSelectOption(find);
+      find ? setSelectOption(find) : setSelectOption(options[0]);
     }
   }, []);
 
@@ -100,7 +100,7 @@ const SortingInput = () => {
     <div>
       <div
         className={clsx(
-          'relative border border-border-primary px-[14px] py-[10px] flex items-center justify-between cursor-pointer rounded-md w-[210px]',
+          'relative border border-border-primary px-[14px] py-[10px] flex items-center justify-between cursor-pointer rounded-md w-[210px]'
         )}
         onClick={handleToggle}
         ref={ref}
@@ -122,7 +122,7 @@ const SortingInput = () => {
                   key={opt?.value}
                   className={clsx(
                     'py-[11px] px-[14px] transition-all duration-300  hover:bg-gray-100 flex items-center justify-between',
-                    selectedOption?.value === opt.value && 'bg-gray-100',
+                    selectedOption?.value === opt.value && 'bg-gray-100'
                   )}
                   onClick={() => handleSelectOption(opt)}
                 >
