@@ -49,6 +49,7 @@ const options = [
 const SortingInput = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const sort_by = searchParams.get('sort_by');
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectOption] = useState(options[0]);
   const { setQueryParams, deleteParams } = useSearchQueryParam();
@@ -87,8 +88,6 @@ const SortingInput = () => {
   useOnClickOutside(ref, handleClickOutside);
 
   useEffect(() => {
-    const sort_by = searchParams.get('sort_by');
-
     if (sort_by) {
       const find = options.find((item) => item.value === sort_by);
 
@@ -96,7 +95,7 @@ const SortingInput = () => {
     } else {
       setSelectOption(options[0]);
     }
-  }, []);
+  }, [sort_by]);
 
   return (
     <div>
