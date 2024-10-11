@@ -92,7 +92,9 @@ const SortingInput = () => {
     if (sort_by) {
       const find = options.find((item) => item.value === sort_by);
 
-      find ? setSelectOption(find) : setSelectOption(options[0]);
+      find && setSelectOption(find);
+    } else {
+      setSelectOption(options[0]);
     }
   }, []);
 
