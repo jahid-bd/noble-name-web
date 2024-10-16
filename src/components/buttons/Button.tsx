@@ -11,11 +11,19 @@ interface ButtonProps {
   onClick?: () => void;
   isLoading?: boolean;
   type?: any;
+  disabled?: boolean;
 }
 
-const Button = ({ children, className, onClick, isLoading }: ButtonProps) => {
+const Button = ({
+  children,
+  className,
+  onClick,
+  isLoading,
+  disabled = false,
+}: ButtonProps) => {
   return (
     <button
+      disabled={disabled}
       className={clsx(
         'w-full bg-primary rounded-md text-base font-semibold text-white p-[10px] flex items-center justify-center button-hover',
         className

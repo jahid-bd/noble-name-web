@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import ReCaptcha from 'react-google-recaptcha';
 import { toast } from 'react-toastify';
 import Button from '../buttons/Button';
 import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
@@ -19,6 +20,8 @@ interface SignInData {
 }
 
 const SignInView = () => {
+  const [isSubmit, setIsSubmit] = useState(true);
+
   const initialValues = {
     email: '',
     password: '',
@@ -45,6 +48,12 @@ const SignInView = () => {
     setserverError('');
     signin(data);
   };
+
+  function onChange(value: any) {
+    if (value) {
+      setIsSubmit(false);
+    }
+  }
 
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
@@ -126,6 +135,13 @@ const SignInView = () => {
                   </Link>
                 </div>
 
+                <div className="flex justify-center mb-6">
+                  <ReCaptcha
+                    onChange={onChange}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTUCHA_SITE_KEY}
+                  />
+                </div>
+
                 <div>
                   {serverError ? (
                     <div className="pb-3">
@@ -135,7 +151,9 @@ const SignInView = () => {
                     </div>
                   ) : null}
 
-                  <Button isLoading={isPending}>Sign in</Button>
+                  <Button isLoading={isPending} disabled={isSubmit}>
+                    Sign in
+                  </Button>
                 </div>
               </Form>
             )}

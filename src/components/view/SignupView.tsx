@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import ReCaptcha from 'react-google-recaptcha';
 import Button from '../buttons/Button';
 import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
 import InputGroup from '../inputs/InputGroup';
@@ -19,6 +20,7 @@ interface RegisterData {
 }
 
 const SignupView = () => {
+  const [isSubmit, setIsSubmit] = useState(true);
   const initialValues = {
     name: '',
     email: '',
@@ -42,6 +44,12 @@ const SignupView = () => {
     setserverError('');
     signup(data);
   };
+
+  function onChange(value: any) {
+    if (value) {
+      setIsSubmit(false);
+    }
+  }
 
   return (
     <div className="flex items-center justify-center h-screen overflow-auto">
@@ -97,6 +105,13 @@ const SignupView = () => {
                     name="password"
                     label="Password*"
                     placeholder="Create a password"
+                  />
+                </div>
+
+                <div className="flex justify-center mb-6">
+                  <ReCaptcha
+                    onChange={onChange}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTUCHA_SITE_KEY}
                   />
                 </div>
 
