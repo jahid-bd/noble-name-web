@@ -8,7 +8,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import ReCaptcha from 'react-google-recaptcha';
+// import ReCaptcha from 'react-google-recaptcha';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { toast } from 'react-toastify';
 import Button from '../buttons/Button';
 import GoogleSignupBtn from '../buttons/GoogleSignupBtn';
@@ -136,9 +137,11 @@ const SignInView = () => {
                 </div>
 
                 <div className="flex justify-center mb-6">
-                  <ReCaptcha
+                  <ReCAPTCHA
                     onChange={onChange}
-                    sitekey={process.env.NEXT_PUBLIC_RECAPTUCHA_SITE_KEY}
+                    sitekey={
+                      process.env.NEXT_PUBLIC_RECAPTUCHA_SITE_KEY as string
+                    }
                   />
                 </div>
 
