@@ -125,7 +125,9 @@ const SignupView = () => {
                       </p>
                     </div>
                   ) : null}
-                  <Button isLoading={isPending}>Get started</Button>
+                  <Button isLoading={isPending} disabled={isSubmit}>
+                    Get started
+                  </Button>
                 </div>
 
                 <div className="mt-4">
